@@ -1,0 +1,39 @@
+image:
+- Visual Studio 2017
+- Ubuntu
+
+version: 0.1.0.{build}
+
+# Only clone the current branch and no history
+clone_depth: 1
+
+pull_requests:
+  # Do not increment build number for pull requests
+  do_not_increment_build_number: true
+
+nuget:
+  # Do not publish NuGet packages for pull requests
+  disable_publish_on_pr: true
+
+environment:
+  # Set the DOTNET_SKIP_FIRST_TIME_EXPERIENCE environment variable to stop wasting time caching packages
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending usage data to Microsoft
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+skip_commits:
+  files:
+    - README.md
+
+init:
+  - git config --global core.autocrlf false
+
+build_script:
+  - dotnet build ./src/Server.Api/Server.Api.csproj --configuration Release
+  - dotnet publish ./src/Server.Api/Server.Api.csproj --configuration Release --no-restore --output ./../../artifacts
+
+test_script:
+  - dotnet build ./test/Server.Tests/Server.Tests.csproj --configuration Release
+  - dotnet test ./test/Server.Tests/Server.Tests.csproj --configuration Release --no-build
+
+deploy: off
