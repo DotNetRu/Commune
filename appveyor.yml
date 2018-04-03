@@ -29,8 +29,8 @@ init:
   - git config --global core.autocrlf false
 
 build_script:
-  - dotnet build ./src/Server.Api/Server.Api.csproj --configuration Release
-  - dotnet publish ./src/Server.Api/Server.Api.csproj --configuration Release --no-restore --output ./../../artifacts
+  - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release
+  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 
 test_script:
   - dotnet build ./test/Server.Tests/Server.Tests.csproj --configuration Release
