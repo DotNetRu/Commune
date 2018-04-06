@@ -16,7 +16,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public override void CreateMeetupDraft([FromRoute, Required] string communityId, [FromBody] MeetupDraft meetupDraft)
+        public override void CreateMeetupDraft([FromRoute, Required] string communityId, [FromBody] CreateMeetupDraftParameters meetupDraft)
         {
             throw new NotImplementedException();
         }
@@ -26,12 +26,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
             throw new NotImplementedException();
         }
 
-        public override MeetupDraftProperties GetMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId)
+        public override MeetupDraft GetMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId, [FromBody] UpdatableMeetupDraftProperties updateMeetupDraftProperties)
+        public override void UpdateMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId, [FromBody] UpdateMeetupDraftParameters updateMeetupDraftProperties)
         {
             throw new NotImplementedException();
         }
