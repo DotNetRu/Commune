@@ -3,9 +3,12 @@ info:
   description: "Meetup Management Service API"
   version: "0.1.0"
   title: "Meetup Management Service API"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+#  license:
+#    name: "Apache 2.0"
+#    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  contact:
+   name: DotNetRu Server Contributors
+   url: https://github.com/DotNetRu/Server
 consumes:
 - "application/json"
 produces:
@@ -15,191 +18,263 @@ securityDefinitions:
     type: basic
 security: 
   - basicAuth: []
+parameters:
+  communityIdPathParam:
+    name: "communityId"
+    in: "path"
+    required: true
+    type: "string"
 paths:
-  /community/{communityId}/meetup/{meetupId}/draft:
-    get:
-      tags:
-      - Meetup
-      summary: "Get meetup draft"
-      description: "Get available drafts of meetups"
-      operationId: "GetMeetupDrafts"
-      parameters: []
-      responses:
-        200:
-          description: "Status 200"
-        404:
-          description: "Status 404"
+  /communities/{communityId}/meetups/draft:
     post:
       tags:
       - Meetup
       summary: "Create meetup draft"
-      description: "Create new meetup draft."
       operationId: "CreateMeetupDraft"
-      consumes: []
       parameters:
-      - name: "body"
-        in: "body"
+      - in: "body"
+        name: "meetupDraft"
         required: true
         schema:
-          $ref: "#/definitions/MeetupDraft"
+          $ref: "#/definitions/CreateMeetupDraftParameters"          
+      responses:
+        201:
+          description: "Draft was sucessfully created"
+        401:
+          $ref: "#/responses/Unauthorized"
+        400:
+          $ref: "#/responses/BadRequest"
+        404:
+          description: "Community not found"
+        409:
+          description: "Draft is already exists"
+    parameters:
+      - $ref: '#/parameters/communityIdPathParam'
+      
+  /communities/{communityId}/meetups/{meetupId}/draft:
+    get:
+      tags:
+      - Meetup    
+      summary: "Get meetup draft"
+      operationId: "GetMeetupDraft"
       responses:
         200:
-          description: "Status 200"
-        400:
-          description: "Invalid request parameters"
+          description: "OK"
+          schema:
+            $ref: "#/definitions/MeetupDraft"
+        401:
+          $ref: "#/responses/Unauthorized"          
         404:
-          description: "Status 404"
-        409:
-          description: "Meetup is already exists"
+          description: "Community or meetup not found"
     put:
       tags:
-      - Meetup
+      - Meetup      
       summary: "Update meetup draft"
       operationId: "UpdateMeetupDraft"
-      parameters: []
+      parameters:
+      - in: "body"
+        name: "updateMeetupDraftProperties"      
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateMeetupDraftParameters"          
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly updated"
         400:
-          description: "Status 400"
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"          
         404:
-          description: "Status 404"
+          description: "Community or meetup not found"
     delete:
       tags:
       - Meetup
       summary: "Delete meetup draft"
       operationId: "DeleteMeetupDraft"
-      parameters: []
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly deleted"
+        401:
+          $ref: "#/responses/Unauthorized"          
         404:
-          description: "Status 404"
+          description: "Community or meetup not found"
     parameters:
-    - name: "communityId"
-      in: "path"
-      required: true
-      type: "string"
+    - $ref: '#/parameters/communityIdPathParam'
     - name: "meetupId"
       in: "path"
       required: true
       type: "string"
-  /speaker/{speakerId}/draft:
-    get:
-      tags:
-      - Speaker
-      summary: "Get speaker draft"
-      description: "Get available drafts of speakers"
-      operationId: "GetSpeakerDrafts"
-      parameters: []
-      responses:
-        200:
-          description: "Status 200"
-          schema:
-            $ref: "#/definitions/SpeakerDraft"
+  /speakers/draft:
     post:
       tags:
       - Speaker
       summary: "Create speaker draft"
-      description: "Create new meetup draft."
       operationId: "CreateSpeakerDraft"
-      consumes: []
       parameters:
-      - name: "body"
+      - name: "speakerDraft"
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/SpeakerDraft"
+          $ref: "#/definitions/CreateSpeakerDraftParameters"
+      responses:
+        201:
+          description: "Draft was sucessfully created"
+        401:
+          $ref: "#/responses/Unauthorized"
+        400:
+          $ref: "#/responses/BadRequest"
+        409:
+          description: "Draft is already exists"
+  /speakers/{speakerId}/draft:
+    get:
+      tags:
+      - Speaker
+      summary: "Get speaker draft"
+      operationId: "GetSpeakerDrafts"
       responses:
         200:
-          description: "Status 200"
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SpeakerDraft"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Speaker not found"            
     put:
       tags:
       - Speaker
       summary: "Update speaker draft"
       operationId: "UpdateSpeakerDraft"
-      consumes: []
       parameters:
       - name: "body"
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/SpeakerDraft"
+          $ref: "#/definitions/UpdateSpeakerDraftParameters"
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly updated"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Speaker not found"          
     delete:
       tags:
       - Speaker
       summary: "Delete speaker draft"
       operationId: "DeleteSpeakerDraft"
-      parameters: []
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly deleted"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Speaker not found"
     parameters:
     - name: "speakerId"
       in: "path"
       required: true
       type: "string"
-  /venue/{venueId}/draft:
-    get:
-      tags:
-      - Venue
-      summary: "Get venue draft"
-      description: "Get available drafts of venue"
-      operationId: "GetVenueDrafts"
-      parameters: []
-      responses:
-        200:
-          description: "Status 200"
-          schema:
-            $ref: "#/definitions/VenueDraft"
+  /venues/draft:
     post:
       tags:
       - Venue
       summary: "Create venue draft"
-      description: "Create new venue draft."
       operationId: "CreateVenueDraft"
       consumes: []
       parameters:
-      - name: "body"
+      - name: "venueDraft"
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/VenueDraft"
+          $ref: "#/definitions/CreateVenueDraftParameters"
+      responses:
+        201:
+          description: "Draft was sucessfully created"
+        401:
+          $ref: "#/responses/Unauthorized"
+        400:
+          $ref: "#/responses/BadRequest"
+        409:
+          description: "Draft is already exists"   
+  /venues/{venueId}/draft:
+    get:
+      tags:
+      - Venue
+      summary: "Get venue draft"
+      operationId: "GetVenueDrafts"
       responses:
         200:
-          description: "Status 200"
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VenueDraft"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Venue not found"            
     put:
       tags:
       - Venue
-      summary: "Update speaker draft"
+      summary: "Update venue draft"
       operationId: "UpdateVenueDraft"
       consumes: []
       parameters:
-      - name: "body"
+      - name: "properties"
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/VenueDraft"
+            $ref: "#/definitions/UpdateVenueDraftParameters"
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly updated"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Venue not found"  
     delete:
       tags:
       - Venue
       summary: "Delete venue draft"
       operationId: "DeleteVenueDraft"
-      parameters: []
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly deleted"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Venue not found"
     parameters:
     - name: "venueId"
       in: "path"
       required: true
       type: "string"
+  /talks/draft:
+    post:
+      tags:
+      - Talk
+      summary: "Create talk draft"
+      description: "Create new talk draft."
+      operationId: "CreateTalkDraft"
+      consumes: []
+      parameters:
+      - name: "talkDraft"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTalkDraftParameters"
+      responses:
+        201:
+          description: "Draft was sucessfully created"
+        401:
+          $ref: "#/responses/Unauthorized"
+        400:
+          $ref: "#/responses/BadRequest"
+        409:
+          description: "Draft is already exists"  
   /talk/{talkId}/draft:
     get:
       tags:
@@ -210,29 +285,17 @@ paths:
       parameters: []
       responses:
         200:
-          description: "Status 200"
+          description: "OK"
           schema:
-            $ref: "#/definitions/VenueDraft"
-    post:
-      tags:
-      - Talk
-      summary: "Create talk draft"
-      description: "Create new talk draft."
-      operationId: "CreateTalkDraft"
-      consumes: []
-      parameters:
-      - name: "body"
-        in: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/TalkDraft"
-      responses:
-        200:
-          description: "Status 200"
+            $ref: "#/definitions/TalkDraft"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Talk not found"            
     put:
       tags:
       - Talk
-      summary: "Update speaker draft"
+      summary: "Update talk draft"
       operationId: "UpdateTalkDraft"
       consumes: []
       parameters:
@@ -240,37 +303,34 @@ paths:
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/TalkDraft"
+          $ref: "#/definitions/UpdateTalkDraftParameters"
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly updated"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Talk not found"  
     delete:
       tags:
       - Talk
       summary: "Delete talk draft"
       operationId: "DeleteTalkDraft"
-      parameters: []
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly deleted"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Talk not found"
     parameters:
     - name: "talkId"
       in: "path"
       required: true
       type: "string"
-  /friend/{friendId}/draft:
-    get:
-      tags:
-      - Friend
-      summary: "Get friend draft"
-      description: "Get friend draft"
-      operationId: "GetFriendDraft"
-      parameters: []
-      responses:
-        200:
-          description: "Status 200"
-          schema:
-            $ref: "#/definitions/FriendDraft"
+  /friends/draft:
     post:
       tags:
       - Friend 
@@ -283,14 +343,37 @@ paths:
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/FriendDraft"
+          $ref: "#/definitions/CreateFriendDraftParameters"
+      responses:
+        201:
+          description: "Draft was sucessfully created"
+        401:
+          $ref: "#/responses/Unauthorized"
+        400:
+          $ref: "#/responses/BadRequest"
+        409:
+          description: "Draft is already exists" 
+  /friends/{friendId}/draft:
+    get:
+      tags:
+      - Friend
+      summary: "Get friend draft"
+      description: "Get friend draft"
+      operationId: "GetFriendDraft"
+      parameters: []
       responses:
         200:
-          description: "Status 200"
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FriendDraft"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Friend not found"            
     put:
       tags:
       - Friend
-      summary: "Update Friend draft"
+      summary: "Update friend draft"
       operationId: "UpdateFriendDraft"
       consumes: []
       parameters:
@@ -298,65 +381,246 @@ paths:
         in: "body"
         required: true
         schema:
-          $ref: "#/definitions/FriendDraft"
+          $ref: "#/definitions/UpdateFriendDraftParameters"
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly updated"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Friend not found"  
     delete:
       tags:
       - Friend
-      summary: "Delete speaker draft"
+      summary: "Delete friend draft"
       operationId: "DeleteFriendDraft"
       parameters: []
       responses:
-        200:
-          description: "Status 200"
+        204:
+          description: "Draft was successfuly deleted"
+        401:
+          $ref: "#/responses/Unauthorized"          
+        404:
+          description: "Speaker not found"
     parameters:
     - name: "friendId"
       in: "path"
       required: true
       type: "string"
+# Descriptions of common responses
+responses:
+  NotFound:
+    description: The specified resource was not found
+  Unauthorized:
+    description: Unauthorized
+  BadRequest:
+    description: Invalid request parameters
+# Descriptions of common types    
 definitions:
-  MeetupDraft:
+# Descriptions of unique identifiers
+  UniqueIdentifier:
+    type: object
+    required:
+    - Id
+    properties:
+      Id:
+        type: string
+        maxLength: 64
+  Name:
+    type: object
+    required:
+    - Name
+    properties:
+      Name:
+        type: string
+        maxLength: 256
+        
+  CommunityIdentifier:
+    required:
+    - "CommunityId"
+    properties:
+      CommunityId:
+        type: string
+        maxLength: 64 
+  VenueIdentifier:
+    required:
+    - "VenueId"
+    properties:
+      VenueId:
+        type: string
+        maxLength: 64
+  FriendIdentifier:
+    required:
+    - "FriendId"
+    properties:
+      FriendId:
+        type: string
+        maxLength: 64 
+  MeetupReference:
     type: "object"
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"
+      - $ref: "#/definitions/Name"
+      - $ref: "#/definitions/CommunityIdentifier" 
+  TalkReference:
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"            
+      - required:
+        - "Title"
+        properties:
+          Title:
+            type: "string"          
+  SpeakerReference:
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"
+      - required:
+        - "FirstName"
+        - "LastName"
+        properties:
+          FirstName:
+            type: "string"
+          LastName:
+            type: "string"
+  VenueReference:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"
+  FriendReference:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"        
+  # Description for meetup
+  CreateMeetupDraftParameters:
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"
+      - $ref: "#/definitions/Name"
+    x-restlet:
+      section: "DraftModels"
+      
+  UpdateMeetupDraftParameters:
     required:
     - "Name"
     properties:
       Name:
-        type: "string"
+        type: string
         maxLength: 256
       VenueId:
-        type: "string"
+        type: string
+        maxLength: 64
+      SpeakerIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64          
       TalkIds:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          maxLength: 64
+          type: string
+          maxLength: 64   
       FriendIds:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          maxLength: 64
-    x-restlet:
-      section: "DraftModels"
-  TalkDraft:
+          type: string
+          maxLength: 64   
+         
+  MeetupDraft:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"    
+    - $ref: "#/definitions/Name"
+    - properties:
+        Venue:
+          $ref: "#/definitions/VenueReference"
+        Speakers:
+          type: array
+          items:
+            $ref: "#/definitions/SpeakerReference"
+        Talks:
+          type: array
+          items:
+            $ref: "#/definitions/TalkReference"
+        Friends:
+          type: array
+          items:
+            $ref: "#/definitions/FriendReference"
+            
+
+  # Description for talk
+  CreateTalkDraftParameters:
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"       
+      - required:
+        - "Title"
+        properties:
+          Title:
+            type: "string"
+            
+  UpdateTalkDraftParameters:
     type: "object"
+    required:
+    - "Title"
     properties:
       Title:
         type: "string"
       Description:
         type: "string"
-      SpeakerIds:
-        type: "array"
-        items:
-          type: "string"
       SlidesUrl:
         type: "string"
       VideoUrl:
         type: "string"
+      MeetupIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
+      SpeakerIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
     x-restlet:
-      section: "DraftModels"
-  FriendDraft:
+      section: "DraftModels"             
+  TalkDraft:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - required:
+      - "Title"
+      properties:
+        Description:
+          type: "string"
+        SlidesUrl:
+          type: "string"
+        VideoUrl:
+          type: "string"
+        Meetups:
+          type: "array"
+          items:
+            $ref: "#/definitions/MeetupReference"          
+        Speakers:
+          type: "array"
+          items:
+            $ref: "#/definitions/SpeakerReference"
+        Friends:
+          type: "array"
+          items:
+            $ref: "#/definitions/FriendReference"
+        Venues:
+          type: "array"
+          items:
+            $ref: "#/definitions/VenueReference"
+    x-restlet:
+      section: "DraftModels"        
+    
+#Description for friend
+  CreateFriendDraftParameters:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"
+    x-restlet:
+      section: "DraftModels" 
+      
+  UpdateFriendDraftParameters:
     type: "object"
     required:
     - "Name"
@@ -368,9 +632,64 @@ definitions:
         type: "string"
       Description:
         type: "string"
+      MeetupIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
+      SpeakerIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64          
+      TalkIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64         
     x-restlet:
       section: "DraftModels"
-  VenueDraft:
+      
+  FriendDraft:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"
+    - properties:
+        Name:
+          type: "string"
+          maxLength: 256
+        Url:
+          type: "string"
+        Description:
+          type: "string"
+        Meetups:
+          type: "array"
+          items:
+            $ref: "#/definitions/MeetupReference"
+        Speakers:
+          type: "array"
+          items:
+            $ref: "#/definitions/SpeakerReference"
+        Talks:
+          type: "array"
+          items:
+            $ref: "#/definitions/TalkReference"
+        Venues:
+          type: "array"
+          items:
+            $ref: "#/definitions/VenueReference"        
+    x-restlet:
+      section: "DraftModels"      
+    
+  CreateVenueDraftParameters:
+    type: "object"
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"
+    x-restlet:
+      section: "DraftModels"
+
+  UpdateVenueDraftParameters:
     type: "object"
     required:
     - "Name"
@@ -383,10 +702,68 @@ definitions:
       MapUrl:
         type: "string"
         maxLength: 2000
+      MeetupIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
+      SpeakerIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64          
+      TalkIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64          
+    x-restlet:
+      section: "DraftModels" 
+      
+  VenueDraft:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - $ref:  "#/definitions/Name"
+    - properties:
+        Address:
+          type: "string"
+        MapUrl:
+          type: "string"
+          maxLength: 2000
+        Meetups:
+          type: "array"
+          items:
+            $ref: "#/definitions/MeetupReference"
+        Speakers:
+          type: "array"
+          items:
+            $ref: "#/definitions/SpeakerReference"
+        Talks:
+          type: "array"
+          items:
+            $ref: "#/definitions/TalkReference"
+        Friends:
+          type: "array"
+          items:
+            $ref: "#/definitions/FriendReference"
+    x-restlet:
+      section: "DraftModels"         
+     
+  CreateSpeakerDraftParameters:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - required:
+      - "FirstName"
+      - "LastName"
+      properties:
+        FirstName:
+          type: "string"
+        LastName:
+          type: "string"
     x-restlet:
       section: "DraftModels"
-  SpeakerDraft:
-    type: "object"
+      
+  UpdateSpeakerDraftParameters:
     required:
     - "FirstName"
     - "LastName"
@@ -411,8 +788,70 @@ definitions:
         type: "string"
       GitHubUrl:
         type: "string"
+      MeetupIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
+      TalkIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
+      VenueIds:
+        type: array
+        items:
+          type: string
+          maxLength: 64
     x-restlet:
       section: "DraftModels"
+      
+  SpeakerDraft:
+    allOf:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - required:
+      - "FirstName"
+      - "LastName"
+      properties:
+        FirstName:
+          type: "string"
+        LastName:
+          type: "string"
+        CompanyName:
+          type: "string"
+        CompanyUrl:
+          type: "string"
+        Description:
+          type: "string"
+        BlogsUrl:
+          type: "string"
+        ContactsUrl:
+          type: "string"
+        TwitterUrl:
+          type: "string"
+        HabrUrl:
+          type: "string"
+        GitHubUrl:
+          type: "string"
+        Meetups:
+          type: "array"
+          items:
+            $ref: "#/definitions/MeetupReference"        
+        Venues:
+          type: "array"
+          items:
+            $ref: "#/definitions/VenueReference"
+        Talks:
+          type: "array"
+          items:
+            $ref: "#/definitions/TalkReference"
+        Friends:
+          type: "array"
+          items:
+            $ref: "#/definitions/FriendReference"  
+    x-restlet:
+      section: "DraftModels"      
+
 x-restlet:
   sections:
     DraftModels: {}
