@@ -25,14 +25,14 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class TalkDraftProperties : IEquatable<TalkDraftProperties>
+    public partial class UpdateTalkDraftParameters : IEquatable<UpdateTalkDraftParameters>
     { 
         /// <summary>
-        /// Gets or Sets Id
+        /// Gets or Sets Title
         /// </summary>
         [Required]
-        [DataMember(Name="Id")]
-        public string Id { get; set; }
+        [DataMember(Name="Title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or Sets Description
@@ -53,28 +53,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string VideoUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets Meetups
+        /// Gets or Sets MeetupIds
         /// </summary>
-        [DataMember(Name="Meetups")]
-        public Collection<MeetupReference> Meetups { get; set; }
+        [DataMember(Name="MeetupIds")]
+        public Collection<string> MeetupIds { get; set; }
 
         /// <summary>
-        /// Gets or Sets Speakers
+        /// Gets or Sets SpeakerIds
         /// </summary>
-        [DataMember(Name="Speakers")]
-        public Collection<SpeakerReference> Speakers { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Friends
-        /// </summary>
-        [DataMember(Name="Friends")]
-        public Collection<FriendReference> Friends { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Venues
-        /// </summary>
-        [DataMember(Name="Venues")]
-        public Collection<VenueReference> Venues { get; set; }
+        [DataMember(Name="SpeakerIds")]
+        public Collection<string> SpeakerIds { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -83,15 +71,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class TalkDraftProperties {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("class UpdateTalkDraftParameters {\n");
+            sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  SlidesUrl: ").Append(SlidesUrl).Append("\n");
             sb.Append("  VideoUrl: ").Append(VideoUrl).Append("\n");
-            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
-            sb.Append("  Speakers: ").Append(Speakers).Append("\n");
-            sb.Append("  Friends: ").Append(Friends).Append("\n");
-            sb.Append("  Venues: ").Append(Venues).Append("\n");
+            sb.Append("  MeetupIds: ").Append(MeetupIds).Append("\n");
+            sb.Append("  SpeakerIds: ").Append(SpeakerIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -114,24 +100,24 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((TalkDraftProperties)obj);
+            return obj.GetType() == GetType() && Equals((UpdateTalkDraftParameters)obj);
         }
 
         /// <summary>
-        /// Returns true if TalkDraftProperties instances are equal
+        /// Returns true if UpdateTalkDraftParameters instances are equal
         /// </summary>
-        /// <param name="other">Instance of TalkDraftProperties to be compared</param>
+        /// <param name="other">Instance of UpdateTalkDraftParameters to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TalkDraftProperties other)
+        public bool Equals(UpdateTalkDraftParameters other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Id == other.Id ||
-                    Id != null &&
-                    Id.Equals(other.Id)
+                    Title == other.Title ||
+                    Title != null &&
+                    Title.Equals(other.Title)
                 ) && 
                 (
                     Description == other.Description ||
@@ -149,24 +135,14 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     VideoUrl.Equals(other.VideoUrl)
                 ) && 
                 (
-                    Meetups == other.Meetups ||
-                    Meetups != null &&
-                    Meetups.SequenceEqual(other.Meetups)
+                    MeetupIds == other.MeetupIds ||
+                    MeetupIds != null &&
+                    MeetupIds.SequenceEqual(other.MeetupIds)
                 ) && 
                 (
-                    Speakers == other.Speakers ||
-                    Speakers != null &&
-                    Speakers.SequenceEqual(other.Speakers)
-                ) && 
-                (
-                    Friends == other.Friends ||
-                    Friends != null &&
-                    Friends.SequenceEqual(other.Friends)
-                ) && 
-                (
-                    Venues == other.Venues ||
-                    Venues != null &&
-                    Venues.SequenceEqual(other.Venues)
+                    SpeakerIds == other.SpeakerIds ||
+                    SpeakerIds != null &&
+                    SpeakerIds.SequenceEqual(other.SpeakerIds)
                 );
         }
 
@@ -180,22 +156,18 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Id != null)
-                    hashCode = hashCode * 59 + Id.GetHashCode();
+                    if (Title != null)
+                    hashCode = hashCode * 59 + Title.GetHashCode();
                     if (Description != null)
                     hashCode = hashCode * 59 + Description.GetHashCode();
                     if (SlidesUrl != null)
                     hashCode = hashCode * 59 + SlidesUrl.GetHashCode();
                     if (VideoUrl != null)
                     hashCode = hashCode * 59 + VideoUrl.GetHashCode();
-                    if (Meetups != null)
-                    hashCode = hashCode * 59 + Meetups.GetHashCode();
-                    if (Speakers != null)
-                    hashCode = hashCode * 59 + Speakers.GetHashCode();
-                    if (Friends != null)
-                    hashCode = hashCode * 59 + Friends.GetHashCode();
-                    if (Venues != null)
-                    hashCode = hashCode * 59 + Venues.GetHashCode();
+                    if (MeetupIds != null)
+                    hashCode = hashCode * 59 + MeetupIds.GetHashCode();
+                    if (SpeakerIds != null)
+                    hashCode = hashCode * 59 + SpeakerIds.GetHashCode();
                 return hashCode;
             }
         }
@@ -203,12 +175,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(TalkDraftProperties left, TalkDraftProperties right)
+        public static bool operator ==(UpdateTalkDraftParameters left, UpdateTalkDraftParameters right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(TalkDraftProperties left, TalkDraftProperties right)
+        public static bool operator !=(UpdateTalkDraftParameters left, UpdateTalkDraftParameters right)
         {
             return !Equals(left, right);
         }

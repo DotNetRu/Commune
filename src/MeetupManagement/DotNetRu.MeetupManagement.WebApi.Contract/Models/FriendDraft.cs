@@ -42,6 +42,42 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or Sets Url
+        /// </summary>
+        [DataMember(Name="Url")]
+        public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name="Description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Meetups
+        /// </summary>
+        [DataMember(Name="Meetups")]
+        public Collection<MeetupReference> Meetups { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Speakers
+        /// </summary>
+        [DataMember(Name="Speakers")]
+        public Collection<SpeakerReference> Speakers { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Talks
+        /// </summary>
+        [DataMember(Name="Talks")]
+        public Collection<TalkReference> Talks { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Venues
+        /// </summary>
+        [DataMember(Name="Venues")]
+        public Collection<VenueReference> Venues { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -51,6 +87,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class FriendDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
+            sb.Append("  Speakers: ").Append(Speakers).Append("\n");
+            sb.Append("  Talks: ").Append(Talks).Append("\n");
+            sb.Append("  Venues: ").Append(Venues).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -96,6 +138,36 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     Name == other.Name ||
                     Name != null &&
                     Name.Equals(other.Name)
+                ) && 
+                (
+                    Url == other.Url ||
+                    Url != null &&
+                    Url.Equals(other.Url)
+                ) && 
+                (
+                    Description == other.Description ||
+                    Description != null &&
+                    Description.Equals(other.Description)
+                ) && 
+                (
+                    Meetups == other.Meetups ||
+                    Meetups != null &&
+                    Meetups.SequenceEqual(other.Meetups)
+                ) && 
+                (
+                    Speakers == other.Speakers ||
+                    Speakers != null &&
+                    Speakers.SequenceEqual(other.Speakers)
+                ) && 
+                (
+                    Talks == other.Talks ||
+                    Talks != null &&
+                    Talks.SequenceEqual(other.Talks)
+                ) && 
+                (
+                    Venues == other.Venues ||
+                    Venues != null &&
+                    Venues.SequenceEqual(other.Venues)
                 );
         }
 
@@ -113,6 +185,18 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     hashCode = hashCode * 59 + Id.GetHashCode();
                     if (Name != null)
                     hashCode = hashCode * 59 + Name.GetHashCode();
+                    if (Url != null)
+                    hashCode = hashCode * 59 + Url.GetHashCode();
+                    if (Description != null)
+                    hashCode = hashCode * 59 + Description.GetHashCode();
+                    if (Meetups != null)
+                    hashCode = hashCode * 59 + Meetups.GetHashCode();
+                    if (Speakers != null)
+                    hashCode = hashCode * 59 + Speakers.GetHashCode();
+                    if (Talks != null)
+                    hashCode = hashCode * 59 + Talks.GetHashCode();
+                    if (Venues != null)
+                    hashCode = hashCode * 59 + Venues.GetHashCode();
                 return hashCode;
             }
         }

@@ -49,6 +49,78 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets or Sets CompanyName
+        /// </summary>
+        [DataMember(Name="CompanyName")]
+        public string CompanyName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CompanyUrl
+        /// </summary>
+        [DataMember(Name="CompanyUrl")]
+        public string CompanyUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name="Description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or Sets BlogsUrl
+        /// </summary>
+        [DataMember(Name="BlogsUrl")]
+        public string BlogsUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ContactsUrl
+        /// </summary>
+        [DataMember(Name="ContactsUrl")]
+        public string ContactsUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets TwitterUrl
+        /// </summary>
+        [DataMember(Name="TwitterUrl")]
+        public string TwitterUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets HabrUrl
+        /// </summary>
+        [DataMember(Name="HabrUrl")]
+        public string HabrUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets GitHubUrl
+        /// </summary>
+        [DataMember(Name="GitHubUrl")]
+        public string GitHubUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Meetups
+        /// </summary>
+        [DataMember(Name="Meetups")]
+        public Collection<MeetupReference> Meetups { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Venues
+        /// </summary>
+        [DataMember(Name="Venues")]
+        public Collection<VenueReference> Venues { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Talks
+        /// </summary>
+        [DataMember(Name="Talks")]
+        public Collection<TalkReference> Talks { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Friends
+        /// </summary>
+        [DataMember(Name="Friends")]
+        public Collection<FriendReference> Friends { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -59,6 +131,18 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  FirstName: ").Append(FirstName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
+            sb.Append("  CompanyName: ").Append(CompanyName).Append("\n");
+            sb.Append("  CompanyUrl: ").Append(CompanyUrl).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  BlogsUrl: ").Append(BlogsUrl).Append("\n");
+            sb.Append("  ContactsUrl: ").Append(ContactsUrl).Append("\n");
+            sb.Append("  TwitterUrl: ").Append(TwitterUrl).Append("\n");
+            sb.Append("  HabrUrl: ").Append(HabrUrl).Append("\n");
+            sb.Append("  GitHubUrl: ").Append(GitHubUrl).Append("\n");
+            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
+            sb.Append("  Venues: ").Append(Venues).Append("\n");
+            sb.Append("  Talks: ").Append(Talks).Append("\n");
+            sb.Append("  Friends: ").Append(Friends).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -109,6 +193,66 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     LastName == other.LastName ||
                     LastName != null &&
                     LastName.Equals(other.LastName)
+                ) && 
+                (
+                    CompanyName == other.CompanyName ||
+                    CompanyName != null &&
+                    CompanyName.Equals(other.CompanyName)
+                ) && 
+                (
+                    CompanyUrl == other.CompanyUrl ||
+                    CompanyUrl != null &&
+                    CompanyUrl.Equals(other.CompanyUrl)
+                ) && 
+                (
+                    Description == other.Description ||
+                    Description != null &&
+                    Description.Equals(other.Description)
+                ) && 
+                (
+                    BlogsUrl == other.BlogsUrl ||
+                    BlogsUrl != null &&
+                    BlogsUrl.Equals(other.BlogsUrl)
+                ) && 
+                (
+                    ContactsUrl == other.ContactsUrl ||
+                    ContactsUrl != null &&
+                    ContactsUrl.Equals(other.ContactsUrl)
+                ) && 
+                (
+                    TwitterUrl == other.TwitterUrl ||
+                    TwitterUrl != null &&
+                    TwitterUrl.Equals(other.TwitterUrl)
+                ) && 
+                (
+                    HabrUrl == other.HabrUrl ||
+                    HabrUrl != null &&
+                    HabrUrl.Equals(other.HabrUrl)
+                ) && 
+                (
+                    GitHubUrl == other.GitHubUrl ||
+                    GitHubUrl != null &&
+                    GitHubUrl.Equals(other.GitHubUrl)
+                ) && 
+                (
+                    Meetups == other.Meetups ||
+                    Meetups != null &&
+                    Meetups.SequenceEqual(other.Meetups)
+                ) && 
+                (
+                    Venues == other.Venues ||
+                    Venues != null &&
+                    Venues.SequenceEqual(other.Venues)
+                ) && 
+                (
+                    Talks == other.Talks ||
+                    Talks != null &&
+                    Talks.SequenceEqual(other.Talks)
+                ) && 
+                (
+                    Friends == other.Friends ||
+                    Friends != null &&
+                    Friends.SequenceEqual(other.Friends)
                 );
         }
 
@@ -128,6 +272,30 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     hashCode = hashCode * 59 + FirstName.GetHashCode();
                     if (LastName != null)
                     hashCode = hashCode * 59 + LastName.GetHashCode();
+                    if (CompanyName != null)
+                    hashCode = hashCode * 59 + CompanyName.GetHashCode();
+                    if (CompanyUrl != null)
+                    hashCode = hashCode * 59 + CompanyUrl.GetHashCode();
+                    if (Description != null)
+                    hashCode = hashCode * 59 + Description.GetHashCode();
+                    if (BlogsUrl != null)
+                    hashCode = hashCode * 59 + BlogsUrl.GetHashCode();
+                    if (ContactsUrl != null)
+                    hashCode = hashCode * 59 + ContactsUrl.GetHashCode();
+                    if (TwitterUrl != null)
+                    hashCode = hashCode * 59 + TwitterUrl.GetHashCode();
+                    if (HabrUrl != null)
+                    hashCode = hashCode * 59 + HabrUrl.GetHashCode();
+                    if (GitHubUrl != null)
+                    hashCode = hashCode * 59 + GitHubUrl.GetHashCode();
+                    if (Meetups != null)
+                    hashCode = hashCode * 59 + Meetups.GetHashCode();
+                    if (Venues != null)
+                    hashCode = hashCode * 59 + Venues.GetHashCode();
+                    if (Talks != null)
+                    hashCode = hashCode * 59 + Talks.GetHashCode();
+                    if (Friends != null)
+                    hashCode = hashCode * 59 + Friends.GetHashCode();
                 return hashCode;
             }
         }

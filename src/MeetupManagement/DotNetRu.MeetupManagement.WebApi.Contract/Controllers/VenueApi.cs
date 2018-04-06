@@ -44,7 +44,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateVenueDraft")]
-        public abstract void CreateVenueDraft([FromBody]VenueDraft venueDraft);
+        public abstract void CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
 
         /// <summary>
         /// Delete venue draft
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetVenueDrafts")]
-        [SwaggerResponse(statusCode: 200, type: typeof(VenueDraftProperties), description: "OK")]
-        public abstract VenueDraftProperties GetVenueDrafts([FromRoute][Required]string venueId);
+        [SwaggerResponse(statusCode: 200, type: typeof(VenueDraft), description: "OK")]
+        public abstract VenueDraft GetVenueDrafts([FromRoute][Required]string venueId);
 
         /// <summary>
         /// Update venue draft
@@ -89,6 +89,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateVenueDraft")]
-        public abstract void UpdateVenueDraft([FromRoute][Required]string venueId, [FromBody]UpdatableVenueDraftProperties properties);
+        public abstract void UpdateVenueDraft([FromRoute][Required]string venueId, [FromBody]UpdateVenueDraftParameters properties);
     }
 }

@@ -46,7 +46,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateMeetupDraft")]
-        public abstract void CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]MeetupDraft meetupDraft);
+        public abstract void CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
 
         /// <summary>
         /// Delete meetup draft
@@ -76,8 +76,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetMeetupDraft")]
-        [SwaggerResponse(statusCode: 200, type: typeof(MeetupDraftProperties), description: "OK")]
-        public abstract MeetupDraftProperties GetMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
+        [SwaggerResponse(statusCode: 200, type: typeof(MeetupDraft), description: "OK")]
+        public abstract MeetupDraft GetMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
 
         /// <summary>
         /// Update meetup draft
@@ -94,6 +94,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateMeetupDraft")]
-        public abstract void UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdatableMeetupDraftProperties updateMeetupDraftProperties);
+        public abstract void UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdateMeetupDraftParameters updateMeetupDraftProperties);
     }
 }

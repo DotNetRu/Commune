@@ -35,11 +35,46 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Title
+        /// Gets or Sets Description
         /// </summary>
-        [Required]
-        [DataMember(Name="Title")]
-        public string Title { get; set; }
+        [DataMember(Name="Description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SlidesUrl
+        /// </summary>
+        [DataMember(Name="SlidesUrl")]
+        public string SlidesUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets VideoUrl
+        /// </summary>
+        [DataMember(Name="VideoUrl")]
+        public string VideoUrl { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Meetups
+        /// </summary>
+        [DataMember(Name="Meetups")]
+        public Collection<MeetupReference> Meetups { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Speakers
+        /// </summary>
+        [DataMember(Name="Speakers")]
+        public Collection<SpeakerReference> Speakers { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Friends
+        /// </summary>
+        [DataMember(Name="Friends")]
+        public Collection<FriendReference> Friends { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Venues
+        /// </summary>
+        [DataMember(Name="Venues")]
+        public Collection<VenueReference> Venues { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -50,7 +85,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class TalkDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Title: ").Append(Title).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  SlidesUrl: ").Append(SlidesUrl).Append("\n");
+            sb.Append("  VideoUrl: ").Append(VideoUrl).Append("\n");
+            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
+            sb.Append("  Speakers: ").Append(Speakers).Append("\n");
+            sb.Append("  Friends: ").Append(Friends).Append("\n");
+            sb.Append("  Venues: ").Append(Venues).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -93,9 +134,39 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     Id.Equals(other.Id)
                 ) && 
                 (
-                    Title == other.Title ||
-                    Title != null &&
-                    Title.Equals(other.Title)
+                    Description == other.Description ||
+                    Description != null &&
+                    Description.Equals(other.Description)
+                ) && 
+                (
+                    SlidesUrl == other.SlidesUrl ||
+                    SlidesUrl != null &&
+                    SlidesUrl.Equals(other.SlidesUrl)
+                ) && 
+                (
+                    VideoUrl == other.VideoUrl ||
+                    VideoUrl != null &&
+                    VideoUrl.Equals(other.VideoUrl)
+                ) && 
+                (
+                    Meetups == other.Meetups ||
+                    Meetups != null &&
+                    Meetups.SequenceEqual(other.Meetups)
+                ) && 
+                (
+                    Speakers == other.Speakers ||
+                    Speakers != null &&
+                    Speakers.SequenceEqual(other.Speakers)
+                ) && 
+                (
+                    Friends == other.Friends ||
+                    Friends != null &&
+                    Friends.SequenceEqual(other.Friends)
+                ) && 
+                (
+                    Venues == other.Venues ||
+                    Venues != null &&
+                    Venues.SequenceEqual(other.Venues)
                 );
         }
 
@@ -111,8 +182,20 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 // Suitable nullity checks etc, of course :)
                     if (Id != null)
                     hashCode = hashCode * 59 + Id.GetHashCode();
-                    if (Title != null)
-                    hashCode = hashCode * 59 + Title.GetHashCode();
+                    if (Description != null)
+                    hashCode = hashCode * 59 + Description.GetHashCode();
+                    if (SlidesUrl != null)
+                    hashCode = hashCode * 59 + SlidesUrl.GetHashCode();
+                    if (VideoUrl != null)
+                    hashCode = hashCode * 59 + VideoUrl.GetHashCode();
+                    if (Meetups != null)
+                    hashCode = hashCode * 59 + Meetups.GetHashCode();
+                    if (Speakers != null)
+                    hashCode = hashCode * 59 + Speakers.GetHashCode();
+                    if (Friends != null)
+                    hashCode = hashCode * 59 + Friends.GetHashCode();
+                    if (Venues != null)
+                    hashCode = hashCode * 59 + Venues.GetHashCode();
                 return hashCode;
             }
         }

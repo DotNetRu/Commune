@@ -44,7 +44,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateSpeakerDraft")]
-        public abstract void CreateSpeakerDraft([FromBody]SpeakerDraft speakerDraft);
+        public abstract void CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
 
         /// <summary>
         /// Delete speaker draft
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetSpeakerDrafts")]
-        [SwaggerResponse(statusCode: 200, type: typeof(SpeakerDraftProperties), description: "OK")]
-        public abstract SpeakerDraftProperties GetSpeakerDrafts([FromRoute][Required]string speakerId);
+        [SwaggerResponse(statusCode: 200, type: typeof(SpeakerDraft), description: "OK")]
+        public abstract SpeakerDraft GetSpeakerDrafts([FromRoute][Required]string speakerId);
 
         /// <summary>
         /// Update speaker draft
@@ -89,6 +89,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateSpeakerDraft")]
-        public abstract void UpdateSpeakerDraft([FromRoute][Required]string speakerId, [FromBody]UpdatableSpeakerDraftProperties body);
+        public abstract void UpdateSpeakerDraft([FromRoute][Required]string speakerId, [FromBody]UpdateSpeakerDraftParameters body);
     }
 }

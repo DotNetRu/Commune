@@ -44,7 +44,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateFriendDraft")]
-        public abstract void CreateFriendDraft([FromBody]FriendDraft body);
+        public abstract void CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
 
         /// <summary>
         /// Delete friend draft
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetFriendDraft")]
-        [SwaggerResponse(statusCode: 200, type: typeof(FriendDraftProperties), description: "OK")]
-        public abstract FriendDraftProperties GetFriendDraft([FromRoute][Required]string friendId);
+        [SwaggerResponse(statusCode: 200, type: typeof(FriendDraft), description: "OK")]
+        public abstract FriendDraft GetFriendDraft([FromRoute][Required]string friendId);
 
         /// <summary>
         /// Update friend draft
@@ -89,6 +89,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateFriendDraft")]
-        public abstract void UpdateFriendDraft([FromRoute][Required]string friendId, [FromBody]UpdatableFriendDraftProperties body);
+        public abstract void UpdateFriendDraft([FromRoute][Required]string friendId, [FromBody]UpdateFriendDraftParameters body);
     }
 }

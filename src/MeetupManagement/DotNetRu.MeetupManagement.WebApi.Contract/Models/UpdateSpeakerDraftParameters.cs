@@ -25,15 +25,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class SpeakerDraftProperties : IEquatable<SpeakerDraftProperties>
+    public partial class UpdateSpeakerDraftParameters : IEquatable<UpdateSpeakerDraftParameters>
     { 
-        /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [Required]
-        [DataMember(Name="Id")]
-        public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
@@ -97,28 +90,22 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string GitHubUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets Meetups
+        /// Gets or Sets MeetupIds
         /// </summary>
-        [DataMember(Name="Meetups")]
-        public Collection<MeetupReference> Meetups { get; set; }
+        [DataMember(Name="MeetupIds")]
+        public Collection<string> MeetupIds { get; set; }
 
         /// <summary>
-        /// Gets or Sets Venues
+        /// Gets or Sets TalkIds
         /// </summary>
-        [DataMember(Name="Venues")]
-        public Collection<VenueReference> Venues { get; set; }
+        [DataMember(Name="TalkIds")]
+        public Collection<string> TalkIds { get; set; }
 
         /// <summary>
-        /// Gets or Sets Talks
+        /// Gets or Sets VenueIds
         /// </summary>
-        [DataMember(Name="Talks")]
-        public Collection<TalkReference> Talks { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Friends
-        /// </summary>
-        [DataMember(Name="Friends")]
-        public Collection<FriendReference> Friends { get; set; }
+        [DataMember(Name="VenueIds")]
+        public Collection<string> VenueIds { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -127,8 +114,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class SpeakerDraftProperties {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("class UpdateSpeakerDraftParameters {\n");
             sb.Append("  FirstName: ").Append(FirstName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("  CompanyName: ").Append(CompanyName).Append("\n");
@@ -139,10 +125,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("  TwitterUrl: ").Append(TwitterUrl).Append("\n");
             sb.Append("  HabrUrl: ").Append(HabrUrl).Append("\n");
             sb.Append("  GitHubUrl: ").Append(GitHubUrl).Append("\n");
-            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
-            sb.Append("  Venues: ").Append(Venues).Append("\n");
-            sb.Append("  Talks: ").Append(Talks).Append("\n");
-            sb.Append("  Friends: ").Append(Friends).Append("\n");
+            sb.Append("  MeetupIds: ").Append(MeetupIds).Append("\n");
+            sb.Append("  TalkIds: ").Append(TalkIds).Append("\n");
+            sb.Append("  VenueIds: ").Append(VenueIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -165,25 +150,20 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((SpeakerDraftProperties)obj);
+            return obj.GetType() == GetType() && Equals((UpdateSpeakerDraftParameters)obj);
         }
 
         /// <summary>
-        /// Returns true if SpeakerDraftProperties instances are equal
+        /// Returns true if UpdateSpeakerDraftParameters instances are equal
         /// </summary>
-        /// <param name="other">Instance of SpeakerDraftProperties to be compared</param>
+        /// <param name="other">Instance of UpdateSpeakerDraftParameters to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(SpeakerDraftProperties other)
+        public bool Equals(UpdateSpeakerDraftParameters other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
-                (
-                    Id == other.Id ||
-                    Id != null &&
-                    Id.Equals(other.Id)
-                ) && 
                 (
                     FirstName == other.FirstName ||
                     FirstName != null &&
@@ -235,24 +215,19 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     GitHubUrl.Equals(other.GitHubUrl)
                 ) && 
                 (
-                    Meetups == other.Meetups ||
-                    Meetups != null &&
-                    Meetups.SequenceEqual(other.Meetups)
+                    MeetupIds == other.MeetupIds ||
+                    MeetupIds != null &&
+                    MeetupIds.SequenceEqual(other.MeetupIds)
                 ) && 
                 (
-                    Venues == other.Venues ||
-                    Venues != null &&
-                    Venues.SequenceEqual(other.Venues)
+                    TalkIds == other.TalkIds ||
+                    TalkIds != null &&
+                    TalkIds.SequenceEqual(other.TalkIds)
                 ) && 
                 (
-                    Talks == other.Talks ||
-                    Talks != null &&
-                    Talks.SequenceEqual(other.Talks)
-                ) && 
-                (
-                    Friends == other.Friends ||
-                    Friends != null &&
-                    Friends.SequenceEqual(other.Friends)
+                    VenueIds == other.VenueIds ||
+                    VenueIds != null &&
+                    VenueIds.SequenceEqual(other.VenueIds)
                 );
         }
 
@@ -266,8 +241,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Id != null)
-                    hashCode = hashCode * 59 + Id.GetHashCode();
                     if (FirstName != null)
                     hashCode = hashCode * 59 + FirstName.GetHashCode();
                     if (LastName != null)
@@ -288,14 +261,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     hashCode = hashCode * 59 + HabrUrl.GetHashCode();
                     if (GitHubUrl != null)
                     hashCode = hashCode * 59 + GitHubUrl.GetHashCode();
-                    if (Meetups != null)
-                    hashCode = hashCode * 59 + Meetups.GetHashCode();
-                    if (Venues != null)
-                    hashCode = hashCode * 59 + Venues.GetHashCode();
-                    if (Talks != null)
-                    hashCode = hashCode * 59 + Talks.GetHashCode();
-                    if (Friends != null)
-                    hashCode = hashCode * 59 + Friends.GetHashCode();
+                    if (MeetupIds != null)
+                    hashCode = hashCode * 59 + MeetupIds.GetHashCode();
+                    if (TalkIds != null)
+                    hashCode = hashCode * 59 + TalkIds.GetHashCode();
+                    if (VenueIds != null)
+                    hashCode = hashCode * 59 + VenueIds.GetHashCode();
                 return hashCode;
             }
         }
@@ -303,12 +274,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(SpeakerDraftProperties left, SpeakerDraftProperties right)
+        public static bool operator ==(UpdateSpeakerDraftParameters left, UpdateSpeakerDraftParameters right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(SpeakerDraftProperties left, SpeakerDraftProperties right)
+        public static bool operator !=(UpdateSpeakerDraftParameters left, UpdateSpeakerDraftParameters right)
         {
             return !Equals(left, right);
         }

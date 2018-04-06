@@ -44,7 +44,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/talks/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateTalkDraft")]
-        public abstract void CreateTalkDraft([FromBody]TalkDraft talkDraft);
+        public abstract void CreateTalkDraft([FromBody]CreateTalkDraftParameters talkDraft);
 
         /// <summary>
         /// Delete talk draft
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/talk/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetTalkDraft")]
-        [SwaggerResponse(statusCode: 200, type: typeof(TalkDraftProperties), description: "OK")]
-        public abstract TalkDraftProperties GetTalkDraft([FromRoute][Required]string talkId);
+        [SwaggerResponse(statusCode: 200, type: typeof(TalkDraft), description: "OK")]
+        public abstract TalkDraft GetTalkDraft([FromRoute][Required]string talkId);
 
         /// <summary>
         /// Update talk draft
@@ -89,6 +89,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/talk/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkDraft")]
-        public abstract void UpdateTalkDraft([FromRoute][Required]string talkId, [FromBody]UpdatableTalkDraftProperties body);
+        public abstract void UpdateTalkDraft([FromRoute][Required]string talkId, [FromBody]UpdateTalkDraftParameters body);
     }
 }
