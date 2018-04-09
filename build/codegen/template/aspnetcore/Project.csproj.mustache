@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <OutputPath>..\bin\$(Configuration)</OutputPath>
+        {{#version}}<AssemblyVersion>{{{version}}}</AssemblyVersion>{{/version}}
+        {{#version}}<FileVersion>{{{version}}}</FileVersion>{{/version}}
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
