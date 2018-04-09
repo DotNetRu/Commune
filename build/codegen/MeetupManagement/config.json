@@ -1,0 +1,8 @@
+{
+  "packageName" : "DotNetRu.MeetupManagement.WebApi.Contract",
+  "packageGuid" : "{11C46F8D-1365-4459-BDDF-F79980DAAC89}",
+  "sourceFolder": "src/MeetupManagement",
+  "useDateTimeOffset" : true,
+  "useCollection" : true,
+  "returnICollection" : true
+}
