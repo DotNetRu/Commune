@@ -33,7 +33,7 @@ build_script:
   - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 
 test_script:
-  - dotnet build ./test/Server.Tests/Server.Tests.csproj --configuration Release
-  - dotnet test ./test/Server.Tests/Server.Tests.csproj --configuration Release --no-build
+  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release
+  - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
 
 deploy: off

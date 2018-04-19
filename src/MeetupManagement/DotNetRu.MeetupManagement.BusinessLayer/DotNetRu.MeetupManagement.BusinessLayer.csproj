@@ -6,12 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DotNetRu.MeetupManagement.BusinessLayer.Contract\DotNetRu.MeetupManagement.BusinessLayer.Contract.csproj" />
-    <ProjectReference Include="..\DotNetRu.MeetupManagement.WebApi.Contract\DotNetRu.MeetupManagement.WebApi.Contract.csproj" />
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.DataLayer.Contract\DotNetRu.MeetupManagement.DataLayer.Contract.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
+using Autofac;
+using DotNetRu.ServiceHost.Autofac;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace DotNetRu.ServiceHost
@@ -25,11 +28,22 @@ namespace DotNetRu.ServiceHost
                 .WriteTo.Console()
                 .CreateLogger();
 
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule(new BusinessLayerModule());
+            containerBuilder.RegisterModule(new DataLayerModule());
             try
             {
                 Log.Information("Getting the motors running...");
 
-                BuildWebHost(args).Run();
+                var webHost = BuildWebHost(args, containerBuilder);
+                try
+                {
+                    webHost.Item1.Run();
+                }
+                finally
+                {
+                    webHost.Item2.Dispose();
+                }
 
                 return 0;
             }
@@ -44,20 +58,23 @@ namespace DotNetRu.ServiceHost
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static (IWebHost, IContainer) BuildWebHost(string[] args, ContainerBuilder containerBuilder)
         {
-            return WebHost.CreateDefaultBuilder(args)
+            var startup = new Startup(Configuration, containerBuilder);
+            var webHost = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseConfiguration(Configuration)
+                .ConfigureServices(services => services.AddSingleton(typeof(Startup), startup))
                 .UseSerilog()
                 .Build();
+            return (webHost, startup.Container);
             /*return new WebHostBuilder()
                             .UseKestrel(options =>
                             {
                             })
                             .UseUrls("http://+:49212")
                             .UseContentRoot(Directory.GetCurrentDirectory())
-                            .UseIISIntegration()
+                            .UseIISIntegration()+
                             .UseConfiguration(Configuration)
                             .UseSerilog()
                             .UseStartup<Startup>()

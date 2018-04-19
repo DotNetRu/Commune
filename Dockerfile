@@ -7,13 +7,13 @@ COPY src/ServiceHost/ServiceHost.csproj ./src/ServiceHost/
 COPY test/Server.Tests/Server.Tests.csproj ./test/Server.Tests/
 
 RUN dotnet restore src/ServiceHost/ServiceHost.csproj
-RUN dotnet restore test/Server.Tests/Server.Tests.csproj
+RUN dotnet restore test/ServiceHost.Tests/ServiceHost.Tests.csproj
 
 # Copy source
 COPY . .
 
 # Run tests
-RUN dotnet test test/Server.Tests/Server.Tests.csproj
+RUN dotnet test test/ServiceHost.Tests/ServiceHost.Tests.csproj
 
 # Publish stage
 RUN dotnet publish src/ServiceHost/ServiceHost.csproj -o /publish
