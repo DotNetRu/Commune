@@ -10,7 +10,7 @@ using Serilog;
 
 namespace DotNetRu.ServiceHost
 {
-    public class Program
+    public static class Program
     {
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -18,7 +18,6 @@ namespace DotNetRu.ServiceHost
             .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
             .AddEnvironmentVariables()
             .Build();
-
 
         public static int Main(string[] args)
         {
@@ -58,7 +57,9 @@ namespace DotNetRu.ServiceHost
             }
         }
 
+#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         public static (IWebHost, IContainer) BuildWebHost(string[] args, ContainerBuilder containerBuilder)
+#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var startup = new Startup(Configuration, containerBuilder);
             var webHost = WebHost.CreateDefaultBuilder(args)

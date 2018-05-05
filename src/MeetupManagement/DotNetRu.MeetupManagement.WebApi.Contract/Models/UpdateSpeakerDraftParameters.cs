@@ -148,7 +148,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((UpdateSpeakerDraftParameters)obj);
         }
@@ -160,57 +162,61 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(UpdateSpeakerDraftParameters other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    FirstName == other.FirstName ||
+                    string.Equals(FirstName, other.FirstName) ||
                     FirstName != null &&
                     FirstName.Equals(other.FirstName)
                 ) && 
                 (
-                    LastName == other.LastName ||
+                    string.Equals(LastName, other.LastName) ||
                     LastName != null &&
                     LastName.Equals(other.LastName)
                 ) && 
                 (
-                    CompanyName == other.CompanyName ||
+                    string.Equals(CompanyName, other.CompanyName) ||
                     CompanyName != null &&
                     CompanyName.Equals(other.CompanyName)
                 ) && 
                 (
-                    CompanyUrl == other.CompanyUrl ||
+                    string.Equals(CompanyUrl, other.CompanyUrl) ||
                     CompanyUrl != null &&
                     CompanyUrl.Equals(other.CompanyUrl)
                 ) && 
                 (
-                    Description == other.Description ||
+                    string.Equals(Description, other.Description) ||
                     Description != null &&
                     Description.Equals(other.Description)
                 ) && 
                 (
-                    BlogsUrl == other.BlogsUrl ||
+                    string.Equals(BlogsUrl, other.BlogsUrl) ||
                     BlogsUrl != null &&
                     BlogsUrl.Equals(other.BlogsUrl)
                 ) && 
                 (
-                    ContactsUrl == other.ContactsUrl ||
+                    string.Equals(ContactsUrl, other.ContactsUrl) ||
                     ContactsUrl != null &&
                     ContactsUrl.Equals(other.ContactsUrl)
                 ) && 
                 (
-                    TwitterUrl == other.TwitterUrl ||
+                    string.Equals(TwitterUrl, other.TwitterUrl) ||
                     TwitterUrl != null &&
                     TwitterUrl.Equals(other.TwitterUrl)
                 ) && 
                 (
-                    HabrUrl == other.HabrUrl ||
+                    string.Equals(HabrUrl, other.HabrUrl) ||
                     HabrUrl != null &&
                     HabrUrl.Equals(other.HabrUrl)
                 ) && 
                 (
-                    GitHubUrl == other.GitHubUrl ||
+                    string.Equals(GitHubUrl, other.GitHubUrl) ||
                     GitHubUrl != null &&
                     GitHubUrl.Equals(other.GitHubUrl)
                 ) && 
@@ -229,6 +235,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     VenueIds != null &&
                     VenueIds.SequenceEqual(other.VenueIds)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -242,31 +250,57 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (FirstName != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + FirstName.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (LastName != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + LastName.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (CompanyName != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + CompanyName.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (CompanyUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + CompanyUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Description != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Description.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (BlogsUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + BlogsUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (ContactsUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + ContactsUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (TwitterUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + TwitterUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (HabrUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + HabrUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (GitHubUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + GitHubUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (MeetupIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + MeetupIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (TalkIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + TalkIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (VenueIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + VenueIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

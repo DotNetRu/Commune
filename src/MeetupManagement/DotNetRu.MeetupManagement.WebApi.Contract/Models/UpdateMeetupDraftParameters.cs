@@ -91,7 +91,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((UpdateMeetupDraftParameters)obj);
         }
@@ -103,17 +105,21 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(UpdateMeetupDraftParameters other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    Name == other.Name ||
+                    string.Equals(Name, other.Name) ||
                     Name != null &&
                     Name.Equals(other.Name)
                 ) && 
                 (
-                    VenueId == other.VenueId ||
+                    string.Equals(VenueId, other.VenueId) ||
                     VenueId != null &&
                     VenueId.Equals(other.VenueId)
                 ) && 
@@ -132,6 +138,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     FriendIds != null &&
                     FriendIds.SequenceEqual(other.FriendIds)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -145,15 +153,25 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (Name != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Name.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (VenueId != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + VenueId.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (SpeakerIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + SpeakerIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (TalkIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + TalkIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (FriendIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + FriendIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

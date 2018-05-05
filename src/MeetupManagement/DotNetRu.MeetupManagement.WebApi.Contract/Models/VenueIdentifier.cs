@@ -63,7 +63,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((VenueIdentifier)obj);
         }
@@ -75,15 +77,21 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(VenueIdentifier other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    VenueId == other.VenueId ||
+                    string.Equals(VenueId, other.VenueId) ||
                     VenueId != null &&
                     VenueId.Equals(other.VenueId)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -97,7 +105,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (VenueId != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + VenueId.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

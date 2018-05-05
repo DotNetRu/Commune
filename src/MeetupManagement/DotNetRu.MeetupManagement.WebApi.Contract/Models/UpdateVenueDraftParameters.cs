@@ -98,7 +98,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((UpdateVenueDraftParameters)obj);
         }
@@ -110,22 +112,26 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(UpdateVenueDraftParameters other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    Name == other.Name ||
+                    string.Equals(Name, other.Name) ||
                     Name != null &&
                     Name.Equals(other.Name)
                 ) && 
                 (
-                    Address == other.Address ||
+                    string.Equals(Address, other.Address) ||
                     Address != null &&
                     Address.Equals(other.Address)
                 ) && 
                 (
-                    MapUrl == other.MapUrl ||
+                    string.Equals(MapUrl, other.MapUrl) ||
                     MapUrl != null &&
                     MapUrl.Equals(other.MapUrl)
                 ) && 
@@ -144,6 +150,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     TalkIds != null &&
                     TalkIds.SequenceEqual(other.TalkIds)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -157,17 +165,29 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (Name != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Name.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Address != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Address.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (MapUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + MapUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (MeetupIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + MeetupIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (SpeakerIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + SpeakerIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (TalkIds != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + TalkIds.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

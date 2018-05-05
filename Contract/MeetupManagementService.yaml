@@ -428,7 +428,7 @@ definitions:
       Id:
         type: string
         maxLength: 64
-  Name:
+  NameProperty:
     type: object
     required:
     - Name
@@ -462,7 +462,7 @@ definitions:
     type: "object"
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
-      - $ref: "#/definitions/Name"
+      - $ref: "#/definitions/NameProperty"
       - $ref: "#/definitions/CommunityIdentifier" 
   TalkReference:
     allOf:
@@ -486,16 +486,16 @@ definitions:
   VenueReference:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
   FriendReference:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"        
+    - $ref:  "#/definitions/NameProperty"        
   # Description for meetup
   CreateMeetupDraftParameters:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
-      - $ref: "#/definitions/Name"
+      - $ref: "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels"
       
@@ -528,7 +528,7 @@ definitions:
   MeetupDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"    
-    - $ref: "#/definitions/Name"
+    - $ref: "#/definitions/NameProperty"
     - properties:
         Venue:
           $ref: "#/definitions/VenueReference"
@@ -616,7 +616,7 @@ definitions:
   CreateFriendDraftParameters:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels" 
       
@@ -653,7 +653,7 @@ definitions:
   FriendDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     - properties:
         Name:
           type: "string"
@@ -685,7 +685,7 @@ definitions:
     type: "object"
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels"
 
@@ -723,7 +723,7 @@ definitions:
   VenueDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     - properties:
         Address:
           type: "string"

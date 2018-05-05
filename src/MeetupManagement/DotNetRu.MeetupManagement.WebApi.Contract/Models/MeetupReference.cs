@@ -79,7 +79,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((MeetupReference)obj);
         }
@@ -91,25 +93,31 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(MeetupReference other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    Id == other.Id ||
+                    string.Equals(Id, other.Id) ||
                     Id != null &&
                     Id.Equals(other.Id)
                 ) && 
                 (
-                    Name == other.Name ||
+                    string.Equals(Name, other.Name) ||
                     Name != null &&
                     Name.Equals(other.Name)
                 ) && 
                 (
-                    CommunityId == other.CommunityId ||
+                    string.Equals(CommunityId, other.CommunityId) ||
                     CommunityId != null &&
                     CommunityId.Equals(other.CommunityId)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -123,11 +131,17 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (Id != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Id.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Name != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Name.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (CommunityId != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + CommunityId.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

@@ -113,7 +113,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((VenueDraft)obj);
         }
@@ -125,27 +127,31 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public bool Equals(VenueDraft other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    Id == other.Id ||
+                    string.Equals(Id, other.Id) ||
                     Id != null &&
                     Id.Equals(other.Id)
                 ) && 
                 (
-                    Name == other.Name ||
+                    string.Equals(Name, other.Name) ||
                     Name != null &&
                     Name.Equals(other.Name)
                 ) && 
                 (
-                    Address == other.Address ||
+                    string.Equals(Address, other.Address) ||
                     Address != null &&
                     Address.Equals(other.Address)
                 ) && 
                 (
-                    MapUrl == other.MapUrl ||
+                    string.Equals(MapUrl, other.MapUrl) ||
                     MapUrl != null &&
                     MapUrl.Equals(other.MapUrl)
                 ) && 
@@ -169,6 +175,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     Friends != null &&
                     Friends.SequenceEqual(other.Friends)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -182,21 +190,37 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                     if (Id != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Id.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Name != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Name.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Address != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Address.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (MapUrl != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + MapUrl.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Meetups != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Meetups.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Speakers != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Speakers.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Talks != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Talks.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                     if (Friends != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + Friends.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }

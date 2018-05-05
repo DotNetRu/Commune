@@ -71,7 +71,9 @@ namespace {{packageName}}.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals(({{classname}})obj);
         }
@@ -83,12 +85,16 @@ namespace {{packageName}}.Models
         /// <returns>Boolean</returns>
         public bool Equals({{classname}} other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return {{#vars}}{{#isNotContainer}}
                 (
-                    {{name}} == other.{{name}} ||
+                    string.Equals({{name}}, other.{{name}}) ||
                     {{name}} != null &&
                     {{name}}.Equals(other.{{name}})
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
@@ -97,6 +103,8 @@ namespace {{packageName}}.Models
                     {{name}} != null &&
                     {{name}}.SequenceEqual(other.{{name}})
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -111,7 +119,9 @@ namespace {{packageName}}.Models
                 // Suitable nullity checks etc, of course :)
                 {{#vars}}
                     if ({{name}} != null)
+#pragma warning disable CA1307 // Specify StringComparison
                     hashCode = hashCode * 59 + {{name}}.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 {{/vars}}
                 return hashCode;
             }

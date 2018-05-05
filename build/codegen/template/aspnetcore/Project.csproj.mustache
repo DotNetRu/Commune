@@ -6,14 +6,20 @@
         {{#version}}<AssemblyVersion>{{{version}}}</AssemblyVersion>{{/version}}
         {{#version}}<FileVersion>{{{version}}}</FileVersion>{{/version}}
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <CodeAnalysisRuleSet>$(SolutionDir)\$(SolutionName).ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
-
+    <ItemGroup>
+      <AdditionalFiles Include="$(SolutionDir)\$(SolutionName).ruleset" Link="Properties\$(SolutionName).ruleset" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
        	<PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="2.3.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" />
+        <PackageReference Include="Microsoft.NetCore.Analyzers" Version="2.6.0" />
     </ItemGroup>
 </Project>
 

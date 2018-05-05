@@ -22,7 +22,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
 
             foreach (var par in pars)
             {
-                var swaggerParam = operation.Parameters.SingleOrDefault(p => p.Name == par.Name);
+                var swaggerParam = operation.Parameters.SingleOrDefault(p => string.Equals(p.Name, par.Name, System.StringComparison.Ordinal));
 
                 var attributes = ((ControllerParameterDescriptor)par.ParameterDescriptor).ParameterInfo.CustomAttributes;
 
@@ -53,7 +53,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
                     {
                         if (stringLengthAttr.NamedArguments.Count == 1)
                         {
-                            minLenght = (int)stringLengthAttr.NamedArguments.Single(p => p.MemberName == "MinimumLength").TypedValue.Value;
+                            minLenght = (int)stringLengthAttr.NamedArguments.Single(p => string.Equals(p.MemberName, "MinimumLength", System.StringComparison.Ordinal)).TypedValue.Value;
                         }
                         maxLength = (int)stringLengthAttr.ConstructorArguments[0].Value;
                     }

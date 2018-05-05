@@ -26,6 +26,7 @@ using DotNetRu.MeetupManagement.WebApi.Contract.Models;
 
 namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
 { 
+    /// <inheritdoc />
     /// <summary>
     /// 
     /// </summary>

@@ -39,7 +39,9 @@ namespace {{packageName}}
         /// <summary>
         /// Configure swagger generator options
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public void ConfigureSwaggerGenOptions(SwaggerGenOptions options)
+#pragma warning restore CA1822 // Mark members as static
         {
             options.SwaggerDoc("{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}", new Info
             {
@@ -69,7 +71,9 @@ namespace {{packageName}}
         /// <summary>
         /// Configure swagger UI options
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public void ConfigureSwaggerUIOptions(SwaggerUIOptions options)
+#pragma warning restore CA1822 // Mark members as static
         {
             //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
             options.SwaggerEndpoint("/swagger/{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}/swagger.json", "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}");
@@ -81,6 +85,8 @@ namespace {{packageName}}
         /// <summary>
         /// Returns swagger comments generated file name
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public string ContractXmlCommentsFileName => "{{packageName}}.xml";
+#pragma warning restore CA1822 // Mark members as static
     }
 }

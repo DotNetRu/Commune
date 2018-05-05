@@ -48,7 +48,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract
         /// <summary>
         /// Configure swagger generator options
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public void ConfigureSwaggerGenOptions(SwaggerGenOptions options)
+#pragma warning restore CA1822 // Mark members as static
         {
             options.SwaggerDoc("0.1.0", new Info
             {
@@ -74,7 +76,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract
         /// <summary>
         /// Configure swagger UI options
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public void ConfigureSwaggerUIOptions(SwaggerUIOptions options)
+#pragma warning restore CA1822 // Mark members as static
         {
             //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
             options.SwaggerEndpoint("/swagger/0.1.0/swagger.json", "Meetup Management Service API");
@@ -86,6 +90,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract
         /// <summary>
         /// Returns swagger comments generated file name
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public string ContractXmlCommentsFileName => "DotNetRu.MeetupManagement.WebApi.Contract.xml";
+#pragma warning restore CA1822 // Mark members as static
     }
 }

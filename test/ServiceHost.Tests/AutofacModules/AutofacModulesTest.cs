@@ -9,7 +9,9 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
     public class AutofacModulesTest
     {
         [Fact]
+#pragma warning disable CA1822 // Mark members as static
         public void AllComponentsRegisteredInModuleMustBeResolved()
+#pragma warning restore CA1822 // Mark members as static
         {
             var module = new BusinessLayerModule();
             ResolveComponents(module, new DataLayerModule());
@@ -35,7 +37,6 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
                     }
                 }
             }
-
         }
     }
 }

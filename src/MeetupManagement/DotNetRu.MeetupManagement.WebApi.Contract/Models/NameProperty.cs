@@ -25,14 +25,14 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Name : IEquatable<Name>
+    public partial class NameProperty : IEquatable<NameProperty>
     { 
         /// <summary>
-        /// Gets or Sets _Name
+        /// Gets or Sets Name
         /// </summary>
         [Required]
         [DataMember(Name="Name")]
-        public string _Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -41,8 +41,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Name {\n");
-            sb.Append("  _Name: ").Append(_Name).Append("\n");
+            sb.Append("class NameProperty {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -63,27 +63,35 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// <returns>Boolean</returns>
         public override bool Equals(object obj)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, obj)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Name)obj);
+            return obj.GetType() == GetType() && Equals((NameProperty)obj);
         }
 
         /// <summary>
-        /// Returns true if Name instances are equal
+        /// Returns true if NameProperty instances are equal
         /// </summary>
-        /// <param name="other">Instance of Name to be compared</param>
+        /// <param name="other">Instance of NameProperty to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Name other)
+        public bool Equals(NameProperty other)
         {
+#pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other)) return false;
+#pragma warning restore IDE0041 // Use 'is null' check
             if (ReferenceEquals(this, other)) return true;
 
+#pragma warning disable CA1309 // Use ordinal stringcomparison
+#pragma warning disable CA1307 // Specify StringComparison
             return 
                 (
-                    _Name == other._Name ||
-                    _Name != null &&
-                    _Name.Equals(other._Name)
+                    string.Equals(Name, other.Name) ||
+                    Name != null &&
+                    Name.Equals(other.Name)
                 );
+#pragma warning restore CA1307 // Specify StringComparison
+#pragma warning restore CA1309 // Use ordinal stringcomparison
         }
 
         /// <summary>
@@ -96,8 +104,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (_Name != null)
-                    hashCode = hashCode * 59 + _Name.GetHashCode();
+                    if (Name != null)
+#pragma warning disable CA1307 // Specify StringComparison
+                    hashCode = hashCode * 59 + Name.GetHashCode();
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }
@@ -105,12 +115,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Name left, Name right)
+        public static bool operator ==(NameProperty left, NameProperty right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Name left, Name right)
+        public static bool operator !=(NameProperty left, NameProperty right)
         {
             return !Equals(left, right);
         }
