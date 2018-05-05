@@ -12,8 +12,8 @@ namespace DotNetRu.ServiceHost
     {
         public Startup(IConfiguration configuration, ContainerBuilder containerBuilder)
         {
-            Configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration));
-            _containerBuilder = containerBuilder ?? throw new System.ArgumentNullException(nameof(containerBuilder));
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _containerBuilder = containerBuilder ?? throw new ArgumentNullException(nameof(containerBuilder));
             _meetupServiceStartup = new MeetupManagement.WebApi.Config.Startup();
         }
 
@@ -22,6 +22,7 @@ namespace DotNetRu.ServiceHost
         public IContainer Container { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // ReSharper disable once UnusedMember.Global
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _meetupServiceStartup.ConfigureServices(services);
@@ -31,6 +32,7 @@ namespace DotNetRu.ServiceHost
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // ReSharper disable once UnusedMember.Global
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -47,7 +49,7 @@ namespace DotNetRu.ServiceHost
             Container = container;
             return result;
         }
-        private MeetupManagement.WebApi.Config.Startup _meetupServiceStartup;
+        private readonly MeetupManagement.WebApi.Config.Startup _meetupServiceStartup;
         private readonly ContainerBuilder _containerBuilder;
     }
 }

@@ -1,6 +1,4 @@
 {{>partial_header}}
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -17,12 +15,14 @@ namespace {{packageName}}
     /// </summary>
     public class Startup
     {
+/*
         /// <summary>
         /// Constructor
         /// </summary>
         public Startup()
         {
         }
+*/
 
         /// <summary>
         /// Configure json options
@@ -72,7 +72,7 @@ namespace {{packageName}}
         /// Configure swagger UI options
         /// </summary>
 #pragma warning disable CA1822 // Mark members as static
-        public void ConfigureSwaggerUIOptions(SwaggerUIOptions options)
+        public void ConfigureSwaggerUiOptions(SwaggerUIOptions options)
 #pragma warning restore CA1822 // Mark members as static
         {
             //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)

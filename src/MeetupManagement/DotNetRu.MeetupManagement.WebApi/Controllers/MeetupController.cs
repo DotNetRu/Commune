@@ -11,6 +11,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
     {
         private readonly ILogger<MeetupController> _logger;
 
+        // ReSharper disable once UnusedMember.Global
         public MeetupController(ILogger<MeetupController> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -26,9 +26,11 @@ namespace {{packageName}}.Filters
 
                 var attributes = ((ControllerParameterDescriptor)par.ParameterDescriptor).ParameterInfo.CustomAttributes;
 
-                if (attributes != null && attributes.Count() > 0 && swaggerParam != null)
+                // ReSharper disable once PossibleMultipleEnumeration
+                if (attributes != null && attributes.Any() && swaggerParam != null)
                 {
                     // Required - [Required]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var requiredAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RequiredAttribute));
                     if (requiredAttr != null)
                     {
@@ -36,18 +38,20 @@ namespace {{packageName}}.Filters
                     }
 
                     // Regex Pattern [RegularExpression]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var regexAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RegularExpressionAttribute));
                     if (regexAttr != null)
                     {
                         string regex = (string)regexAttr.ConstructorArguments[0].Value;
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is NonBodyParameter parameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Pattern = regex;
+                            parameter.Pattern = regex;
                         }
                     }
 
                     // String Length [StringLength]
                     int? minLenght = null, maxLength = null;
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var stringLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(StringLengthAttribute));
                     if (stringLengthAttr != null)
                     {
@@ -58,35 +62,38 @@ namespace {{packageName}}.Filters
                         maxLength = (int)stringLengthAttr.ConstructorArguments[0].Value;
                     }
 
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var minLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(MinLengthAttribute));
                     if (minLengthAttr != null)
                     {
                         minLenght = (int)minLengthAttr.ConstructorArguments[0].Value;
                     }
 
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var maxLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(MaxLengthAttribute));
                     if (maxLengthAttr != null)
                     {
                         maxLength = (int)maxLengthAttr.ConstructorArguments[0].Value;
                     }
 
-                    if (swaggerParam is NonBodyParameter)
+                    if (swaggerParam is NonBodyParameter bodyParameter)
                     {
-                        ((NonBodyParameter)swaggerParam).MinLength = minLenght;
-                        ((NonBodyParameter)swaggerParam).MaxLength = maxLength;
+                        bodyParameter.MinLength = minLenght;
+                        bodyParameter.MaxLength = maxLength;
                     }
 
                     // Range [Range]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var rangeAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RangeAttribute));
                     if (rangeAttr != null)
                     {
                         int rangeMin = (int)rangeAttr.ConstructorArguments[0].Value;
                         int rangeMax = (int)rangeAttr.ConstructorArguments[1].Value;
 
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is NonBodyParameter parameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Minimum = rangeMin;
-                            ((NonBodyParameter)swaggerParam).Maximum = rangeMax;
+                            parameter.Minimum = rangeMin;
+                            parameter.Maximum = rangeMax;
                         }
                     }
                 }

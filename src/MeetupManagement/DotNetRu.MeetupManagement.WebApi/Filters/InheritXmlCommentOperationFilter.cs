@@ -2,13 +2,14 @@
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
+namespace DotNetRu.MeetupManagement.WebApi.Filters
 {
     public class InheritXmlCommentOperationFilter : IOperationFilter
     {
         private readonly XmlCommentsOperationFilter _filter;
 
         /// <inheritdoc />
+        // ReSharper disable once UnusedMember.Global
         public InheritXmlCommentOperationFilter(XmlCommentsOperationFilter filter)
         {
             _filter = filter;

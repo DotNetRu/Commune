@@ -1,4 +1,5 @@
 {{>partial_header}}
+// ReSharper disable RedundantUsingDirective
 using System;
 using System.Linq;
 using System.IO;
@@ -14,11 +15,12 @@ using Newtonsoft.Json;
 {{#model}}
 namespace {{packageName}}.Models
 { {{#isEnum}}{{>enumClass}}{{/isEnum}}{{^isEnum}}
+    /// <inheritdoc />
     /// <summary>
     /// {{description}}
     /// </summary>
     [DataContract]
-    public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}}IEquatable<{{classname}}>
+    public class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}}IEquatable<{{classname}}>
     { {{#vars}}{{#isEnum}}{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}{{>enumClass}}{{/items}}{{/items.isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
@@ -59,6 +61,7 @@ namespace {{packageName}}.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
+        // ReSharper disable once UnusedMember.Global
         public {{#parent}} new {{/parent}}string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
@@ -78,6 +81,7 @@ namespace {{packageName}}.Models
             return obj.GetType() == GetType() && Equals(({{classname}})obj);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Returns true if {{classname}} instances are equal
         /// </summary>
@@ -94,6 +98,7 @@ namespace {{packageName}}.Models
 #pragma warning disable CA1307 // Specify StringComparison
             return {{#vars}}{{#isNotContainer}}
                 (
+                    // ReSharper disable once RedundantNameQualifier
                     string.Equals({{name}}, other.{{name}}) ||
                     {{name}} != null &&
                     {{name}}.Equals(other.{{name}})
@@ -118,8 +123,10 @@ namespace {{packageName}}.Models
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
                 {{#vars}}
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
                     if ({{name}} != null)
 #pragma warning disable CA1307 // Specify StringComparison
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = hashCode * 59 + {{name}}.GetHashCode();
 #pragma warning restore CA1307 // Specify StringComparison
                 {{/vars}}

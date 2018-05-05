@@ -33,7 +33,7 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
                 {
                     foreach (var service in registration.Services.OfType<TypedService>())
                     {
-                        var instance = container.Resolve(service.ServiceType);
+                        container.Resolve(service.ServiceType);
                     }
                 }
             }
