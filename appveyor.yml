@@ -35,6 +35,7 @@ for:
         - platform: Visual Studio 2017
     build_script:
       - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+  -
     matrix:
       only:
         - platform: Ubuntu
