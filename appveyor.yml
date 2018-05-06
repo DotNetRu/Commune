@@ -29,11 +29,15 @@ init:
   - git config --global core.autocrlf false
 
 build_script:
-  - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+    matrix:
+        - image: Visual Studio 2017
+          - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+        - image: Ubuntu
+          - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
   - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 
-test_script:
-  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-  - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
-
+#test_script:
+#  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+# - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
+#
 deploy: off
