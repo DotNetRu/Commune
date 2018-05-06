@@ -28,26 +28,12 @@ skip_commits:
 init:
   - git config --global core.autocrlf false
 
-for:
-  -
-    matrix:
-      only:
-        - image: Visual Studio 2017
-    build_script:
-      - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
-  -
-    matrix:
-      only:
-        - image: Ubuntu
-    build_script:
-      - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-  -
-    matrix:
-      only:
-        - image: Visual Studio 2017
-        - image: Ubuntu
-    build_script:
-      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
+build:
+  project: DotNetRu.Server.sln
+  publish_nuget: false
+  publish_aspnet_core: false
+  publish_core_console: true
+  verbosity: minimal
 
 #test_script:
 #  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
