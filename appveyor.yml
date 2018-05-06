@@ -30,7 +30,6 @@ init:
 
 build:
   project: DotNetRu.Server.sln
-  configuration: Release
   publish_nuget: false
   publish_aspnet_core: false
   publish_core_console: false
