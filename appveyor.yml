@@ -28,14 +28,19 @@ skip_commits:
 init:
   - git config --global core.autocrlf false
 
-before_build:
-  - msbuild DotNetRu.Server.sln /t:Restore
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2017
+    before_build:
+      - msbuild DotNetRu.Server.sln /t:Restore
 build:
   project: DotNetRu.Server.sln
   publish_nuget: false
   publish_aspnet_core: false
   publish_core_console: false
-  verbosity: normal
+  verbosity: minimal
 
 #test_script:
 #  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
