@@ -42,7 +42,7 @@ build:
   project: DotNetRu.Server.sln
   publish_nuget: false
   publish_aspnet_core: false
-  publish_core_console: false
+  publish_core_console: true
   verbosity: minimal
 
 #test_script:
