@@ -28,6 +28,8 @@ skip_commits:
 init:
   - git config --global core.autocrlf false
 
+before_build:
+  - msbuild DotNetRu.Server.sln /t:Restore
 build:
   project: DotNetRu.Server.sln
   publish_nuget: false
