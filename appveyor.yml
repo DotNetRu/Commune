@@ -41,9 +41,13 @@ for:
         - image: Ubuntu
     build_script:
       - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-
-build_script:
-  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2017
+        - image: Ubuntu
+    build_script:
+      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 
 #test_script:
 #  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
