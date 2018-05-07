@@ -42,9 +42,11 @@ build:
   project: DotNetRu.Server.sln
   publish_nuget: false
   publish_aspnet_core: false
-  publish_core_console: true
+  publish_core_console: false
   verbosity: minimal
 
+after_build:
+  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 #test_script:
 #  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
 # - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
