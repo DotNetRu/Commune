@@ -38,6 +38,15 @@ for:
         - image: Visual Studio 2017
     before_build:
       - dotnet restore DotNetRu.Server.sln
+    after_test:
+      - - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+  -
+    matrix:
+      only:
+        - image: Ubuntu
+    after_test:
+      - - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+
 build:
   project: DotNetRu.Server.sln
   publish_nuget: false
@@ -45,8 +54,6 @@ build:
   publish_core_console: false
   verbosity: minimal
 
-after_build:
-  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
 #test_script:
 #  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
 # - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
