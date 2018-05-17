@@ -37,6 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Core\DotNetRu.MeetupManagement.Core.csproj" />
+    <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.EFCore\DotNetRu.MeetupManagement.Infrastructure.EFCore.csproj" />
     <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.WebApi\DotNetRu.MeetupManagement.WebApi.csproj" />
   </ItemGroup>
 
