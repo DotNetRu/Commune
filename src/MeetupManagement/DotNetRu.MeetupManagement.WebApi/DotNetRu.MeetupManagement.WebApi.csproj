@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetRu.MeetupManagement.BusinessLayer.Contract\DotNetRu.MeetupManagement.BusinessLayer.Contract.csproj" />
     <ProjectReference Include="..\DotNetRu.MeetupManagement.WebApi.Contract\DotNetRu.MeetupManagement.WebApi.Contract.csproj" />
   </ItemGroup>
 
