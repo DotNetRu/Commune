@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputPath>..\..\bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.BusinessLayer.Contract\DotNetRu.MeetupManagement.BusinessLayer.Contract.csproj" />
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.DataLayer.Contract\DotNetRu.MeetupManagement.DataLayer.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

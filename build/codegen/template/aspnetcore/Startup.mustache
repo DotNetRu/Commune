@@ -1,0 +1,86 @@
+{{>partial_header}}
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using {{packageName}}.Filters;
+
+namespace {{packageName}}
+{
+    /// <summary>
+    /// Startup
+    /// </summary>
+    public class Startup
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Startup()
+        {
+        }
+
+        /// <summary>
+        /// Configure json options
+        /// </summary>
+        public void ConfigureJsonOptions(MvcJsonOptions options)
+        {
+            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            options.SerializerSettings.Converters.Add(new StringEnumConverter
+            {
+                CamelCaseText = true
+            });
+        }
+
+        /// <summary>
+        /// Configure swagger generator options
+        /// </summary>
+        public void ConfigureSwaggerGenOptions(SwaggerGenOptions options)
+        {
+            options.SwaggerDoc("{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}", new Info
+            {
+                Version = "{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}",
+                Title = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}",
+                Description = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}} (ASP.NET Core 2.0)",
+                Contact = new Contact()
+                {
+                    Name = "{{#infoName}}{{{infoName}}}{{/infoName}}{{^infoName}}Swagger Codegen Contributors{{/infoName}}",
+                    Url = "{{#infoUrl}}{{{infoUrl}}}{{/infoUrl}}{{^infoUrl}}https://github.com/swagger-api/swagger-codegen{{/infoUrl}}",
+                    Email = "{{#infoEmail}}{{{infoEmail}}}{{/infoEmail}}"
+                },
+                TermsOfService = "{{#termsOfService}}{{{termsOfService}}}{{/termsOfService}}"
+            });
+            options.CustomSchemaIds(type => type.FriendlyId(true));
+            options.DescribeAllEnumsAsStrings();
+            {{#basePathWithoutHost}}
+            // Sets the basePath property in the Swagger document generated
+            options.DocumentFilter<BasePathFilter>("{{{basePathWithoutHost}}}");
+            {{/basePathWithoutHost}}
+
+            // Include DataAnnotation attributes on Controller Action parameters as Swagger validation rules (e.g required, pattern, ..)
+            // Use [ValidateModelState] on Actions to actually validate it in C# as well!
+            options.OperationFilter<GeneratePathParamsValidationFilter>();
+        }
+
+        /// <summary>
+        /// Configure swagger UI options
+        /// </summary>
+        public void ConfigureSwaggerUIOptions(SwaggerUIOptions options)
+        {
+            //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+            options.SwaggerEndpoint("/swagger/{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}/swagger.json", "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}");
+
+            //TODO: Or alternatively use the original Swagger contract that's included in the static files
+            // options.SwaggerEndpoint("/swagger-original.json", "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}} Original");
+        }
+
+        /// <summary>
+        /// Returns swagger comments generated file name
+        /// </summary>
+        public string ContractXmlCommentsFileName => "{{packageName}}.xml";
+    }
+}
