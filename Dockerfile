@@ -4,7 +4,7 @@ WORKDIR /build
 
 # Restore dependencies
 COPY src/ServiceHost/ServiceHost.csproj ./src/ServiceHost/
-COPY test/Server.Tests/Server.Tests.csproj ./test/Server.Tests/
+COPY test/ServiceHost.Tests/ServiceHost.Tests.csproj ./test/ServiceHost.Tests/
 
 RUN dotnet restore src/ServiceHost/ServiceHost.csproj
 RUN dotnet restore test/ServiceHost.Tests/ServiceHost.Tests.csproj
@@ -24,4 +24,4 @@ FROM microsoft/aspnetcore:2.0
 COPY --from=build-env /publish /app
 
 WORKDIR /app
-ENTRYPOINT ["dotnet", "ServiceHost.dll"]
+ENTRYPOINT ["dotnet", "DotNetRu.ServiceHost.dll"]
