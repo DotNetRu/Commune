@@ -1,8 +1,10 @@
 ﻿using Xunit;
-using DotNetRu.ServiceHost.Autofac;
 using Autofac;
 using System.Linq;
 using Autofac.Core;
+using DotNetRu.MeetupManagement.Core;
+using DotNetRu.MeetupManagement.Infrastructure.EFCore;
+using DotNetRu.MeetupManagement.Infrastructure.Messaging;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
@@ -11,8 +13,7 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
         [Fact]
         public void AllComponentsRegisteredInModuleMustBeResolved()
         {
-            var module = new BusinessLayerModule();
-            ResolveComponents(module, new DataLayerModule());
+            ResolveComponents(new MessagingModule(), new EFCoreModule(), new CoreModule());
         }
 
         private static void ResolveComponents(params Module[] modules)
