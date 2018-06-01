@@ -1,7 +1,7 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 using DotNetRu.ServiceHost.Autofac;
 using Autofac;
-using System.Linq;
 using Autofac.Core;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules

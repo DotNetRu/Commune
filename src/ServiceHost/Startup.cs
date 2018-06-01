@@ -10,6 +10,9 @@ namespace DotNetRu.ServiceHost
 {
     public class Startup
     {
+        private readonly MeetupManagement.WebApi.Config.Startup _meetupServiceStartup;
+        private readonly ContainerBuilder _containerBuilder;
+
         public Startup(IConfiguration configuration, ContainerBuilder containerBuilder)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
@@ -39,6 +42,7 @@ namespace DotNetRu.ServiceHost
             {
                 app.UseDeveloperExceptionPage();
             }
+
             _meetupServiceStartup.Configure(app);
         }
 
@@ -49,7 +53,5 @@ namespace DotNetRu.ServiceHost
             Container = container;
             return result;
         }
-        private readonly MeetupManagement.WebApi.Config.Startup _meetupServiceStartup;
-        private readonly ContainerBuilder _containerBuilder;
     }
 }

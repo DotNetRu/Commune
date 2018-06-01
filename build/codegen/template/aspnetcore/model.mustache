@@ -14,16 +14,20 @@ using Newtonsoft.Json;
 {{#models}}
 {{#model}}
 namespace {{packageName}}.Models
+#pragma warning disable SA1028 // Code must not contain trailing whitespace
 { {{#isEnum}}{{>enumClass}}{{/isEnum}}{{^isEnum}}
     /// <inheritdoc />
     /// <summary>
     /// {{description}}
     /// </summary>
+#pragma warning restore SA1028 // Code must not contain trailing whitespace
     [DataContract]
     public class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}}IEquatable<{{classname}}>
-    { {{#vars}}{{#isEnum}}{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}{{>enumClass}}{{/items}}{{/items.isEnum}}
+#pragma warning disable SA1028 // Code must not contain trailing whitespace
+    {
+#pragma warning restore SA1028 // Code must not contain trailing whitespace{{#vars}}{{#isEnum}}{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}{{>enumClass}}{{/items}}{{/items.isEnum}}
         /// <summary>
-        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
+        /// {{^description}}Gets or sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>
         {{#description}}
         /// <value>{{description}}</value>
@@ -75,9 +79,10 @@ namespace {{packageName}}.Models
         public override bool Equals(object obj)
         {
 #pragma warning disable IDE0041 // Use 'is null' check
-            if (ReferenceEquals(null, obj)) return false;
-#pragma warning restore IDE0041 // Use 'is null' check
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
             return obj.GetType() == GetType() && Equals(({{classname}})obj);
         }
 
@@ -90,24 +95,29 @@ namespace {{packageName}}.Models
         public bool Equals({{classname}} other)
         {
 #pragma warning disable IDE0041 // Use 'is null' check
-            if (ReferenceEquals(null, other)) return false;
-#pragma warning restore IDE0041 // Use 'is null' check
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
 
 #pragma warning disable CA1309 // Use ordinal stringcomparison
 #pragma warning disable CA1307 // Specify StringComparison
-            return {{#vars}}{{#isNotContainer}}
+#pragma warning disable SA1515 // Single-line comment must be preceded by blank line
+#pragma warning disable SA1009 // Closing parenthesis must be spaced correctly
+            return
+#pragma warning disable SA1119 // Statement must not use unnecessary parenthesis{{#vars}}{{#isNotContainer}}
                 (
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals({{name}}, other.{{name}}) ||
-                    {{name}} != null &&
-                    {{name}}.Equals(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
+                    ({{name}} != null && {{name}}.Equals(other.{{name}}))
+                ){{#hasMore}} &&{{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
                 (
                     {{name}} == other.{{name}} ||
-                    {{name}} != null &&
-                    {{name}}.SequenceEqual(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+                    ({{name}} != null && {{name}}.SequenceEqual(other.{{name}}))
+                ){{#hasMore}} &&{{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+#pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
+#pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
+#pragma warning restore SA1515 // Single-line comment must be preceded by blank line
 #pragma warning restore CA1307 // Specify StringComparison
 #pragma warning restore CA1309 // Use ordinal stringcomparison
         }
@@ -118,29 +128,36 @@ namespace {{packageName}}.Models
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            unchecked // Overflow is fine, just wrap
+            // Overflow is fine, just wrap
+            unchecked
             {
                 var hashCode = 41;
+
                 // Suitable nullity checks etc, of course :)
+#pragma warning disable CA1307 // Specify StringComparison
                 {{#vars}}
+
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
                     if ({{name}} != null)
-#pragma warning disable CA1307 // Specify StringComparison
+                    {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = hashCode * 59 + {{name}}.GetHashCode();
-#pragma warning restore CA1307 // Specify StringComparison
+                    hashCode = (hashCode * 59) + {{name}}.GetHashCode();
+                    }
                 {{/vars}}
+#pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
             }
         }
 
+#pragma warning disable SA1124 // Do not use regions
         #region Operators
         #pragma warning disable 1591
-
+        #pragma warning disable SA1201 // Elements must appear in the correct order
         public static bool operator ==({{classname}} left, {{classname}} right)
         {
             return Equals(left, right);
         }
+        #pragma warning restore SA1201 // Elements must appear in the correct order
 
         public static bool operator !=({{classname}} left, {{classname}} right)
         {
@@ -149,6 +166,7 @@ namespace {{packageName}}.Models
 
         #pragma warning restore 1591
         #endregion Operators
+#pragma warning restore SA1124 // Do not use regions
     }
 {{/isEnum}}
 {{/model}}

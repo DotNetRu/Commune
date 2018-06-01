@@ -25,6 +25,13 @@ namespace {{packageName}}
 */
 
         /// <summary>
+        /// Gets swagger comments generated file name
+        /// </summary>
+#pragma warning disable CA1822 // Mark members as static
+        public string ContractXmlCommentsFileName => "{{packageName}}.xml";
+#pragma warning restore CA1822 // Mark members as static
+
+        /// <summary>
         /// Configure json options
         /// </summary>
         public void ConfigureJsonOptions(MvcJsonOptions options)
@@ -43,7 +50,8 @@ namespace {{packageName}}
         public void ConfigureSwaggerGenOptions(SwaggerGenOptions options)
 #pragma warning restore CA1822 // Mark members as static
         {
-            options.SwaggerDoc("{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}", new Info
+#pragma warning disable SA1122 // Use string.Empty for empty strings
+            var info = new Info()
             {
                 Version = "{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}",
                 Title = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}",
@@ -55,7 +63,9 @@ namespace {{packageName}}
                     Email = "{{#infoEmail}}{{{infoEmail}}}{{/infoEmail}}"
                 },
                 TermsOfService = "{{#termsOfService}}{{{termsOfService}}}{{/termsOfService}}"
-            });
+            };
+#pragma warning restore SA1122 // Use string.Empty for empty strings
+            options.SwaggerDoc("{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}", info);
             options.CustomSchemaIds(type => type.FriendlyId(true));
             options.DescribeAllEnumsAsStrings();
             {{#basePathWithoutHost}}
@@ -75,18 +85,11 @@ namespace {{packageName}}
         public void ConfigureSwaggerUiOptions(SwaggerUIOptions options)
 #pragma warning restore CA1822 // Mark members as static
         {
-            //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+            // TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
             options.SwaggerEndpoint("/swagger/{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}/swagger.json", "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}");
 
-            //TODO: Or alternatively use the original Swagger contract that's included in the static files
+            // TODO: Or alternatively use the original Swagger contract that's included in the static files
             // options.SwaggerEndpoint("/swagger-original.json", "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}} Original");
         }
-
-        /// <summary>
-        /// Returns swagger comments generated file name
-        /// </summary>
-#pragma warning disable CA1822 // Mark members as static
-        public string ContractXmlCommentsFileName => "{{packageName}}.xml";
-#pragma warning restore CA1822 // Mark members as static
     }
 }

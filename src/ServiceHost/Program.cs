@@ -81,6 +81,5 @@ namespace DotNetRu.ServiceHost
                             .UseStartup<Startup>()
                             .Build();*/
         }
-
     }
 }

@@ -19,7 +19,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Attributes
         /// <summary>
         /// Called before the action method is invoked
         /// </summary>
-        /// <param name="context"></param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             // Per https://blog.markvincze.com/how-to-validate-action-parameters-with-dataannotation-attributes/
@@ -29,7 +28,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Attributes
                 {
                     object args = null;
                     if (context.ActionArguments.ContainsKey(parameter.Name))
-                    { 
+                    {
                         args = context.ActionArguments[parameter.Name];
                     }
 

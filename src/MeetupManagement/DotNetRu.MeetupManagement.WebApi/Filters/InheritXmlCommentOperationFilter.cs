@@ -8,7 +8,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Filters
     {
         private readonly XmlCommentsOperationFilter _filter;
 
-        /// <inheritdoc />
         // ReSharper disable once UnusedMember.Global
         public InheritXmlCommentOperationFilter(XmlCommentsOperationFilter filter)
         {
@@ -17,7 +16,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Filters
 
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            //_filter.Apply(operation, context);
+            // _filter.Apply(operation, context);
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descr)
             {
                 var prev = descr.MethodInfo;
@@ -25,8 +24,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Filters
                 _filter.Apply(operation, context);
                 descr.MethodInfo = prev;
             }
-
-
         }
     }
 }

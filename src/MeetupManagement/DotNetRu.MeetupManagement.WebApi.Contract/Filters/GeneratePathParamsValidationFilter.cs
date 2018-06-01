@@ -51,6 +51,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
 
                     // String Length [StringLength]
                     int? minLenght = null, maxLength = null;
+
                     // ReSharper disable once PossibleMultipleEnumeration
                     var stringLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(StringLengthAttribute));
                     if (stringLengthAttr != null)
@@ -59,6 +60,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
                         {
                             minLenght = (int)stringLengthAttr.NamedArguments.Single(p => string.Equals(p.MemberName, "MinimumLength", System.StringComparison.Ordinal)).TypedValue.Value;
                         }
+
                         maxLength = (int)stringLengthAttr.ConstructorArguments[0].Value;
                     }
 
@@ -101,4 +103,3 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
         }
     }
 }
-

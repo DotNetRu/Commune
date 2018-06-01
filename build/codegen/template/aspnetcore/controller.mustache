@@ -1,18 +1,23 @@
 {{>partial_header}}
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.ComponentModel.DataAnnotations;
 using {{packageName}}.Attributes;
 using {{packageName}}.Models;
 
 namespace {{packageName}}.Controllers
+#pragma warning disable SA1028 // Code must not contain trailing whitespace
 { {{#operations}}
     /// <inheritdoc />
     /// <summary>
     /// {{description}}
     /// </summary>{{#description}}
     [Description("{{description}}")]{{/description}}
+#pragma warning restore SA1028 // Code must not contain trailing whitespace
+#pragma warning disable SA1649
     public abstract class {{classname}}Controller : ControllerBase
+#pragma warning restore SA1649
+#pragma warning disable SA1028 // Code must not contain trailing whitespace
     { {{#operation}}
         /// <summary>
         /// {{#summary}}{{summary}}{{/summary}}
@@ -28,5 +33,6 @@ namespace {{packageName}}.Controllers
         public abstract {{#returnType}}{{&returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
     }
+#pragma warning restore SA1028 // Code must not contain trailing whitespace
 {{/operations}}
 }

@@ -280,7 +280,6 @@ paths:
       tags:
       - Talk
       summary: "Get talk draft"
-      description: "Get talk draft"
       operationId: "GetTalkDraft"
       parameters: []
       responses:
@@ -358,7 +357,6 @@ paths:
       tags:
       - Friend
       summary: "Get friend draft"
-      description: "Get friend draft"
       operationId: "GetFriendDraft"
       parameters: []
       responses:

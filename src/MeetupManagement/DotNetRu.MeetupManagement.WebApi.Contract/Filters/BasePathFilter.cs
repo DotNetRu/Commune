@@ -13,6 +13,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
     public class BasePathFilter : IDocumentFilter
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BasePathFilter"/> class.
         /// Constructor
         /// </summary>
         /// <param name="basePath">BasePath to remove from Operations</param>
