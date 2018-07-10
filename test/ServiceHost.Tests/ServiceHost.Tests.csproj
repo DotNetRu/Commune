@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.Messaging\DotNetRu.MeetupManagement.Infrastructure.Messaging.csproj" />
     <ProjectReference Include="..\..\src\ServiceHost\ServiceHost.csproj" />
   </ItemGroup>
 

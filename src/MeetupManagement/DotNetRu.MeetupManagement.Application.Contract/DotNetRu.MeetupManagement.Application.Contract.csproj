@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain\DotNetRu.MeetupManagement.Domain.csproj" />
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain.Contract\DotNetRu.MeetupManagement.Domain.Contract.csproj" />
   </ItemGroup>
 
 </Project>

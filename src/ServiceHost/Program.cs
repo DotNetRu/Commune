@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using Autofac;
-using DotNetRu.MeetupManagement.Core;
-using DotNetRu.MeetupManagement.Infrastructure.EFCore;
+using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,8 +29,7 @@ namespace DotNetRu.ServiceHost
                 .CreateLogger();
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new CoreModule());
-            containerBuilder.RegisterModule(new EFCoreModule());
+            containerBuilder.RegisterModule(new DataLayerModule());
             try
             {
                 Log.Information("Getting the motors running...");

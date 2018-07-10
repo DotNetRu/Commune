@@ -2,9 +2,7 @@
 using Autofac;
 using System.Linq;
 using Autofac.Core;
-using DotNetRu.MeetupManagement.Core;
-using DotNetRu.MeetupManagement.Infrastructure.EFCore;
-using DotNetRu.MeetupManagement.Infrastructure.Messaging;
+using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
@@ -13,7 +11,7 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
         [Fact]
         public void AllComponentsRegisteredInModuleMustBeResolved()
         {
-            ResolveComponents(new MessagingModule(), new EFCoreModule(), new CoreModule());
+            ResolveComponents(new DataLayerModule());
         }
 
         private static void ResolveComponents(params Module[] modules)
