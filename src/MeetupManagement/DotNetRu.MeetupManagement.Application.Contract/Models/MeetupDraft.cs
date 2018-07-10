@@ -10,13 +10,13 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Models
             Id = id ?? throw new ArgumentNullException(nameof(id));
             CommunityId = communityId ?? throw new ArgumentNullException(nameof(communityId));
             Talks = new List<TalkDraft>();
-            Friends = new List<FriendDraft>();
+            Friends = new List<FriendReference>();
         }
 
         public string Id { get; }
         public string CommunityId { get;}
         public ICollection<TalkDraft> Talks { get; }
-        public ICollection<FriendDraft> Friends { get; set; }
-        public VenueDraft Venue { get; set; }
+        public ICollection<FriendReference> Friends { get; set; }
+        public VenueReference Venue { get; set; }
     }
 }
