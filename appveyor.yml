@@ -20,6 +20,12 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   # Disable sending usage data to Microsoft
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOCKER_PASS:
+    secure: 7xusxxMFy9iURl0Ktuzri5XyT3/NDKlsU3kkfJ+Sq90=
+
+branches:
+  only:
+    - master
 
 skip_commits:
   files:
@@ -29,11 +35,12 @@ init:
   - git config --global core.autocrlf false
 
 build_script:
-  - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release
-  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
+  - ps: .\build.ps1
+  - ps: .\build-docker.ps1
 
 test_script:
   - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release
   - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
 
-deploy: off
+deploy_script:
+- ps: .\deploy-docker.ps1
