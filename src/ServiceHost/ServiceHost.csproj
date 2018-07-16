@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;osx-x64;ubuntu-x64</RuntimeIdentifiers>
     <AssemblyName>DotNetRu.ServiceHost</AssemblyName>
     <RootNamespace>DotNetRu.ServiceHost</RootNamespace>
     <OutputPath>..\bin\$(Configuration)</OutputPath>
