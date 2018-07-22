@@ -35,12 +35,12 @@ init:
   - git config --global core.autocrlf false
 
 build_script:
-  - ps: .\build.ps1
-  - ps: .\build-docker.ps1
+  - ps: .\build\build.ps1
+  - ps: .\build\build-docker.ps1
 
 test_script:
   - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release
   - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
 
 deploy_script:
-- ps: .\deploy-docker.ps1
+- ps: .\build\deploy-docker.ps1
