@@ -13,4 +13,8 @@
     <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain\DotNetRu.MeetupManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

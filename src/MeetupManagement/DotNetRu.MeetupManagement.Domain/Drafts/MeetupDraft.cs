@@ -15,6 +15,8 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         }
 
         public MeetupKey Key { get; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public ICollection<TalkDraft> Talks { get; }
         public ICollection<FriendReference> Friends { get; set; }
         public VenueReference Venue { get; set; }

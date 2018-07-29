@@ -4,7 +4,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
     public interface IMeetupDraftService
     {
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
-        MeetupDraft CreateMeetupDraft(string comminityId, string name);
+        MeetupDraft CreateMeetupDraft(string comminityId, string name, string description);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />

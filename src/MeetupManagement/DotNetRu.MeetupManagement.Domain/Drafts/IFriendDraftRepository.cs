@@ -2,7 +2,7 @@
 
 namespace DotNetRu.MeetupManagement.Domain.Drafts
 {
-    public interface IFriendDraftRepository : IRepository<SpeakerDraft, string>
+    public interface IFriendDraftRepository : IRepository<FriendDraft, string>
     {
         FriendDraft Add(CreateFriendDraftParameters parameters);
     }
