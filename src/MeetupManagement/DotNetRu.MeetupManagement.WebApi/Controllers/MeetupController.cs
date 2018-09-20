@@ -9,7 +9,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
 {
     public class MeetupController : MeetupApiController
     {
-        private ILogger<MeetupController> _logger;
+        private readonly ILogger<MeetupController> _logger;
 
         // ReSharper disable once UnusedMember.Global
         public MeetupController(ILogger<MeetupController> logger)

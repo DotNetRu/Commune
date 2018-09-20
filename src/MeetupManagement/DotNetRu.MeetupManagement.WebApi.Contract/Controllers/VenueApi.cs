@@ -34,7 +34,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="venueDraft"></param>
-        /// <response code="201">Draft was sucessfully created</response>
+        /// <response code="201">Draft was successfully created</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="409">Draft is already exists</response>
@@ -49,7 +49,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="venueId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>
         [HttpDelete]
@@ -79,7 +79,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="venueId"></param>
         /// <param name="properties"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>

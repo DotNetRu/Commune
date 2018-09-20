@@ -34,7 +34,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         /// <remarks>Create new friend draft.</remarks>
         /// <param name="body"></param>
-        /// <response code="201">Draft was sucessfully created</response>
+        /// <response code="201">Draft was successfully created</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="409">Draft is already exists</response>
@@ -49,7 +49,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="friendId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
         [HttpDelete]
@@ -79,7 +79,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="friendId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Friend not found</response>

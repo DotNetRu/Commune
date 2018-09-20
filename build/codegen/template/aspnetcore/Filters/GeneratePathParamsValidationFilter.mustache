@@ -50,7 +50,7 @@ namespace {{packageName}}.Filters
                     }
 
                     // String Length [StringLength]
-                    int? minLenght = null, maxLength = null;
+                    int? minLength = null, maxLength = null;
 
                     // ReSharper disable once PossibleMultipleEnumeration
                     var stringLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(StringLengthAttribute));
@@ -58,7 +58,7 @@ namespace {{packageName}}.Filters
                     {
                         if (stringLengthAttr.NamedArguments.Count == 1)
                         {
-                            minLenght = (int)stringLengthAttr.NamedArguments.Single(p => string.Equals(p.MemberName, "MinimumLength", System.StringComparison.Ordinal)).TypedValue.Value;
+                            minLength = (int)stringLengthAttr.NamedArguments.Single(p => string.Equals(p.MemberName, "MinimumLength", System.StringComparison.Ordinal)).TypedValue.Value;
                         }
 
                         maxLength = (int)stringLengthAttr.ConstructorArguments[0].Value;
@@ -68,7 +68,7 @@ namespace {{packageName}}.Filters
                     var minLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(MinLengthAttribute));
                     if (minLengthAttr != null)
                     {
-                        minLenght = (int)minLengthAttr.ConstructorArguments[0].Value;
+                        minLength = (int)minLengthAttr.ConstructorArguments[0].Value;
                     }
 
                     // ReSharper disable once PossibleMultipleEnumeration
@@ -80,7 +80,7 @@ namespace {{packageName}}.Filters
 
                     if (swaggerParam is NonBodyParameter bodyParameter)
                     {
-                        bodyParameter.MinLength = minLenght;
+                        bodyParameter.MinLength = minLength;
                         bodyParameter.MaxLength = maxLength;
                     }
 

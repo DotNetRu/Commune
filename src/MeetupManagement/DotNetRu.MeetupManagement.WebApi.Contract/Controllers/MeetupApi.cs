@@ -35,7 +35,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="communityId"></param>
         /// <param name="meetupDraft"></param>
-        /// <response code="201">Draft was sucessfully created</response>
+        /// <response code="201">Draft was successfully created</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community not found</response>
@@ -52,7 +52,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
         [HttpDelete]
@@ -84,7 +84,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
         /// <param name="updateMeetupDraftProperties"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
