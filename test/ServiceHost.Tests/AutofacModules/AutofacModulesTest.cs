@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Xunit;
-using DotNetRu.ServiceHost.Autofac;
 using Autofac;
 using Autofac.Core;
+using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
@@ -13,8 +13,7 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
         public void AllComponentsRegisteredInModuleMustBeResolved()
 #pragma warning restore CA1822 // Mark members as static
         {
-            var module = new BusinessLayerModule();
-            ResolveComponents(module, new DataLayerModule());
+            ResolveComponents(new DataLayerModule());
         }
 
         private static void ResolveComponents(params Module[] modules)
