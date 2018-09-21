@@ -19,9 +19,12 @@
     <Rule Id="SA1503" Action="None" />
     <Rule Id="SA1633" Action="None" />
     <Rule Id="SA1652" Action="None" />
+    <Rule Id="SA1516" Action="None" />
 <!-- Temporary disabled -->
+    <Rule Id="SA1604" Action="None" />
     <Rule Id="SA1611" Action="None" />
     <Rule Id="SA1614" Action="None" />
     <Rule Id="SA1615" Action="None" />
+    <Rule Id="SA1627" Action="None" />
   </Rules>
 </RuleSet>

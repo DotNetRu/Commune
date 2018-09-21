@@ -1,10 +1,9 @@
-﻿
-namespace DotNetRu.MeetupManagement.Domain.Drafts
+﻿namespace DotNetRu.MeetupManagement.Domain.Drafts
 {
     public interface IMeetupDraftService
     {
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
-        MeetupDraft CreateMeetupDraft(string comminityId, string name, string description);
+        MeetupDraft CreateMeetupDraft(string communityId, string name, string description);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />
@@ -23,12 +22,12 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.FriendNotFoundException" />
-        void AddFriendReference(MeetupKey meetup, string freindId);
+        void AddFriendReference(MeetupKey meetup, string friendId);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.FriendNotFoundException" />
-        void RemoveFriendReference(MeetupKey meetup, string freindId);
+        void RemoveFriendReference(MeetupKey meetup, string friendId);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />

@@ -6,7 +6,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
     public class SpeakerDraftRepository : ISpeakerDraftRepository
     {
         /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
-        public SpeakerDraft Get(string id)
+        public SpeakerDraft GetEntity(string id)
         {
             throw new NotImplementedException();
         }

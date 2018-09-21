@@ -13,7 +13,7 @@ namespace DotNetRu.MeetupManagement.Application.Services
             _speakerDraftService = speakerDraftService ?? throw new ArgumentNullException(nameof(speakerDraftService));
         }
 
-        public SpeakerDraft CreteSpeakerDraft(string comminityId, string talkDraftId, CreateSpeakerDraftParameters parameters)
+        public SpeakerDraft CreteSpeakerDraft(string communityId, string talkDraftId, CreateSpeakerDraftParameters parameters)
         {
             throw new NotImplementedException();
         }

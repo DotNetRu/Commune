@@ -12,6 +12,5 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
 
         public TalkKey TalkKey { get; }
         public string Id { get; }
-
     }
 }

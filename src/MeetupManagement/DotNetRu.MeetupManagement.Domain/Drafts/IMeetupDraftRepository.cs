@@ -1,5 +1,4 @@
-﻿
-using DotNetRu.MeetupManagement.Domain.Shared;
+﻿using DotNetRu.MeetupManagement.Domain.Common;
 
 namespace DotNetRu.MeetupManagement.Domain.Drafts
 {

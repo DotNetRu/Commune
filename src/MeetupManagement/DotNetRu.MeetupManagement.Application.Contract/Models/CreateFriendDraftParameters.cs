@@ -1,5 +1,4 @@
-﻿
-namespace DotNetRu.MeetupManagement.Application.Contract.Models
+﻿namespace DotNetRu.MeetupManagement.Application.Contract.Models
 {
     public class CreateFriendDraftParameters
     {

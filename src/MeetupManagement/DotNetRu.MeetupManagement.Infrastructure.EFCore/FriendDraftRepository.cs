@@ -3,10 +3,10 @@ using DotNetRu.MeetupManagement.Domain.Drafts;
 
 namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
 {
-    public class FriendDarftRepository : IFriendDraftRepository
+    public class FriendDraftRepository : IFriendDraftRepository
     {
         /// <exception cref="Domain.Contract.Exceptions.FriendNotFoundException" />
-        public FriendDraft Get(string id)
+        public FriendDraft GetEntity(string id)
         {
             throw new NotImplementedException();
         }

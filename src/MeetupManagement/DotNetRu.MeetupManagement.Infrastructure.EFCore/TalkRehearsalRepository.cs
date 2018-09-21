@@ -10,7 +10,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.TalkRehearsalNotFoundException" />
-        public TalkRehearsal Get(TalkRehearsalKey id)
+        public TalkRehearsal GetEntity(TalkRehearsalKey id)
         {
             throw new NotImplementedException();
         }

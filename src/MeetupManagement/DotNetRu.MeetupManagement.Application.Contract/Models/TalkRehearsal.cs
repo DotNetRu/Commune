@@ -4,7 +4,7 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Models
 {
     public class TalkRehearsal
     {
-        public TalkRehearsal(string id) 
+        public TalkRehearsal(string id)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
         }

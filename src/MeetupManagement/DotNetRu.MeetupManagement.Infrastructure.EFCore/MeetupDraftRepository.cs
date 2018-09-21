@@ -8,7 +8,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
     {
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />
-        public MeetupDraft Get(MeetupKey id)
+        public MeetupDraft GetEntity(MeetupKey id)
         {
             throw new NotImplementedException();
         }

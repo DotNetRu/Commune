@@ -1,5 +1,4 @@
-﻿
-namespace DotNetRu.MeetupManagement.Domain.Drafts
+﻿namespace DotNetRu.MeetupManagement.Domain.Drafts
 {
     public interface ISpeakerDraftService
     {

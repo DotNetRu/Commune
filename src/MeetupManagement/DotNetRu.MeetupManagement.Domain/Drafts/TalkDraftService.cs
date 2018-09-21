@@ -8,7 +8,8 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         private readonly ITalkDraftRepository _talkDraftRepository;
         private readonly ITalkRehearsalRepository _talkRehearsalRepository;
 
-        public TalkDraftService(ITalkDraftRepository talkDraftRepository, 
+        public TalkDraftService(
+            ITalkDraftRepository talkDraftRepository,
             ITalkRehearsalRepository talkRehearsalRepository)
         {
             _talkDraftRepository = talkDraftRepository ?? throw new ArgumentNullException(nameof(talkDraftRepository));
@@ -17,7 +18,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
 
         public TalkDraft GetTalkDraft(TalkKey key)
         {
-            return _talkDraftRepository.Get(key);
+            return _talkDraftRepository.GetEntity(key);
         }
 
         public TalkDraft CreateTalkDraft(string communityId, string title, string comments)

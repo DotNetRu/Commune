@@ -1,4 +1,4 @@
-﻿using DotNetRu.MeetupManagement.Domain.Shared;
+﻿using DotNetRu.MeetupManagement.Domain.Common;
 
 namespace DotNetRu.MeetupManagement.Domain.Drafts
 {
@@ -11,7 +11,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         /// <param name="title"></param>
         /// <param name="comments"></param>
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
-        /// <exception cref="Contract.Exceptions.TalkNotFoundException" /> 
+        /// <exception cref="Contract.Exceptions.TalkNotFoundException" />
         TalkDraft Create(string communityId, string title, string comments);
 
         /// <summary>

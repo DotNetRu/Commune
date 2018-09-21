@@ -2,7 +2,7 @@
 
 namespace DotNetRu.MeetupManagement.Application.Contract.Models
 {
-    public class SpeakerDraft 
+    public class SpeakerDraft
     {
         public SpeakerDraft(string id)
         {
@@ -18,6 +18,7 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Models
         public string TwitterUrl { get; set; }
         public string GitHubUrl { get; set; }
         public Company Company { get; set; }
-        //public string PersonId { get; set; }
+
+        // public string PersonId { get; set; }
     }
 }

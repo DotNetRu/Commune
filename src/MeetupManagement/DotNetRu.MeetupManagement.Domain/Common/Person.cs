@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotNetRu.MeetupManagement.Domain.Shared
+﻿namespace DotNetRu.MeetupManagement.Domain.Common
 {
     public class Person
     {
@@ -12,8 +8,8 @@ namespace DotNetRu.MeetupManagement.Domain.Shared
         public string CompanyName { get; set; }
         public string Summary { get; set; }
         public string Phone { get; set; }
-        //public string OtherContacts { get; set; }
-        //public byte[] Photo { get; set; } // lazy load
 
+        // public string OtherContacts { get; set; }
+        // public byte[] Photo { get; set; } // lazy load
     }
 }

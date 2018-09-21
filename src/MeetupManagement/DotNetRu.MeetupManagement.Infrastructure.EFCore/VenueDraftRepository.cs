@@ -6,7 +6,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
     public class VenueDraftRepository : IVenueDraftRepository
     {
         /// <exception cref="Domain.Contract.Exceptions.VenueNotFoundException" />
-        public VenueDraft Get(string id)
+        public VenueDraft GetEntity(string id)
         {
             throw new NotImplementedException();
         }

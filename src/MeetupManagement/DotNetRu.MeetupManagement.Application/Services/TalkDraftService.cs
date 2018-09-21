@@ -104,7 +104,7 @@ namespace DotNetRu.MeetupManagement.Application.Services
 
         private static TalkRehearsal Convert(Domain.Drafts.TalkRehearsal source)
         {
-            return new TalkRehearsal(source.Id) 
+            return new TalkRehearsal(source.Id)
             {
                 Comment = source.Comment
             };

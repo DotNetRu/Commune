@@ -6,7 +6,7 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Services
     {
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
-        SpeakerDraft CreteSpeakerDraft(string comminityId, string talkDraftId, CreateSpeakerDraftParameters parameters);
+        SpeakerDraft CreteSpeakerDraft(string communityId, string talkDraftId, CreateSpeakerDraftParameters parameters);
 
         /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
         void UpdateSpeakerDraft(SpeakerDraft draft);

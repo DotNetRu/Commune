@@ -1,7 +1,5 @@
-﻿using DotNetRu.MeetupManagement.Application.Contract.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using DotNetRu.MeetupManagement.Application.Contract.Models;
 
 namespace DotNetRu.MeetupManagement.Application.Contract.Services
 {

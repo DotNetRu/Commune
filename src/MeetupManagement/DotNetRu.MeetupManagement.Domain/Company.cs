@@ -1,5 +1,4 @@
-﻿
-namespace DotNetRu.MeetupManagement.Domain
+﻿namespace DotNetRu.MeetupManagement.Domain
 {
     public class Company
     {

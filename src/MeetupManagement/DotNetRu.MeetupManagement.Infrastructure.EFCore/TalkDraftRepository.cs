@@ -44,7 +44,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
-        public TalkDraft Get(TalkKey id)
+        public TalkDraft GetEntity(TalkKey id)
         {
             throw new System.NotImplementedException();
         }

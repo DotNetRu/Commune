@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DotNetRu.MeetupManagement.Application.Contract.Models;
 
-
 namespace DotNetRu.MeetupManagement.Application.Contract.Services
 {
     public interface IMeetupDraftService
@@ -18,8 +17,12 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Services
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.VenueNotFoundException" />
-        void UpdateMeetupDraft(string communityId, string meetupId, ICollection<string> talksIds,
-            ICollection<string> speakerIds, string venueId);
+        void UpdateMeetupDraft(
+            string communityId,
+            string meetupId,
+            ICollection<string> talksIds,
+            ICollection<string> speakerIds,
+            string venueId);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />

@@ -8,6 +8,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
         }
+
         public string Id { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,6 +18,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         public string TwitterUrl { get; set; }
         public string GitHubUrl { get; set; }
         public Company Company { get; set; }
-        //public string PersonId { get; set; }
+
+        // public string PersonId { get; set; }
     }
 }

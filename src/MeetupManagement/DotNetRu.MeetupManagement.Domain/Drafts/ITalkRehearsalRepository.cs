@@ -1,5 +1,5 @@
 ﻿using System;
-using DotNetRu.MeetupManagement.Domain.Shared;
+using DotNetRu.MeetupManagement.Domain.Common;
 
 namespace DotNetRu.MeetupManagement.Domain.Drafts
 {
@@ -9,7 +9,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         /// Store new talk rehearsal
         /// </summary>
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
-        /// <exception cref="Contract.Exceptions.TalkNotFoundException" /> 
+        /// <exception cref="Contract.Exceptions.TalkNotFoundException" />
         TalkRehearsal Add(TalkKey key, string comments, DateTimeOffset time);
     }
 }

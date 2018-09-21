@@ -11,11 +11,11 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
             Key = key ?? throw new ArgumentNullException(nameof(key));
             Speakers = new List<SpeakerReference>();
             Rehearsals = new List<TalkRehearsal>();
-        } 
+        }
+
         public TalkKey Key { get; }
         public string Title { get; set; }
         public string Comments { get; set; }
-
         public ICollection<SpeakerReference> Speakers { get; }
         public ICollection<TalkRehearsal> Rehearsals { get; set; }
     }
