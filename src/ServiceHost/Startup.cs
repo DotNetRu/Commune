@@ -10,11 +10,14 @@ namespace DotNetRu.ServiceHost
 {
     public class Startup
     {
+        private readonly MeetupManagement.WebApi.Config.Startup _meetupServiceStartup;
+        private readonly ContainerBuilder _containerBuilder;
+
         public Startup(IConfiguration configuration, ContainerBuilder containerBuilder)
         {
-            Configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration));
-            _containerBuilder = containerBuilder ?? throw new System.ArgumentNullException(nameof(containerBuilder));
-            meetupServiceStartup = new MeetupManagement.WebApi.Config.Startup();
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _containerBuilder = containerBuilder ?? throw new ArgumentNullException(nameof(containerBuilder));
+            _meetupServiceStartup = new MeetupManagement.WebApi.Config.Startup();
         }
 
         public IConfiguration Configuration { get; }
@@ -22,22 +25,25 @@ namespace DotNetRu.ServiceHost
         public IContainer Container { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // ReSharper disable once UnusedMember.Global
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            meetupServiceStartup.ConfigureServices(services);
+            _meetupServiceStartup.ConfigureServices(services);
             services.AddMvcCore().AddControllersAsServices();
             _containerBuilder.Populate(services);
             return BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // ReSharper disable once UnusedMember.Global
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            meetupServiceStartup.Configure(app);
+
+            _meetupServiceStartup.Configure(app);
         }
 
         private IServiceProvider BuildServiceProvider()
@@ -47,7 +53,5 @@ namespace DotNetRu.ServiceHost
             Container = container;
             return result;
         }
-        private MeetupManagement.WebApi.Config.Startup meetupServiceStartup;
-        private readonly ContainerBuilder _containerBuilder;
     }
 }

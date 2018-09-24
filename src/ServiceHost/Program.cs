@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Autofac;
-using DotNetRu.ServiceHost.Autofac;
+using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using Serilog;
 
 namespace DotNetRu.ServiceHost
 {
-    public class Program
+    public static class Program
     {
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -18,7 +18,6 @@ namespace DotNetRu.ServiceHost
             .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
             .AddEnvironmentVariables()
             .Build();
-
 
         public static int Main(string[] args)
         {
@@ -29,7 +28,6 @@ namespace DotNetRu.ServiceHost
                 .CreateLogger();
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new BusinessLayerModule());
             containerBuilder.RegisterModule(new DataLayerModule());
             try
             {
@@ -58,7 +56,9 @@ namespace DotNetRu.ServiceHost
             }
         }
 
+#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         public static (IWebHost, IContainer) BuildWebHost(string[] args, ContainerBuilder containerBuilder)
+#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var startup = new Startup(Configuration, containerBuilder);
             var webHost = WebHost.CreateDefaultBuilder(args)
@@ -80,6 +80,5 @@ namespace DotNetRu.ServiceHost
                             .UseStartup<Startup>()
                             .Build();*/
         }
-
     }
 }

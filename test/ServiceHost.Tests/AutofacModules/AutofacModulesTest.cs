@@ -1,18 +1,19 @@
-﻿using Xunit;
-using DotNetRu.ServiceHost.Autofac;
+﻿using System.Linq;
+using Xunit;
 using Autofac;
-using System.Linq;
 using Autofac.Core;
+using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
     public class AutofacModulesTest
     {
         [Fact]
+#pragma warning disable CA1822 // Mark members as static
         public void AllComponentsRegisteredInModuleMustBeResolved()
+#pragma warning restore CA1822 // Mark members as static
         {
-            var module = new BusinessLayerModule();
-            ResolveComponents(module, new DataLayerModule());
+            ResolveComponents(new DataLayerModule());
         }
 
         private static void ResolveComponents(params Module[] modules)
@@ -31,11 +32,10 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
                 {
                     foreach (var service in registration.Services.OfType<TypedService>())
                     {
-                        var instance = container.Resolve(service.ServiceType);
+                        container.Resolve(service.ServiceType);
                     }
                 }
             }
-
         }
     }
 }

@@ -22,13 +22,15 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
 
             foreach (var par in pars)
             {
-                var swaggerParam = operation.Parameters.SingleOrDefault(p => p.Name == par.Name);
+                var swaggerParam = operation.Parameters.SingleOrDefault(p => string.Equals(p.Name, par.Name, System.StringComparison.Ordinal));
 
                 var attributes = ((ControllerParameterDescriptor)par.ParameterDescriptor).ParameterInfo.CustomAttributes;
 
-                if (attributes != null && attributes.Count() > 0 && swaggerParam != null)
+                // ReSharper disable once PossibleMultipleEnumeration
+                if (attributes != null && attributes.Any() && swaggerParam != null)
                 {
                     // Required - [Required]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var requiredAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RequiredAttribute));
                     if (requiredAttr != null)
                     {
@@ -36,57 +38,64 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
                     }
 
                     // Regex Pattern [RegularExpression]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var regexAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RegularExpressionAttribute));
                     if (regexAttr != null)
                     {
                         string regex = (string)regexAttr.ConstructorArguments[0].Value;
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is NonBodyParameter parameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Pattern = regex;
+                            parameter.Pattern = regex;
                         }
                     }
 
                     // String Length [StringLength]
-                    int? minLenght = null, maxLength = null;
+                    int? minLength = null, maxLength = null;
+
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var stringLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(StringLengthAttribute));
                     if (stringLengthAttr != null)
                     {
                         if (stringLengthAttr.NamedArguments.Count == 1)
                         {
-                            minLenght = (int)stringLengthAttr.NamedArguments.Single(p => p.MemberName == "MinimumLength").TypedValue.Value;
+                            minLength = (int)stringLengthAttr.NamedArguments.Single(p => string.Equals(p.MemberName, "MinimumLength", System.StringComparison.Ordinal)).TypedValue.Value;
                         }
+
                         maxLength = (int)stringLengthAttr.ConstructorArguments[0].Value;
                     }
 
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var minLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(MinLengthAttribute));
                     if (minLengthAttr != null)
                     {
-                        minLenght = (int)minLengthAttr.ConstructorArguments[0].Value;
+                        minLength = (int)minLengthAttr.ConstructorArguments[0].Value;
                     }
 
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var maxLengthAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(MaxLengthAttribute));
                     if (maxLengthAttr != null)
                     {
                         maxLength = (int)maxLengthAttr.ConstructorArguments[0].Value;
                     }
 
-                    if (swaggerParam is NonBodyParameter)
+                    if (swaggerParam is NonBodyParameter bodyParameter)
                     {
-                        ((NonBodyParameter)swaggerParam).MinLength = minLenght;
-                        ((NonBodyParameter)swaggerParam).MaxLength = maxLength;
+                        bodyParameter.MinLength = minLength;
+                        bodyParameter.MaxLength = maxLength;
                     }
 
                     // Range [Range]
+                    // ReSharper disable once PossibleMultipleEnumeration
                     var rangeAttr = attributes.FirstOrDefault(p => p.AttributeType == typeof(RangeAttribute));
                     if (rangeAttr != null)
                     {
                         int rangeMin = (int)rangeAttr.ConstructorArguments[0].Value;
                         int rangeMax = (int)rangeAttr.ConstructorArguments[1].Value;
 
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is NonBodyParameter parameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Minimum = rangeMin;
-                            ((NonBodyParameter)swaggerParam).Maximum = rangeMax;
+                            parameter.Minimum = rangeMin;
+                            parameter.Maximum = rangeMax;
                         }
                     }
                 }
@@ -94,4 +103,3 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Filters
         }
     }
 }
-

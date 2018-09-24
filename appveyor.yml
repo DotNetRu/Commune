@@ -28,12 +28,34 @@ skip_commits:
 init:
   - git config --global core.autocrlf false
 
-build_script:
-  - dotnet build ./src/ServiceHost/ServiceHost.csproj --configuration Release
-  - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts
+configuration:
+  - Release
 
-test_script:
-  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release
-  - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2017
+    before_build:
+      - dotnet restore DotNetRu.Server.sln
+    after_test:
+      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+  -
+    matrix:
+      only:
+        - image: Ubuntu
+    after_test:
+      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
 
+build:
+  project: DotNetRu.Server.sln
+  publish_nuget: false
+  publish_aspnet_core: false
+  publish_core_console: false
+  verbosity: minimal
+
+#test_script:
+#  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+# - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
+#
 deploy: off

@@ -39,7 +39,7 @@ paths:
           $ref: "#/definitions/CreateMeetupDraftParameters"          
       responses:
         201:
-          description: "Draft was sucessfully created"
+          description: "Draft was successfully created"
         401:
           $ref: "#/responses/Unauthorized"
         400:
@@ -79,7 +79,7 @@ paths:
           $ref: "#/definitions/UpdateMeetupDraftParameters"          
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -93,7 +93,7 @@ paths:
       operationId: "DeleteMeetupDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -118,7 +118,7 @@ paths:
           $ref: "#/definitions/CreateSpeakerDraftParameters"
       responses:
         201:
-          description: "Draft was sucessfully created"
+          description: "Draft was successfully created"
         401:
           $ref: "#/responses/Unauthorized"
         400:
@@ -153,7 +153,7 @@ paths:
           $ref: "#/definitions/UpdateSpeakerDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -167,7 +167,7 @@ paths:
       operationId: "DeleteSpeakerDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -192,7 +192,7 @@ paths:
           $ref: "#/definitions/CreateVenueDraftParameters"
       responses:
         201:
-          description: "Draft was sucessfully created"
+          description: "Draft was successfully created"
         401:
           $ref: "#/responses/Unauthorized"
         400:
@@ -228,7 +228,7 @@ paths:
             $ref: "#/definitions/UpdateVenueDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -242,7 +242,7 @@ paths:
       operationId: "DeleteVenueDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -268,7 +268,7 @@ paths:
           $ref: "#/definitions/CreateTalkDraftParameters"
       responses:
         201:
-          description: "Draft was sucessfully created"
+          description: "Draft was successfully created"
         401:
           $ref: "#/responses/Unauthorized"
         400:
@@ -280,7 +280,6 @@ paths:
       tags:
       - Talk
       summary: "Get talk draft"
-      description: "Get talk draft"
       operationId: "GetTalkDraft"
       parameters: []
       responses:
@@ -306,7 +305,7 @@ paths:
           $ref: "#/definitions/UpdateTalkDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -320,7 +319,7 @@ paths:
       operationId: "DeleteTalkDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -346,7 +345,7 @@ paths:
           $ref: "#/definitions/CreateFriendDraftParameters"
       responses:
         201:
-          description: "Draft was sucessfully created"
+          description: "Draft was successfully created"
         401:
           $ref: "#/responses/Unauthorized"
         400:
@@ -358,7 +357,6 @@ paths:
       tags:
       - Friend
       summary: "Get friend draft"
-      description: "Get friend draft"
       operationId: "GetFriendDraft"
       parameters: []
       responses:
@@ -384,7 +382,7 @@ paths:
           $ref: "#/definitions/UpdateFriendDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -399,7 +397,7 @@ paths:
       parameters: []
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -428,7 +426,7 @@ definitions:
       Id:
         type: string
         maxLength: 64
-  Name:
+  NameProperty:
     type: object
     required:
     - Name
@@ -462,7 +460,7 @@ definitions:
     type: "object"
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
-      - $ref: "#/definitions/Name"
+      - $ref: "#/definitions/NameProperty"
       - $ref: "#/definitions/CommunityIdentifier" 
   TalkReference:
     allOf:
@@ -486,16 +484,16 @@ definitions:
   VenueReference:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
   FriendReference:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"        
+    - $ref:  "#/definitions/NameProperty"        
   # Description for meetup
   CreateMeetupDraftParameters:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
-      - $ref: "#/definitions/Name"
+      - $ref: "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels"
       
@@ -528,7 +526,7 @@ definitions:
   MeetupDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"    
-    - $ref: "#/definitions/Name"
+    - $ref: "#/definitions/NameProperty"
     - properties:
         Venue:
           $ref: "#/definitions/VenueReference"
@@ -616,7 +614,7 @@ definitions:
   CreateFriendDraftParameters:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels" 
       
@@ -653,7 +651,7 @@ definitions:
   FriendDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     - properties:
         Name:
           type: "string"
@@ -685,7 +683,7 @@ definitions:
     type: "object"
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     x-restlet:
       section: "DraftModels"
 
@@ -723,7 +721,7 @@ definitions:
   VenueDraft:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/Name"
+    - $ref:  "#/definitions/NameProperty"
     - properties:
         Address:
           type: "string"
