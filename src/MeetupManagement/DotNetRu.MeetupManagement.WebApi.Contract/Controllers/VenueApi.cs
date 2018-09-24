@@ -12,7 +12,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.Annotations;
 using DotNetRu.MeetupManagement.WebApi.Contract.Attributes;
 using DotNetRu.MeetupManagement.WebApi.Contract.Models;
 
