@@ -11,7 +11,6 @@ namespace {{packageName}}.Filters
     {
         private readonly XmlCommentsOperationFilter _filter;
 
-        /// <inheritdoc />
         public InheritXmlCommentOperationFilter(XmlCommentsOperationFilter filter)
         {
             _filter = filter;
@@ -19,7 +18,7 @@ namespace {{packageName}}.Filters
 
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            //_filter.Apply(operation, context);
+            // _filter.Apply(operation, context);
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descr)
             {
                 var prev = descr.MethodInfo;
@@ -27,8 +26,6 @@ namespace {{packageName}}.Filters
                 _filter.Apply(operation, context);
                 descr.MethodInfo = prev;
             }
-
-
         }
     }
 }

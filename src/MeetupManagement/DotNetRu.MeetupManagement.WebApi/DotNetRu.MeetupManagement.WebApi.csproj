@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$(SolutionDir)\Common.props" />
+  <Import Project="$(SolutionDir)\CodeAnalysis.props" />
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputPath>..\..\bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetRu.MeetupManagement.BusinessLayer.Contract\DotNetRu.MeetupManagement.BusinessLayer.Contract.csproj" />
     <ProjectReference Include="..\DotNetRu.MeetupManagement.WebApi.Contract\DotNetRu.MeetupManagement.WebApi.Contract.csproj" />
   </ItemGroup>
 

@@ -1,9 +1,9 @@
-﻿using DotNetRu.MeetupManagement.WebApi.Contract.Controllers;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using DotNetRu.MeetupManagement.WebApi.Contract.Controllers;
 using DotNetRu.MeetupManagement.WebApi.Contract.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace DotNetRu.MeetupManagement.WebApi.Controllers
 {
@@ -11,6 +11,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
     {
         private readonly ILogger<MeetupController> _logger;
 
+        // ReSharper disable once UnusedMember.Global
         public MeetupController(ILogger<MeetupController> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)\Common.props"/>
+  <Import Project="$(SolutionDir)\CodeAnalysis.props"/>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputPath>..\..\bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain.Contract\DotNetRu.MeetupManagement.Domain.Contract.csproj" />
+  </ItemGroup>
+
+</Project>
