@@ -23,10 +23,6 @@ environment:
   DOCKER_PASS:
     secure: 7xusxxMFy9iURl0Ktuzri5XyT3/NDKlsU3kkfJ+Sq90=
 
-branches:
-  only:
-    - master
-
 skip_commits:
   files:
     - README.md
@@ -46,10 +42,19 @@ for:
       - dotnet restore DotNetRu.Server.sln
     after_test:
       - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+  -
+    matrix:
+      only:
+        - image: Ubuntu
+    after_test:
+      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
   - 
     matrix:
       only:
         - image: Ubuntu
+    branches:
+      only:
+        - master
     before_build:
       - dotnet restore DotNetRu.Server.sln
     build_script:
