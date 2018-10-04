@@ -1,8 +1,3 @@
-# Prevent windows container build
-if($isWindows){
-    exit 0
-}
-
 Write-Host Starting build docker
 $Version=$env:APPVEYOR_BUILD_VERSION
 

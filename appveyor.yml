@@ -1,4 +1,5 @@
 image:
+- Visual Studio 2017
 - Ubuntu
 
 version: 0.1.0.{build}
@@ -33,8 +34,40 @@ skip_commits:
 init:
   - git config --global core.autocrlf false
 
-build_script:
-  - ps: .\build\build-docker.ps1
+configuration:
+  - Release
 
-deploy_script:
-  - ps: .\build\deploy-docker.ps1
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2017
+      before_build:
+        - dotnet restore DotNetRu.Server.sln
+      after_test:
+        - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=%APPVEYOR_BUILD_FOLDER% /p:SolutionName=DotNetRu.Server
+  -
+    matrix:
+      only:
+        - image: Ubuntu
+      before_build:
+        - dotnet restore DotNetRu.Server.sln
+      build_script:
+        - ps: .\build\build-docker.ps1
+      deploy_script:
+        - ps: .\build\deploy-docker.ps1
+      after_test:
+        - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+
+build:
+  project: DotNetRu.Server.sln
+  publish_nuget: false
+  publish_aspnet_core: false
+  publish_core_console: false
+  verbosity: minimal
+
+#test_script:
+#  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+# - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
+#
+deploy: off

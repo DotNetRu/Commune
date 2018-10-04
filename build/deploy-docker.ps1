@@ -1,13 +1,7 @@
-# Prevent windows container build
-if($isWindows){
-    exit 0
-}
-
-Write-Host Starting deploy docker
-Write-Host Docker login
+Write-Host Starting deploy docker image
 
 $env:DOCKER_PASS | docker login --username dotnetrucd --password-stdin
 
-Write-Host Push to docker hub
+Write-Host Push image to docker hub
 
 docker push dotnetru/server
