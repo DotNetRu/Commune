@@ -46,6 +46,9 @@ for:
     matrix:
       only:
         - image: Ubuntu
+    branches:
+      except:
+        - master
     after_test:
       - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
   - 
