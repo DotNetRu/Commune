@@ -20,6 +20,8 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   # Disable sending usage data to Microsoft
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOCKER_PASS:
+    secure: 7xusxxMFy9iURl0Ktuzri5XyT3/NDKlsU3kkfJ+Sq90=
 
 skip_commits:
   files:
@@ -44,6 +46,24 @@ for:
     matrix:
       only:
         - image: Ubuntu
+    branches:
+      except:
+        - master
+    after_test:
+      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+  - 
+    matrix:
+      only:
+        - image: Ubuntu
+    branches:
+      only:
+        - master
+    before_build:
+      - dotnet restore DotNetRu.Server.sln
+    build_script:
+      - ps: .\build\build-docker.ps1
+    deploy_script:
+      - ps: .\build\deploy-docker.ps1
     after_test:
       - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
 
