@@ -1,5 +1,5 @@
 ## Build stage
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /build
 
 # Copy source
@@ -16,7 +16,7 @@ RUN dotnet test test/ServiceHost.Tests/ServiceHost.Tests.csproj /p:SolutionDir=/
 RUN dotnet publish src/ServiceHost/ServiceHost.csproj -o /publish /p:SolutionDir=/build /p:SolutionName=DotNetRu.Server
 
 ## Runtime stage
-FROM microsoft/aspnetcore:2.0
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 COPY --from=build-env /publish /app
 
 WORKDIR /app
