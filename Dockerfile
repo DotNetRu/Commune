@@ -1,26 +1,22 @@
 ## Build stage
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /build
-
-# Restore dependencies
-COPY src/ServiceHost/ServiceHost.csproj ./src/ServiceHost/
-COPY test/ServiceHost.Tests/ServiceHost.Tests.csproj ./test/ServiceHost.Tests/
-
-RUN dotnet restore src/ServiceHost/ServiceHost.csproj
-RUN dotnet restore test/ServiceHost.Tests/ServiceHost.Tests.csproj
 
 # Copy source
 COPY . .
 
+# Restore dependencies
+RUN dotnet restore src/ServiceHost/ServiceHost.csproj /p:SolutionDir=/build /p:SolutionName=DotNetRu.Server
+RUN dotnet restore test/ServiceHost.Tests/ServiceHost.Tests.csproj /p:SolutionDir=/build /p:SolutionName=DotNetRu.Server
+
 # Run tests
-RUN dotnet test test/ServiceHost.Tests/ServiceHost.Tests.csproj
+RUN dotnet test test/ServiceHost.Tests/ServiceHost.Tests.csproj /p:SolutionDir=/build /p:SolutionName=DotNetRu.Server
 
 # Publish stage
-RUN dotnet publish src/ServiceHost/ServiceHost.csproj -o /publish
-
+RUN dotnet publish src/ServiceHost/ServiceHost.csproj -o /publish /p:SolutionDir=/build /p:SolutionName=DotNetRu.Server
 
 ## Runtime stage
-FROM microsoft/aspnetcore:2.0
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 COPY --from=build-env /publish /app
 
 WORKDIR /app
