@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		DotNetRu.Server.ruleset = DotNetRu.Server.ruleset
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRu.MeetupManagement.Infrastructure.Telegram", "src\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.Telegram\DotNetRu.MeetupManagement.Infrastructure.Telegram.csproj", "{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +193,18 @@ Global
 		{90918CB2-0FCE-42F0-8241-923EDBB57ED0}.Release|x64.Build.0 = Release|Any CPU
 		{90918CB2-0FCE-42F0-8241-923EDBB57ED0}.Release|x86.ActiveCfg = Release|Any CPU
 		{90918CB2-0FCE-42F0-8241-923EDBB57ED0}.Release|x86.Build.0 = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|x64.Build.0 = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Debug|x86.Build.0 = Debug|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|x64.Build.0 = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,6 +220,7 @@ Global
 		{BA3914BD-CEFF-4961-AC9E-D776B8DF6303} = {7897F236-06FD-4246-8D6C-E511C07035B7}
 		{35E9D093-65F3-4323-889F-AE7F8EB5A4F8} = {7897F236-06FD-4246-8D6C-E511C07035B7}
 		{90918CB2-0FCE-42F0-8241-923EDBB57ED0} = {7897F236-06FD-4246-8D6C-E511C07035B7}
+		{4F8861C5-2A11-4FDE-83FE-79CC0AE681A9} = {7897F236-06FD-4246-8D6C-E511C07035B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C2A932-4F39-48F0-8562-5580B2AAE008}
