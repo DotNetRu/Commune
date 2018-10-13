@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
-    </PropertyGroup>
+  <Import Project="$(SolutionDir)\Common.props"/>
+  <Import Project="$(SolutionDir)\CodeAnalysis.props"/>
 
-    <ItemGroup>
-      <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain\DotNetRu.MeetupManagement.Domain.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Telegram.Bot" Version="14.10.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.Domain\DotNetRu.MeetupManagement.Domain.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Telegram.Bot" Version="14.10.0"/>
+  </ItemGroup>
 
 </Project>

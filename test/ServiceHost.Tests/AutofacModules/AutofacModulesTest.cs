@@ -3,6 +3,8 @@ using Xunit;
 using Autofac;
 using Autofac.Core;
 using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
+using DotNetRu.ServiceHost.Autofac;
+using Microsoft.Extensions.Configuration;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
@@ -13,7 +15,8 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
         public void AllComponentsRegisteredInModuleMustBeResolved()
 #pragma warning restore CA1822 // Mark members as static
         {
-            ResolveComponents(new DataLayerModule());
+            IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            ResolveComponents(new ConfigurationModule(configuration), new DataLayerModule());
         }
 
         private static void ResolveComponents(params Module[] modules)

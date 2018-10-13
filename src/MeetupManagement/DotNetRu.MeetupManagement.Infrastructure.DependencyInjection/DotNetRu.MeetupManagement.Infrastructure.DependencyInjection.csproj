@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(SolutionDir)\Common.props"/>
-  <Import Project="$(SolutionDir)\CodeAnalysis.props"/>
+  <Import Project="$(SolutionDir)\Common.props" />
+  <Import Project="$(SolutionDir)\CodeAnalysis.props" />
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputPath>..\..\bin\$(Configuration)</OutputPath>
@@ -9,5 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotNetRu.MeetupManagement.Infrastructure.EFCore\DotNetRu.MeetupManagement.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.Infrastructure.Telegram\DotNetRu.MeetupManagement.Infrastructure.Telegram.csproj" />
   </ItemGroup>
 </Project>
