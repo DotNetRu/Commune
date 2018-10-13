@@ -41,6 +41,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.DependencyInjection\DotNetRu.MeetupManagement.Infrastructure.DependencyInjection.csproj" />
     <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.EFCore\DotNetRu.MeetupManagement.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Infrastructure.Telegram\DotNetRu.MeetupManagement.Infrastructure.Telegram.csproj" />
+    <ProjectReference Include="..\MeetupManagement\DotNetRu.MeetupManagement.Application\DotNetRu.MeetupManagement.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

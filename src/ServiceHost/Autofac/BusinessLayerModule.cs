@@ -1,12 +1,13 @@
 ﻿namespace DotNetRu.ServiceHost.Autofac
 {
+    using DotNetRu.MeetupManagement.Application.Services;
     using global::Autofac;
 
     public class BusinessLayerModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // register components
+            builder.RegisterType<ISocialIntegrationService>().AsImplementedInterfaces();
         }
     }
 }

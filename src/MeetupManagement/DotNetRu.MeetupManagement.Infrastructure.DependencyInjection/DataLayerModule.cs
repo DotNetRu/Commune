@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DotNetRu.MeetupManagement.Domain.SocialNetworks;
 using DotNetRu.MeetupManagement.Infrastructure.EFCore;
 
 namespace DotNetRu.MeetupManagement.Infrastructure.DependencyInjection
@@ -9,6 +10,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.DependencyInjection
         {
             builder.RegisterType<TalkDraftRepository>().AsImplementedInterfaces();
             builder.RegisterType<TalkRehearsalRepository>().AsImplementedInterfaces();
+            builder.RegisterType<ITelegramGateway>().AsImplementedInterfaces();
         }
     }
 }
