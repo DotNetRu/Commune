@@ -46,9 +46,6 @@ for:
     matrix:
       only:
         - image: Ubuntu
-    branches:
-      only:
-        - master
     before_build:
       - dotnet restore DotNetRu.Server.sln
     build_script:
