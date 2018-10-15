@@ -46,26 +46,17 @@ for:
     matrix:
       only:
         - image: Ubuntu
-    branches:
-      except:
-        - master
-    after_test:
-      - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-  - 
-    matrix:
-      only:
-        - image: Ubuntu
-    branches:
-      only:
-        - master
     before_build:
       - dotnet restore DotNetRu.Server.sln
     build_script:
       - ps: .\build\build-docker.ps1
-    deploy_script:
-      - ps: .\build\deploy-docker.ps1
+    test_script:
+      - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+      - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
     after_test:
       - dotnet publish ./src/ServiceHost/ServiceHost.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
+    deploy_script:
+      - ps: .\build\deploy-docker.ps1
 
 build:
   project: DotNetRu.Server.sln
@@ -74,8 +65,4 @@ build:
   publish_core_console: false
   verbosity: minimal
 
-#test_script:
-#  - dotnet build ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-# - dotnet test ./test/ServiceHost.Tests/ServiceHost.Tests.csproj --configuration Release --no-build
-#
 deploy: off
