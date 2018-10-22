@@ -7,7 +7,6 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ISocialIntegrationService>().AsImplementedInterfaces();
         }
     }
 }

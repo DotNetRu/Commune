@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
+using DotNetRu.MeetupManagement.Infrastructure.Telegram;
 
 namespace DotNetRu.ServiceHost
 {

@@ -20,7 +20,7 @@
                 var settings = new TelegramGatewaySettings();
                 _configuration.GetSection("SocialNetworks").GetSection("Telegram").Bind(settings);
                 return settings;
-            }).SingleInstance();
+            });
         }
     }
 }
