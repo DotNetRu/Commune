@@ -30,11 +30,4 @@
     <AdditionalFiles Include="$(SolutionDir)\$(SolutionName).ruleset" Link="Properties\$(SolutionName).ruleset" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="AutofacModules\appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

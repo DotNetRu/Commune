@@ -29,7 +29,6 @@ namespace DotNetRu.ServiceHost
                 .CreateLogger();
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new ConfigurationModule(Configuration));
             containerBuilder.RegisterModule(new DataLayerModule());
             try
             {

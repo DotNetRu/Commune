@@ -3,8 +3,9 @@ using Xunit;
 using Autofac;
 using Autofac.Core;
 using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
-using DotNetRu.ServiceHost.Autofac;
-using Microsoft.Extensions.Configuration;
+using DotNetRu.MeetupManagement.Infrastructure.Telegram;
+using Microsoft.Extensions.Options;
+using Moq;
 
 namespace DotNetRu.ServiceHost.Tests.AutofacModules
 {
@@ -15,13 +16,19 @@ namespace DotNetRu.ServiceHost.Tests.AutofacModules
         public void AllComponentsRegisteredInModuleMustBeResolved()
 #pragma warning restore CA1822 // Mark members as static
         {
-            IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            ResolveComponents(new ConfigurationModule(configuration), new DataLayerModule());
+            ResolveComponents(new DataLayerModule());
+        }
+
+        private static void ConfigureMockSettings(ContainerBuilder builder)
+        {
+            builder.Register(args => Mock.Of<IOptions<TelegramGatewaySettings>>());
         }
 
         private static void ResolveComponents(params Module[] modules)
         {
             var builder = new ContainerBuilder();
+            ConfigureMockSettings(builder);
+            
             foreach (var module in modules)
             {
                 builder.RegisterModule(module);

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
-using DotNetRu.MeetupManagement.Infrastructure.Telegram;
+using DotNetRu.ServiceHost.Autofac;
 
 namespace DotNetRu.ServiceHost
 {
@@ -29,6 +29,7 @@ namespace DotNetRu.ServiceHost
         // ReSharper disable once UnusedMember.Global
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureSettings(Configuration);
             _meetupServiceStartup.ConfigureServices(services);
             services.AddMvcCore().AddControllersAsServices();
             _containerBuilder.Populate(services);
