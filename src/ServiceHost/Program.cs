@@ -2,6 +2,7 @@
 using System.IO;
 using Autofac;
 using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
+using DotNetRu.MeetupManagement.Infrastructure.EFCore.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace DotNetRu.ServiceHost
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new DataLayerModule());
+            containerBuilder.RegisterInstance(Configuration);
             try
             {
                 Log.Information("Getting the motors running...");
@@ -67,6 +69,13 @@ namespace DotNetRu.ServiceHost
                 .ConfigureServices(services => services.AddSingleton(typeof(Startup), startup))
                 .UseSerilog()
                 .Build();
+
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<MeetupManagement.Infrastructure.EFCore.DataContext>();
+                context.Migrate();
+            }
+
             return (webHost, startup.Container);
             /*return new WebHostBuilder()
                             .UseKestrel(options =>
