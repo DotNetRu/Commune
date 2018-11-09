@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-
-namespace DotNetRu.MeetupManagement.WebApi.Tests
+﻿namespace DotNetRu.MeetupManagement.WebApi.Tests
 {
-    using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Security.Principal;
     using DotNetRu.MeetupManagement.Application.Contract.Services;
@@ -95,7 +92,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Tests
         public void GetMeetupDraftSuccessTest()
         {
             var initializedObjects = this.Init(true);
-            initializedObjects.ServiceDependency.Setup(s => s.GetMeetupDraft("111-111", "1")).Returns(() => new Application.Contract.Models.MeetupDraft ("1", "111-111") { Friends = new List<Application.Contract.Models.FriendReference>(), Venue = new Application.Contract.Models.VenueReference("1", "Venue", false) });
+            initializedObjects.ServiceDependency.Setup(s => s.GetMeetupDraft("111-111", "1")).Returns(() => new Application.Contract.Models.MeetupDraft("1", "111-111") { Friends = new List<Application.Contract.Models.FriendReference>(), Venue = new Application.Contract.Models.VenueReference("1", "Venue", false) });
 
             initializedObjects.Controller.GetMeetupDraft("111-111", "1");
             Assert.Equal(initializedObjects.Controller.Response.StatusCode, (int)HttpStatusCode.OK);
