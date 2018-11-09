@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using DotNetRu.MeetupManagement.Application.Contract.Services;
+using DotNetRu.MeetupManagement.Application.Services;
+using DotNetRu.MeetupManagement.Domain.Contract.Exceptions;
 using DotNetRu.MeetupManagement.WebApi.Contract.Controllers;
 using DotNetRu.MeetupManagement.WebApi.Contract.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,25 +28,92 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
 
         public override void CreateMeetupDraft([FromRoute, Required] string communityId, [FromBody] CreateMeetupDraftParameters meetupDraft)
         {
-            var meetUp = _meetupDraftService.CreateMeetupDraft(communityId, meetupDraft.Name);
+            if (ValidateRequest(new List<string> { communityId, meetupDraft.Id, meetupDraft.Name }))
+            {
+                try
+                {
+                    var meetUp = _meetupDraftService.CreateMeetupDraft(communityId, meetupDraft.Name);
+                    this.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
+                }
+                catch (CommunityNotFoundException)
+                {
+                    this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                }
+            }
 
             // ToDo: my guess, we need to return meetup id at least
         }
 
         public override void DeleteMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId)
         {
-            _meetupDraftService.DeleteMeetupDraft(communityId, meetupId);
+            if (ValidateRequest(new List<string> { communityId, meetupId }))
+            {
+                try
+                {
+                    _meetupDraftService.DeleteMeetupDraft(communityId, meetupId);
+                    this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                }
+                catch (Exception ex)
+                {
+                    if (ex is CommunityNotFoundException || ex is MeetupNotFoundException)
+                    {
+                        this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
         }
 
         public override Contract.Models.MeetupDraft GetMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId)
         {
-            var result = _meetupDraftService.GetMeetupDraft(communityId, meetupId);
-            return Map(result);
+            if (ValidateRequest(new List<string> { communityId, meetupId }))
+            {
+                try
+                {
+                    var result = _meetupDraftService.GetMeetupDraft(communityId, meetupId);
+                    this.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+                    return Map(result);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is CommunityNotFoundException || ex is MeetupNotFoundException)
+                    {
+                        this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public override void UpdateMeetupDraft([FromRoute, Required] string communityId, [FromRoute, Required] string meetupId, [FromBody] UpdateMeetupDraftParameters updateMeetupDraftProperties)
         {
-            _meetupDraftService.UpdateMeetupDraft(communityId, meetupId, updateMeetupDraftProperties.TalkIds, updateMeetupDraftProperties.SpeakerIds, updateMeetupDraftProperties.VenueId);
+            if (ValidateRequest(new List<string> { communityId, meetupId }))
+            {
+                try
+                {
+                    _meetupDraftService.UpdateMeetupDraft(communityId, meetupId, updateMeetupDraftProperties.TalkIds, updateMeetupDraftProperties.SpeakerIds, updateMeetupDraftProperties.VenueId);
+                    this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                }
+                catch (Exception ex)
+                {
+                    if (ex is CommunityNotFoundException || ex is MeetupNotFoundException)
+                    {
+                        this.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
         }
 
         private Contract.Models.MeetupDraft Map(Application.Contract.Models.MeetupDraft source)
@@ -76,6 +148,22 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
         private TalkReference Map(Application.Contract.Models.TalkDraft source)
         {
             return new TalkReference { Id = source.Id, Title = source.Title };
+        }
+
+        private bool ValidateRequest(List<string> parameters)
+        {
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                this.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return false;
+            }
+            else if (parameters.Any(p => string.IsNullOrEmpty(p)))
+            {
+                this.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return false;
+            }
+
+            return true;
         }
     }
 }

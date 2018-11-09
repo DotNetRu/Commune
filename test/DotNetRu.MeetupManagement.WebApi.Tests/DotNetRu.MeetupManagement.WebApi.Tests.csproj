@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Moq" Version="4.10.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
       <PrivateAssets>all</PrivateAssets>
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MeetupManagement\DotNetRu.MeetupManagement.Application\DotNetRu.MeetupManagement.Application.csproj" />
     <ProjectReference Include="..\..\src\MeetupManagement\DotNetRu.MeetupManagement.WebApi\DotNetRu.MeetupManagement.WebApi.csproj" />
   </ItemGroup>
 
