@@ -1,0 +1,29 @@
+<div class="base-component-container">
+
+    <mat-form-field class="full-width">
+        <input type="text"
+               placeholder="Поиск спикера"
+               matInput
+               [formControl]="speakersControl"
+               [matAutocomplete]="auto">
+
+        <mat-autocomplete autoActiveFirstOption
+                          #auto="matAutocomplete"
+                          (optionSelected)="onSelected($event.option.value)">
+            <mat-option *ngFor="let speaker of speakers$ | async"
+                        [value]="speaker">
+                {{ speaker.name }}
+            </mat-option>
+        </mat-autocomplete>
+
+        <a [routerLink]="['/speaker-creator']"
+           color="primary"
+           mat-button
+           matSuffix>
+            <mat-icon>add</mat-icon>
+            <span>Добавить</span>
+        </a>
+
+    </mat-form-field>
+
+</div>

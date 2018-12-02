@@ -1,5 +1,13 @@
+using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using DevActivator.Common.BL.Caching;
+using DevActivator.Common.BL.Config;
+using DevActivator.Meetup.BL;
+using DevActivator.Meetup.DAL.Providers;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +16,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace ElectronNetAngular
 {
@@ -21,14 +30,43 @@ namespace ElectronNetAngular
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            StaticVirtualFolderPath = Configuration[$"{nameof(Settings)}:{nameof(Settings.AuditRepoDirectory)}"];
         }
+
+        private string _staticVirtualFolderPath;
+
+        private string StaticVirtualFolderPath
+        {
+            get => _staticVirtualFolderPath;
+            set => _staticVirtualFolderPath = Directory.Exists(value)
+                ? value
+                : throw new DirectoryNotFoundException(value);
+        }
+
+        public IContainer ApplicationContainer { get; private set; }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             services.AddMvc();
+
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+
+            builder.RegisterType<MemCache>().As<ICache>().SingleInstance();
+
+
+            var settings = new Settings();
+            Configuration.Bind(nameof(Settings), settings);
+
+            builder.RegisterModule(new MeetupModule<SpeakerProvider>(settings));
+
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +94,13 @@ namespace ElectronNetAngular
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(StaticVirtualFolderPath),
+                RequestPath = new PathString("/static"),
+                EnableDirectoryBrowsing = false
+            });
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -79,7 +124,7 @@ namespace ElectronNetAngular
             _browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
                 Show = false
-            });
+            }).ConfigureAwait(false);
 
             _browserWindow.OnReadyToShow += () => _browserWindow.Show();
         }

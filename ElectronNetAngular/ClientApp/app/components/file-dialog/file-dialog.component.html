@@ -1,0 +1,14 @@
+<input type="file"
+       [accept]="accept"
+       [multiple]="multiple"
+       (change)="onNativeInputFileSelect($event)"
+       #inputFile
+       hidden>
+<button type="button"
+        color="primary"
+        mat-button
+        [disabled]="disabled"
+        (click)="uploadFile()">
+    <mat-icon>file_upload</mat-icon>
+    <span>Загрузить</span>
+</button>

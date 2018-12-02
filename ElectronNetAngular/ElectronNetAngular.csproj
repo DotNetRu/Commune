@@ -6,6 +6,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
     <PackageReference Include="ElectronNET.API" Version="0.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
   </ItemGroup>
@@ -49,5 +50,9 @@
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DevActivator.Meetup.BL\DevActivator.Meetup.BL.csproj" />
+    <ProjectReference Include="..\DevActivator.Meetup.DAL\DevActivator.Meetup.DAL.csproj" />
   </ItemGroup>
 </Project>

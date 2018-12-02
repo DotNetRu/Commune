@@ -1,0 +1,11 @@
+<mat-drawer-container autosize>
+
+    <mat-drawer #drawer>
+        <mtp-menu></mtp-menu>
+    </mat-drawer>
+
+    <mtp-toolbar [drawer]="drawer"></mtp-toolbar>
+
+    <router-outlet></router-outlet>
+
+</mat-drawer-container>

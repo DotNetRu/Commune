@@ -1,0 +1,87 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "codelyzer"
+    ],
+    "jsRules": {},
+    "rules": {
+        "max-line-length": [
+            true,
+            {
+                "limit": 120,
+                "ignore-pattern": "^import |^export {(.*?)}"
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore"
+        ],
+        "no-console": {
+            "severity": "warning",
+            "options": [
+                "log"
+            ]
+        },
+        // The rule have the following arguments:
+        // [ENABLED, "attribute" | "element", "selectorPrefix" | ["listOfPrefixes"], "camelCase" | "kebab-case"]
+        "directive-selector": [
+            true,
+            "attribute",
+            [
+                "dir-prefix1",
+                "dir-prefix2"
+            ],
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            [
+                "mtp"
+            ],
+            "kebab-case"
+        ],
+        "angular-whitespace": [
+            true,
+            "check-interpolation",
+            "check-semicolon"
+        ],
+        "use-input-property-decorator": true,
+        "use-output-property-decorator": true,
+        "use-host-property-decorator": true,
+        "no-attribute-parameter-decorator": true,
+        "no-input-rename": true,
+        "no-output-on-prefix": true,
+        "no-output-rename": true,
+        "no-forward-ref": true,
+        "use-life-cycle-interface": true,
+        "use-pipe-transform-interface": true,
+        "no-output-named-after-standard-event": true,
+        "max-inline-declarations": true,
+        "no-life-cycle-call": true,
+        "prefer-output-readonly": true,
+        "no-conflicting-life-cycle-hooks": true,
+        "enforce-component-selector": true,
+        "no-queries-parameter": true,
+        "prefer-inline-decorator": true,
+        "component-class-suffix": [
+            true,
+            "Component"
+        ],
+        "directive-class-suffix": [
+            true,
+            "Directive"
+        ],
+        "rxjs-collapse-imports": true,
+        "rxjs-pipeable-operators-only": true,
+        "rxjs-no-static-observable-methods": true,
+        "rxjs-proper-imports": true
+    },
+    "rulesDirectory": [
+        "node_modules/codelyzer",
+        "node_modules/rxjs-tslint"
+    ]
+}

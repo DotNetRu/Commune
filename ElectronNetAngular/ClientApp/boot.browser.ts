@@ -1,18 +1,26 @@
-import 'reflect-metadata';
-import 'zone.js';
-import 'bootstrap';
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.browser.module';
+import "reflect-metadata";
+import "zone.js";
+// tslint:disable-next-line:ordered-imports
+import { enableProdMode, NgModuleRef } from "@angular/core";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { AppModule } from "./app/app.browser.module";
 
 if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => {
         // Before restarting the app, we create a new root element and dispose the old one
-        const oldRootElem = document.querySelector('app');
-        const newRootElem = document.createElement('app');
+        const oldRootElem = document.querySelector("app");
+        const newRootElem = document.createElement("app");
         oldRootElem!.parentNode!.insertBefore(newRootElem, oldRootElem);
-        modulePromise.then(appModule => appModule.destroy());
+        modulePromise.then((appModule: NgModuleRef<AppModule>) => {
+            appModule.destroy();
+            oldRootElem!.innerHTML = "";
+            const elements: HTMLCollectionOf<Element> = document.getElementsByClassName("cdk-overlay-container");
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].innerHTML = "";
+            }
+        });
     });
 } else {
     enableProdMode();

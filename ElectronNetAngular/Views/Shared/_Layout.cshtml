@@ -6,7 +6,33 @@
     <title>@ViewData["Title"] - ElectronNetAngular</title>
     <base href="~/" />
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+    <style>
+        /* todo: move to style.scss */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .base-component-container {
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        .snack-bar-info .mat-simple-snackbar-action {
+            color: #40ffbe;
+        }
+
+        .snack-bar-warn .mat-simple-snackbar-action {
+            color: #ffe440;
+        }
+    </style>
 </head>
 <body>
     @RenderBody()

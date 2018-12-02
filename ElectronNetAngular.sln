@@ -5,6 +5,16 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronNetAngular", "ElectronNetAngular\ElectronNetAngular.csproj", "{58A8A76E-BA6E-4999-8E63-F0DCD45EE48F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Meetup.BL", "DevActivator.Meetup.BL\DevActivator.Meetup.BL.csproj", "{D4F85861-ED59-4B29-930D-D63435EA9538}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Meetup.DAL", "DevActivator.Meetup.DAL\DevActivator.Meetup.DAL.csproj", "{15BF5BBA-7862-486B-9C72-D332DC3D56EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Meetup.Tests", "DevActivator.Meetup.Tests\DevActivator.Meetup.Tests.csproj", "{144CAEB0-2E7A-4844-86C4-74C46041E816}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Common.BL", "DevActivator.Common.BL\DevActivator.Common.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Common.DAL", "DevActivator.Common.DAL\DevActivator.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +25,33 @@ Global
 		{58A8A76E-BA6E-4999-8E63-F0DCD45EE48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A8A76E-BA6E-4999-8E63-F0DCD45EE48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A8A76E-BA6E-4999-8E63-F0DCD45EE48F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4F85861-ED59-4B29-930D-D63435EA9538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4F85861-ED59-4B29-930D-D63435EA9538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4F85861-ED59-4B29-930D-D63435EA9538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4F85861-ED59-4B29-930D-D63435EA9538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15BF5BBA-7862-486B-9C72-D332DC3D56EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15BF5BBA-7862-486B-9C72-D332DC3D56EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15BF5BBA-7862-486B-9C72-D332DC3D56EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15BF5BBA-7862-486B-9C72-D332DC3D56EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144CAEB0-2E7A-4844-86C4-74C46041E816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144CAEB0-2E7A-4844-86C4-74C46041E816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144CAEB0-2E7A-4844-86C4-74C46041E816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144CAEB0-2E7A-4844-86C4-74C46041E816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EE58BA7-D274-460B-9444-847FD2E6CD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EE58BA7-D274-460B-9444-847FD2E6CD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EE58BA7-D274-460B-9444-847FD2E6CD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EE58BA7-D274-460B-9444-847FD2E6CD45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E7F3F96-440D-471C-953F-DF3E5227BE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7F3F96-440D-471C-953F-DF3E5227BE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7F3F96-440D-471C-953F-DF3E5227BE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7F3F96-440D-471C-953F-DF3E5227BE89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6E27B0B-660E-4659-9A90-AB8C395BDB0A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

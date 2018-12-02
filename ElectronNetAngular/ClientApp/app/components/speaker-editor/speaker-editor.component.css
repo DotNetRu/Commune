@@ -1,0 +1,15 @@
+.mat-form-field {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.avatar {
+    max-width: 200px;
+    max-height: 200px;
+}

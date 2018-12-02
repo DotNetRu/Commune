@@ -1,0 +1,188 @@
+<form #speakerForm="ngForm"
+      class="base-component-container">
+
+    <pre>{{ speaker.lastUpdateDate | json }}</pre>
+
+    <div class="actions">
+        <button type="button"
+                color="primary"
+                mat-icon-button
+                (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="!editMode"
+                (click)="reset()">
+            <mat-icon>close</mat-icon>
+            <span>Сбросить</span>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="speakerForm.invalid"
+                (click)="save()">
+            <mat-icon>{{ editMode ? 'save' : 'add' }}</mat-icon>
+            <span>{{ editMode ? 'Сохранить' : 'Добавить' }}</span>
+        </button>
+    </div>
+
+    <div class="image-container"
+         *ngIf="editMode">
+        <img class="avatar"
+             [src]="speaker.id | speakerImageUrl">
+        <mtp-file-dialog [accept]="AVATAR_MIME_TYPES"
+                         [maxFileSize]="AVATAR_MAX_SIZE"
+                         (filesAccepted)="onFilesAccepted($event)"
+                         (filesRejected)="onFilesRejected($event)"></mtp-file-dialog>
+    </div>
+
+    <mat-form-field>
+        <input type="text"
+               name="speakerId"
+               matInput
+               [placeholder]="LABELS.IDENTITY"
+               required
+               [pattern]="PATTERNS.IDENTITY"
+               [readonly]="editMode"
+               #speakerId="ngModel"
+               [(ngModel)]="speaker.id">
+        <mat-error *ngIf="speakerId.getError('required')">
+            {{ LABELS.IDENTITY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="speakerId.getError('pattern')">
+            {{ PATTERNS.IDENTITY | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="speakerName"
+               matInput
+               [placeholder]="LABELS.NAME"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #speakerName="ngModel"
+               [(ngModel)]="speaker.name">
+        <mat-error *ngIf="speakerName.getError('required')">
+            {{ LABELS.NAME | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="speakerName.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="companyName"
+               matInput
+               [placeholder]="LABELS.COMPANY"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #companyName="ngModel"
+               [(ngModel)]="speaker.companyName">
+        <mat-error *ngIf="companyName.getError('required')">
+            {{ LABELS.COMPANY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="companyName.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="companyUrl"
+               matInput
+               [placeholder]="LABELS.COMPANY_URL"
+               [pattern]="PATTERNS.URI"
+               #companyUrl="ngModel"
+               [(ngModel)]="speaker.companyUrl">
+        <mat-error *ngIf="companyUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea name="description"
+                  matInput
+                  [cdkTextareaAutosize]="true"
+                  [placeholder]="LABELS.DESCRIPTION"
+                  required
+                  [pattern]="PATTERNS.REQUIRED_STRING"
+                  #description="ngModel"
+                  [(ngModel)]="speaker.description"></textarea>
+        <mat-error *ngIf="description.getError('required')">
+            {{ LABELS.DESCRIPTION | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="description.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="blogUrl"
+               matInput
+               [placeholder]="LABELS.BLOG_URL"
+               [pattern]="PATTERNS.URI"
+               #blogUrl="ngModel"
+               [(ngModel)]="speaker.blogUrl">
+        <mat-error *ngIf="blogUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="contactsUrl"
+               matInput
+               [placeholder]="LABELS.CONTACTS_URL"
+               [pattern]="PATTERNS.URI"
+               #contactsUrl="ngModel"
+               [(ngModel)]="speaker.contactsUrl">
+        <mat-error *ngIf="contactsUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="twitterUrl"
+               matInput
+               [placeholder]="LABELS.TWITTER_URL"
+               [pattern]="PATTERNS.URI"
+               #twitterUrl="ngModel"
+               [(ngModel)]="speaker.twitterUrl">
+        <mat-error *ngIf="twitterUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="habrUrl"
+               matInput
+               [placeholder]="LABELS.HABR_URL"
+               [pattern]="PATTERNS.URI"
+               #habrUrl="ngModel"
+               [(ngModel)]="speaker.habrUrl">
+        <mat-error *ngIf="habrUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="gitHubUrl"
+               matInput
+               [placeholder]="LABELS.GIT_HUB_URL"
+               [pattern]="PATTERNS.URI"
+               #gitHubUrl="ngModel"
+               [(ngModel)]="speaker.gitHubUrl">
+        <mat-error *ngIf="gitHubUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+</form>

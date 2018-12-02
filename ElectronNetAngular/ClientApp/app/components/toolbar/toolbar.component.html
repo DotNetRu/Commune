@@ -1,0 +1,16 @@
+<div style="position: absolute; width: 100%;"
+     [hidden]="!showProgressBar">
+    <mat-progress-bar [mode]="getProgressMode()"
+                      [value]="percentage"></mat-progress-bar>
+</div>
+
+<mat-toolbar>
+    <button type="button"
+            color="primary"
+            mat-button
+            (click)="drawer?.toggle()">
+        <mat-icon>menu</mat-icon>
+        <span>Меню</span>
+    </button>
+    <span>DevActivator v0.0.1-alpha</span>
+</mat-toolbar>

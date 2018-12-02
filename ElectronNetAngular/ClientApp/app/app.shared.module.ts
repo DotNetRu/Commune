@@ -1,35 +1,39 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { MatSidenavModule } from "@angular/material";
+import { RouterModule } from "@angular/router";
+import { CoreModule } from "@dotnetru/core";
+import { SpeakerEditorModule } from "@dotnetru/speaker-editor";
+import { SpeakerListModule } from "@dotnetru/speaker-list";
 
-import { AppComponent } from './components/app/app.component';
-import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { AppComponent } from "./app.component";
+import { HomeComponent } from "./components/home/home.component";
+import { NavMenuModule } from "./components/navmenu/navmenu.module";
+import { ToolbarModule } from "./components/toolbar/toolbar.module";
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
-        HomeComponent
+        HomeComponent,
     ],
     imports: [
         CommonModule,
-        HttpModule,
-        FormsModule,
+        HttpClientModule,
+
+        MatSidenavModule,
+        ToolbarModule,
+        NavMenuModule,
+
+        CoreModule,
+        SpeakerEditorModule,
+        SpeakerListModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'home' }
-        ])
-    ]
+            { path: "", redirectTo: "home", pathMatch: "full" },
+            { path: "home", component: HomeComponent },
+            { path: "**", redirectTo: "home" },
+        ]),
+    ],
 })
 export class AppModuleShared {
 }
