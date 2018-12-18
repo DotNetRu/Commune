@@ -21,11 +21,11 @@ namespace DevActivator.Meetup.BL.Services
             _speakerProvider = speakerProvider;
         }
 
-        public async Task<List<SpeakerRow>> GetAllSpeakersAsync()
+        public async Task<List<AutocompleteRow>> GetAllSpeakersAsync()
         {
             var speakers = await _speakerProvider.GetAllSpeakersAsync().ConfigureAwait(false);
             return speakers
-                .Select(x => new SpeakerRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
                 .ToList();
         }
 

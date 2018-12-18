@@ -1,6 +1,6 @@
 namespace DevActivator.Meetup.BL.Models
 {
-    public class SpeakerRow
+    public class AutocompleteRow
     {
         public string Id { get; set; }
 

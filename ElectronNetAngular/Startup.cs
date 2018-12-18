@@ -63,7 +63,7 @@ namespace ElectronNetAngular
             var settings = new Settings();
             Configuration.Bind(nameof(Settings), settings);
 
-            builder.RegisterModule(new MeetupModule<SpeakerProvider>(settings));
+            builder.RegisterModule(new MeetupModule<SpeakerProvider, TalkProvider>(settings));
 
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);

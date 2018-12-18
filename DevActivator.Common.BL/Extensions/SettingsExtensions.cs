@@ -19,15 +19,32 @@ namespace DevActivator.Common.BL.Extensions
         public static string GetSpeakerFilePath(this Settings settings, string speakerId)
             => Path.Combine(settings.GetDirectory("speakers"), speakerId, IndexFileName);
 
-        public static List<string> GetAllFilePaths(this Settings settings, string directoryName)
-            => Directory.GetDirectories(settings.GetDirectory(directoryName))
-                .Select(directory => Path.Combine(directory, IndexFileName)).ToList();
+        public static List<string> GetAllFilePaths(this Settings settings, string directoryName, bool flatEntity)
+        {
+            var entityDirectory = settings.GetDirectory(directoryName);
+            if (!flatEntity)
+            {
+                return Directory.GetDirectories(entityDirectory)
+                    .Select(directory => Path.Combine(directory, IndexFileName)).ToList();
+            }
 
-        public static string GetEntityFilePath(this Settings settings, string directoryName, IEntity entity)
-            => settings.GetEntityFilePath(directoryName, entity.Id);
+            return Directory.GetFiles(entityDirectory, "*.xml").ToList();
+        }
 
-        public static string GetEntityFilePath(this Settings settings, string directoryName, string entityId)
-            => Path.Combine(settings.GetDirectory(directoryName), entityId, IndexFileName);
+        public static string GetEntityFilePath(this Settings settings, string directoryName, IEntity entity,
+            bool flatEntity)
+            => settings.GetEntityFilePath(directoryName, entity.Id, flatEntity);
+
+        public static string GetEntityFilePath(this Settings settings, string directoryName, string entityId,
+            bool flatEntity)
+        {
+            if (!flatEntity)
+            {
+                return Path.Combine(settings.GetDirectory(directoryName), entityId, IndexFileName);
+            }
+
+            return Path.Combine(settings.GetDirectory(directoryName), $"{entityId}.xml");
+        }
 
         private static string GetDirectory(this Settings settings, string directoryName)
             => Path.Combine(settings.AuditRepoDirectory, Db, directoryName);

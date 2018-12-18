@@ -18,7 +18,7 @@ namespace DevActivator.Meetup.BL.Services
             _speakerService = speakerServiceImplementation;
         }
 
-        public Task<List<SpeakerRow>> GetAllSpeakersAsync()
+        public Task<List<AutocompleteRow>> GetAllSpeakersAsync()
             => _cache.GetOrCreateAsync(nameof(GetAllSpeakersAsync),
                 cacheEntry =>
                 {
@@ -35,10 +35,6 @@ namespace DevActivator.Meetup.BL.Services
             var result = await _speakerService.AddSpeakerAsync(speaker).ConfigureAwait(false);
 
             _cache.Remove(nameof(GetAllSpeakersAsync));
-            if (_cache.TryGetValue<List<SpeakerRow>>(nameof(GetAllSpeakersAsync), out var speakers))
-            {
-                speakers.ForEach(x => _cache.Remove($"{nameof(GetSpeakerAsync)}_{x.Id}"));
-            }
 
             return result;
         }
@@ -48,7 +44,7 @@ namespace DevActivator.Meetup.BL.Services
             var result = await _speakerService.UpdateSpeakerAsync(speaker).ConfigureAwait(false);
 
             _cache.Remove(nameof(GetAllSpeakersAsync));
-            if (_cache.TryGetValue<List<SpeakerRow>>(nameof(GetAllSpeakersAsync), out var speakers))
+            if (_cache.TryGetValue<List<AutocompleteRow>>(nameof(GetAllSpeakersAsync), out var speakers))
             {
                 speakers.ForEach(x => _cache.Remove($"{nameof(GetSpeakerAsync)}_{x.Id}"));
             }

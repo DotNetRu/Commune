@@ -20,6 +20,8 @@ namespace DevActivator.Common.DAL
         private readonly XmlWriterSettings _xmlWriterSettings;
         private readonly XmlSerializerNamespaces _namespaces;
 
+        private readonly bool _flatEntity = typeof(T).GetInterfaces().Any(x => x == typeof(IFlatEntity));
+
         private readonly Settings _settings;
         private readonly string _directory;
 
@@ -43,14 +45,14 @@ namespace DevActivator.Common.DAL
             _namespaces.Add(string.Empty, string.Empty);
         }
 
-        protected Task<T> GetEntityByIdAsync(string speakerId)
-            => GetEntityAsync(_settings.GetEntityFilePath(_directory, speakerId));
+        protected Task<T> GetEntityByIdAsync(string entityId)
+            => GetEntityAsync(_settings.GetEntityFilePath(_directory, entityId, _flatEntity));
 
         protected Task<T> SaveEntityAsync(T entity)
         {
             var data = Serialize(entity);
 
-            var filePath = _settings.GetEntityFilePath(_directory, entity);
+            var filePath = _settings.GetEntityFilePath(_directory, entity, _flatEntity);
             var directory = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
             {
@@ -65,7 +67,7 @@ namespace DevActivator.Common.DAL
 
         protected async Task<List<T>> GetAllAsync()
         {
-            var filePaths = _settings.GetAllFilePaths(_directory);
+            var filePaths = _settings.GetAllFilePaths(_directory, _flatEntity);
             var entities = new List<T>(filePaths.Count);
 
             foreach (var filePath in filePaths.AsParallel())

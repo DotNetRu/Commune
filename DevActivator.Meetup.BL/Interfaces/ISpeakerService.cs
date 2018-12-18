@@ -6,7 +6,7 @@ namespace DevActivator.Meetup.BL.Interfaces
 {
     public interface ISpeakerService
     {
-        Task<List<SpeakerRow>> GetAllSpeakersAsync();
+        Task<List<AutocompleteRow>> GetAllSpeakersAsync();
 
         Task<SpeakerVm> GetSpeakerAsync(string speakerId);
 

@@ -17,7 +17,7 @@ namespace ElectronNetAngular.Controllers
         }
 
         [HttpGet("[action]")]
-        public Task<List<SpeakerRow>> GetSpeakers()
+        public Task<List<AutocompleteRow>> GetSpeakers()
             => _speakerService.GetAllSpeakersAsync();
 
         [HttpGet("[action]/{speakerId}")]
