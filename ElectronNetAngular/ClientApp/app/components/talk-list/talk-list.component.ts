@@ -13,21 +13,21 @@ import { AutocompleteComponent, IAutocompleteRow } from "@dotnetru/shared/autoco
 import { BehaviorSubject, Subscription } from "rxjs";
 import { debounceTime, switchMap } from "rxjs/operators";
 
-import { SpeakerListService } from "./speaker-list.service";
+import { TalkListService } from "./talk-list.service";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: "mtp-speaker-list",
-    templateUrl: "./speaker-list.component.html",
+    selector: "mtp-talk-list",
+    templateUrl: "./talk-list.component.html",
 })
-export class SpeakerListComponent implements OnInit, OnDestroy {
-    @Input() public title: string = "Поиск спикера";
+export class TalkListComponent implements OnInit, OnDestroy {
+    @Input() public title: string = "Поиск доклада";
     @Input() public iconName: string = "add";
     @Input() public iconText: string = "Добавить";
 
-    @Input() public set speakerLink(value: { speakerId?: string }) {
-        if (value && value.speakerId) {
-            this._speakerId$.next(value.speakerId);
+    @Input() public set talkLink(value: { talkId?: string }) {
+        if (value && value.talkId) {
+            this._talkId$.next(value.talkId);
         }
     }
 
@@ -36,38 +36,38 @@ export class SpeakerListComponent implements OnInit, OnDestroy {
     @Output() public readonly selected: EventEmitter<IAutocompleteRow> = new EventEmitter<IAutocompleteRow>();
     @Output() public readonly iconClicked: EventEmitter<void> = new EventEmitter<void>();
 
-    public speakers: IAutocompleteRow[] = [];
+    public talks: IAutocompleteRow[] = [];
 
-    private _speakerId$: BehaviorSubject<string> = new BehaviorSubject("");
+    private _talkId$: BehaviorSubject<string> = new BehaviorSubject("");
     private _subs: Subscription[] = [];
 
     constructor(
-        private _speakerListService: SpeakerListService,
+        private _talkListService: TalkListService,
         private _changeDetectorRef: ChangeDetectorRef,
     ) { }
 
     public ngOnInit(): void {
         this._subs = [
-            this._speakerListService.speakers$
+            this._talkListService.talks$
                 .subscribe(
-                    (speakers: IAutocompleteRow[]) => {
-                        this.speakers = speakers;
+                    (talks: IAutocompleteRow[]) => {
+                        this.talks = talks;
                         this._changeDetectorRef.detectChanges();
                     },
                 ),
-            this._speakerListService.speakers$.pipe(switchMap((_) => this._speakerId$.pipe()))
+            this._talkListService.talks$.pipe(switchMap((_) => this._talkId$.pipe()))
                 .pipe(debounceTime(100))
-                .subscribe((speakerId: string) => {
-                    const speaker = this.speakers.find((x) => x.id === speakerId);
-                    if (speaker) {
-                        this.autocomplete.queryControl.patchValue(speaker.name);
+                .subscribe((talkId: string) => {
+                    const talk = this.talks.find((x) => x.id === talkId);
+                    if (talk) {
+                        this.autocomplete.queryControl.patchValue(talk.name);
                     } else {
-                        console.warn("speaker not found", speakerId);
+                        console.warn("talk not found", talkId);
                     }
                 }),
         ];
 
-        this._speakerListService.fetchSpeakers();
+        this._talkListService.fetchTalks();
     }
 
     public ngOnDestroy(): void {

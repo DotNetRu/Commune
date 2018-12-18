@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from "@angular/material";
 import { RouterModule } from "@angular/router";
 import { CoreModule } from "@dotnetru/core";
-import { FileDialogModule } from "@dotnetru/file-dialog";
+import { FileDialogModule } from "@dotnetru/shared/file-dialog";
 
 import { SpeakerImageUrlPipe } from "./pipes";
 import { SpeakerEditorComponent } from "./speaker-editor.component";

@@ -8,26 +8,19 @@ import {
     MatIconModule,
     MatInputModule,
 } from "@angular/material";
-import { AutocompleteModule } from "@dotnetru/shared/autocomplete";
 
-import { SpeakerListComponent } from "./speaker-list.component";
-import { SpeakerListService } from "./speaker-list.service";
+import { AutocompleteComponent } from "./autocomplete.component";
 
 @NgModule({
     declarations: [
-        SpeakerListComponent,
-    ],
-    entryComponents: [
-        SpeakerListComponent,
+        AutocompleteComponent,
     ],
     exports: [
-        SpeakerListComponent,
+        AutocompleteComponent,
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
-
-        AutocompleteModule,
 
         MatAutocompleteModule,
         MatButtonModule,
@@ -35,8 +28,5 @@ import { SpeakerListService } from "./speaker-list.service";
         MatIconModule,
         MatInputModule,
     ],
-    providers: [
-        SpeakerListService,
-    ],
 })
-export class SpeakerListModule { }
+export class AutocompleteModule { }

@@ -5,8 +5,17 @@
       "@dotnetru/core": [
         "./ClientApp/app/core/index"
       ],
+      "@dotnetru/shared/*": [
+        "./ClientApp/app/shared/*/index",
+        "./ClientApp/app/shared/*"
+      ],
+      "@dotnetru/pages/*": [
+        "./ClientApp/app/pages/*/index",
+        "./ClientApp/app/pages/*"
+      ],
       "@dotnetru/*": [
-        "./ClientApp/app/components/*/index"
+        "./ClientApp/app/components/*/index",
+        "./ClientApp/app/components/*"
       ]
     },
     "module": "es2015",

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FILE_SIZES, LABELS, LayoutService, MIME_TYPES, PATTERNS } from "@dotnetru/core";
-import { IAcceptedFile, IRejectedFile, RejectionReason } from "@dotnetru/file-dialog";
+import { IAcceptedFile, IRejectedFile, RejectionReason } from "@dotnetru/shared/file-dialog";
 import { Subscription } from "rxjs";
 
 import { ISpeaker } from "./interfaces";

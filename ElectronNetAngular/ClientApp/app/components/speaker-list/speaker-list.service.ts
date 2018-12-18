@@ -3,13 +3,13 @@ import { API_ENDPOINTS, HttpService } from "@dotnetru/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { filter } from "rxjs/operators";
 
-import { ISpeakerRow } from "./interfaces";
+import { IAutocompleteRow } from "@dotnetru/shared/autocomplete";
 
 @Injectable()
 export class SpeakerListService {
-    private _speakers$: BehaviorSubject<ISpeakerRow[]> = new BehaviorSubject<ISpeakerRow[]>([]);
+    private _speakers$: BehaviorSubject<IAutocompleteRow[]> = new BehaviorSubject<IAutocompleteRow[]>([]);
 
-    public get speakers$(): Observable<ISpeakerRow[]> {
+    public get speakers$(): Observable<IAutocompleteRow[]> {
         return this._speakers$.pipe(filter((x) => x.length > 0));
     }
 
@@ -18,9 +18,9 @@ export class SpeakerListService {
     ) { }
 
     public fetchSpeakers(): void {
-        this._httpService.get<ISpeakerRow[]>(
+        this._httpService.get<IAutocompleteRow[]>(
             API_ENDPOINTS.getSpeakersUrl,
-            (speakers: ISpeakerRow[]) => this._speakers$.next(speakers),
+            (speakers: IAutocompleteRow[]) => this._speakers$.next(speakers),
         );
     }
 }

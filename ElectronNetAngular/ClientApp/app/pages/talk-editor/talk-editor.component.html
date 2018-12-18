@@ -1,0 +1,140 @@
+<form #talkForm="ngForm"
+      class="base-component-container">
+
+    <div class="actions">
+        <button type="button"
+                color="primary"
+                mat-icon-button
+                (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="!editMode"
+                (click)="reset()">
+            <mat-icon>close</mat-icon>
+            <span>Сбросить</span>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="talkForm.invalid"
+                (click)="save()">
+            <mat-icon>{{ editMode ? 'save' : 'add' }}</mat-icon>
+            <span>{{ editMode ? 'Сохранить' : 'Добавить' }}</span>
+        </button>
+    </div>
+
+    <mat-form-field>
+        <input type="text"
+               name="talkId"
+               matInput
+               [placeholder]="LABELS.IDENTITY"
+               required
+               [pattern]="PATTERNS.IDENTITY"
+               [readonly]="editMode"
+               #talkId="ngModel"
+               [(ngModel)]="talk.id">
+        <mat-error *ngIf="talkId.getError('required')">
+            {{ LABELS.IDENTITY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="talkId.getError('pattern')">
+            {{ PATTERNS.IDENTITY | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="talkTitle"
+               matInput
+               [placeholder]="LABELS.TITLE"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #talkTitle="ngModel"
+               [(ngModel)]="talk.title">
+        <mat-error *ngIf="talkTitle.getError('required')">
+            {{ LABELS.NAME | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="talkTitle.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-card>
+        <mtp-speaker-list *ngFor="let rel of talk.speakerIds; let idx = index"
+                          [title]="'Спикер №' + (idx+1)"
+                          [iconName]="'delete_forever'"
+                          [iconText]="'Убрать'"
+                          [speakerLink]="rel"
+                          (selected)="onSpeakerSelected($event, idx)"
+                          (iconClicked)="removeSpeaker(idx)"></mtp-speaker-list>
+        <button type="button"
+                color="primary"
+                mat-button
+                (click)="addSpeaker()">
+            <mat-icon>person_add</mat-icon>
+            <span *ngIf="talk.speakerIds.length === 0">Добавить спикера</span>
+            <span *ngIf="talk.speakerIds.length === 1">Это парный доклад</span>
+            <span *ngIf="talk.speakerIds.length === 2">Это тройничок</span>
+            <span *ngIf="talk.speakerIds.length >=3">Это круглый стол</span>
+        </button>
+    </mat-card>
+
+    <mat-form-field>
+        <textarea name="description"
+                  matInput
+                  [cdkTextareaAutosize]="true"
+                  [placeholder]="LABELS.DESCRIPTION"
+                  required
+                  [pattern]="PATTERNS.REQUIRED_STRING"
+                  #description="ngModel"
+                  [(ngModel)]="talk.description"></textarea>
+        <mat-error *ngIf="description.getError('required')">
+            {{ LABELS.DESCRIPTION | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="description.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="codeUrl"
+               matInput
+               [placeholder]="LABELS.CODE_URL"
+               [pattern]="PATTERNS.URI"
+               #codeUrl="ngModel"
+               [(ngModel)]="talk.codeUrl">
+        <mat-error *ngIf="codeUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="slidesUrl"
+               matInput
+               [placeholder]="LABELS.SLIDES_URL"
+               [pattern]="PATTERNS.URI"
+               #slidesUrl="ngModel"
+               [(ngModel)]="talk.slidesUrl">
+        <mat-error *ngIf="slidesUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="videoUrl"
+               matInput
+               [placeholder]="LABELS.VIDEO_URL"
+               [pattern]="PATTERNS.URI"
+               #videoUrl="ngModel"
+               [(ngModel)]="talk.videoUrl">
+        <mat-error *ngIf="videoUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+</form>

@@ -10,18 +10,18 @@ import {
 } from "@angular/material";
 import { AutocompleteModule } from "@dotnetru/shared/autocomplete";
 
-import { SpeakerListComponent } from "./speaker-list.component";
-import { SpeakerListService } from "./speaker-list.service";
+import { TalkListComponent } from "./talk-list.component";
+import { TalkListService } from "./talk-list.service";
 
 @NgModule({
     declarations: [
-        SpeakerListComponent,
+        TalkListComponent,
     ],
     entryComponents: [
-        SpeakerListComponent,
+        TalkListComponent,
     ],
     exports: [
-        SpeakerListComponent,
+        TalkListComponent,
     ],
     imports: [
         CommonModule,
@@ -36,7 +36,7 @@ import { SpeakerListService } from "./speaker-list.service";
         MatInputModule,
     ],
     providers: [
-        SpeakerListService,
+        TalkListService,
     ],
 })
-export class SpeakerListModule { }
+export class TalkListModule { }

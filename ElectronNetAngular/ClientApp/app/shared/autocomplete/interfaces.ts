@@ -1,4 +1,4 @@
-export interface ISpeakerRow {
+export interface IAutocompleteRow {
     id: string;
     name: string;
 }
