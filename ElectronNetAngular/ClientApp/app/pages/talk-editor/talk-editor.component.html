@@ -54,7 +54,7 @@
                #talkTitle="ngModel"
                [(ngModel)]="talk.title">
         <mat-error *ngIf="talkTitle.getError('required')">
-            {{ LABELS.NAME | requiredErrorMessage }}
+            {{ LABELS.TITLE | requiredErrorMessage }}
         </mat-error>
         <mat-error *ngIf="talkTitle.getError('pattern')">
             {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}

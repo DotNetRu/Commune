@@ -1,0 +1,103 @@
+<form #venueForm="ngForm"
+      class="base-component-container">
+
+    <div class="actions">
+        <button type="button"
+                color="primary"
+                mat-icon-button
+                (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="!editMode"
+                (click)="reset()">
+            <mat-icon>close</mat-icon>
+            <span>Сбросить</span>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="venueForm.invalid"
+                (click)="save()">
+            <mat-icon>{{ editMode ? 'save' : 'add' }}</mat-icon>
+            <span>{{ editMode ? 'Сохранить' : 'Добавить' }}</span>
+        </button>
+    </div>
+
+    <mtp-city-select name="city"
+                     [readonly]="editMode"
+                     [(ngModel)]="venue.city"></mtp-city-select>
+
+    <mat-form-field>
+        <input type="text"
+               name="venueId"
+               matInput
+               [placeholder]="LABELS.IDENTITY"
+               required
+               [pattern]="PATTERNS.IDENTITY"
+               [readonly]="editMode"
+               #venueId="ngModel"
+               [(ngModel)]="venue.id">
+        <mat-error *ngIf="venueId.getError('required')">
+            {{ LABELS.IDENTITY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="venueId.getError('pattern')">
+            {{ PATTERNS.IDENTITY | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="venueName"
+               matInput
+               [placeholder]="LABELS.TITLE"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #venueName="ngModel"
+               [(ngModel)]="venue.name">
+        <mat-error *ngIf="venueName.getError('required')">
+            {{ LABELS.TITLE | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="venueName.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea name="address"
+                  matInput
+                  [cdkTextareaAutosize]="true"
+                  [placeholder]="LABELS.ADDRESS"
+                  required
+                  [pattern]="PATTERNS.REQUIRED_STRING"
+                  #address="ngModel"
+                  [(ngModel)]="venue.address"></textarea>
+        <mat-error *ngIf="address.getError('required')">
+            {{ LABELS.ADDRESS | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="address.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="mapUrl"
+               matInput
+               [placeholder]="LABELS.MAP_URL"
+               required
+               [pattern]="PATTERNS.URI"
+               #mapUrl="ngModel"
+               [(ngModel)]="venue.mapUrl">
+        <mat-error *ngIf="mapUrl.getError('required')">
+            {{ LABELS.MAP_URL | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="mapUrl.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <pre>{{ venue | json }}</pre>
+</form>

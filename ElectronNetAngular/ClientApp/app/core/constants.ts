@@ -1,16 +1,21 @@
 export const API_ENDPOINTS = {
     addSpeakerUrl: "api/Speaker/AddSpeaker",
     addTalkUrl: "api/Talk/AddTalk",
+    addVenueUrl: "api/Venue/AddVenue",
     getSpeakerUrl: "api/Speaker/GetSpeaker/{{speakerId}}",
     getSpeakersUrl: "api/Speaker/GetSpeakers",
     getTalkUrl: "api/Talk/GetTalk/{{talkId}}",
     getTalksUrl: "api/Talk/GetTalks",
+    getVenueUrl: "api/Venue/GetVenue/{{venueId}}",
+    getVenuesUrl: "api/Venue/GetVenues",
     storeSpeakerAvatarUrl: "api/File/StoreSpeakerAvatar/{{speakerId}}",
     updateSpeakerUrl: "api/Speaker/UpdateSpeaker",
     updateTalkUrl: "api/Talk/UpdateTalk",
+    updateVenueUrl: "api/Venue/UpdateVenue",
 };
 
 export const LABELS = {
+    ADDRESS: "Адрес",
     BLOG_URL: "Ссылка на блог",
     CODE_URL: "Ссылка на код",
     COMPANY: "Компания",
@@ -20,6 +25,7 @@ export const LABELS = {
     GIT_HUB_URL: "Ссылка на GitHub",
     HABR_URL: "Ссылка на хабр",
     IDENTITY: "Идентификатор",
+    MAP_URL: "Ссылка на карту",
     NAME: "Имя",
     SLIDES_URL: "Ссылка на слайды",
     TITLE: "Название",

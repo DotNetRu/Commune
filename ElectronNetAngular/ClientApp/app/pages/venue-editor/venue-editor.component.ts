@@ -1,34 +1,34 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { FILE_SIZES, LABELS, LayoutService, MIME_TYPES, PATTERNS } from "@dotnetru/core";
-import { IAutocompleteRow } from "@dotnetru/shared/autocomplete";
+import { City } from "@dotnetru/shared/city-select";
 import { Subscription } from "rxjs";
 
-import { ITalk } from "./interfaces";
-import { TalkEditorService } from "./talk-editor.service";
+import { IVenue } from "./interfaces";
+import { VenueEditorService } from "./venue-editor.service";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [TalkEditorService],
-    selector: "mtp-talk-editor",
-    styleUrls: ["./talk-editor.component.css"],
-    templateUrl: "./talk-editor.component.html",
+    providers: [VenueEditorService],
+    selector: "mtp-venue-editor",
+    styleUrls: ["./venue-editor.component.css"],
+    templateUrl: "./venue-editor.component.html",
 })
-export class TalkEditorComponent implements OnInit, OnDestroy {
+export class VenueEditorComponent implements OnInit, OnDestroy {
     public readonly LABELS = LABELS;
     public readonly PATTERNS = PATTERNS;
     public readonly AVATAR_MIME_TYPES = MIME_TYPES.AVATAR;
     public readonly AVATAR_MAX_SIZE = FILE_SIZES.AVATAR_MAX_SIZE;
 
-    // todo: create service method getDefaultTalk
-    public talk: ITalk = { id: "", speakerIds: [], title: "", description: "" };
+    // todo: create service method getDefaultVenue
+    public venue: IVenue = { id: "", city: City.Spb, name: "", address: "", mapUrl: "" };
 
     public editMode: boolean = true;
 
     private _subs: Subscription[] = [];
 
     constructor(
-        private _talkEditorService: TalkEditorService,
+        private _venueEditorService: VenueEditorService,
         private _layoutService: LayoutService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
@@ -39,15 +39,15 @@ export class TalkEditorComponent implements OnInit, OnDestroy {
         this._subs = [
             this._activatedRoute.params
                 .subscribe((params: Params) => {
-                    if (typeof params.talkId === "string" && params.talkId.length > 0) {
-                        this._talkEditorService.fetchTalk(params.talkId);
+                    if (typeof params.venueId === "string" && params.venueId.length > 0) {
+                        this._venueEditorService.fetchVenue(params.venueId);
                     } else {
                         this.editMode = false;
                     }
                 }),
-            this._talkEditorService.talk$
-                .subscribe((talk: ITalk) => {
-                    this.talk = talk;
+            this._venueEditorService.venue$
+                .subscribe((venue: IVenue) => {
+                    this.venue = venue;
                     this._changeDetectorRef.detectChanges();
                 }),
         ];
@@ -58,8 +58,8 @@ export class TalkEditorComponent implements OnInit, OnDestroy {
     }
 
     public goBack(): void {
-        if (!this._talkEditorService.hasChanges(this.talk)) {
-            this._router.navigateByUrl("/talk-list");
+        if (!this._venueEditorService.hasChanges(this.venue)) {
+            this._router.navigateByUrl("/venue-list");
         } else {
             this._layoutService.showWarning("Потеря введенных данных предотвращена");
         }
@@ -67,25 +67,25 @@ export class TalkEditorComponent implements OnInit, OnDestroy {
 
     public save(): void {
         if (this.editMode) {
-            this._talkEditorService.updateTalk(this.talk);
+            this._venueEditorService.updateVenue(this.venue);
         } else {
-            this._talkEditorService.addTalk(this.talk);
+            this._venueEditorService.addVenue(this.venue);
         }
     }
 
     public reset(): void {
-        this._talkEditorService.reset();
+        this._venueEditorService.reset();
     }
 
-    public onSpeakerSelected(row: IAutocompleteRow, index: number): void {
-        this.talk.speakerIds[index] = { speakerId: row.id };
-    }
+    // public onSpeakerSelected(row: IAutocompleteRow, index: number): void {
+    //     this.venue.speakerIds[index] = { speakerId: row.id };
+    // }
 
-    public removeSpeaker(index: number): void {
-        this.talk.speakerIds.splice(index, 1);
-    }
+    // public removeSpeaker(index: number): void {
+    //     this.venue.speakerIds.splice(index, 1);
+    // }
 
-    public addSpeaker(): void {
-        this.talk.speakerIds.push({ speakerId: "" });
-    }
+    // public addSpeaker(): void {
+    //     this.venue.speakerIds.push({ speakerId: "" });
+    // }
 }

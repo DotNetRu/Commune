@@ -27,4 +27,12 @@ export class SearchPageComponent {
     public addTalk(): void {
         this._router.navigateByUrl(`talk-creator`);
     }
+
+    public onVenueSelected(venue: IAutocompleteRow): void {
+        this._router.navigateByUrl(`venue-editor/${venue.id}`);
+    }
+
+    public addVenue(): void {
+        this._router.navigateByUrl(`venue-creator`);
+    }
 }

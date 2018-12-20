@@ -1,0 +1,10 @@
+<mat-form-field>
+    <mat-select placeholder="Город"
+                [(ngModel)]="value"
+                required>
+        <mat-option *ngFor="let city of CITIES"
+                    [value]="city">
+            {{ city | cityName }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
