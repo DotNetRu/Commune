@@ -17,8 +17,6 @@ import { VenueEditorService } from "./venue-editor.service";
 export class VenueEditorComponent implements OnInit, OnDestroy {
     public readonly LABELS = LABELS;
     public readonly PATTERNS = PATTERNS;
-    public readonly AVATAR_MIME_TYPES = MIME_TYPES.AVATAR;
-    public readonly AVATAR_MAX_SIZE = FILE_SIZES.AVATAR_MAX_SIZE;
 
     // todo: create service method getDefaultVenue
     public venue: IVenue = { id: "", city: City.Spb, name: "", address: "", mapUrl: "" };

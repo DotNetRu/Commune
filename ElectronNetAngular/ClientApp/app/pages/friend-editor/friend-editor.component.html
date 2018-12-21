@@ -1,0 +1,104 @@
+<form #friendForm="ngForm"
+      class="base-component-container">
+
+    <div class="actions">
+        <button type="button"
+                color="primary"
+                mat-icon-button
+                (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="!editMode"
+                (click)="reset()">
+            <mat-icon>close</mat-icon>
+            <span>Сбросить</span>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="friendForm.invalid"
+                (click)="save()">
+            <mat-icon>{{ editMode ? 'save' : 'add' }}</mat-icon>
+            <span>{{ editMode ? 'Сохранить' : 'Добавить' }}</span>
+        </button>
+    </div>
+
+    <div class="image-container"
+         *ngIf="editMode">
+        <img class="avatar"
+             [src]="friend.id | friendImageUrl">
+        <mtp-file-dialog [accept]="AVATAR_MIME_TYPES"
+                         [maxFileSize]="AVATAR_MAX_SIZE"
+                         (filesAccepted)="onFilesAccepted($event)"
+                         (filesRejected)="onFilesRejected($event)"></mtp-file-dialog>
+    </div>
+
+    <mat-form-field>
+        <input type="text"
+               name="friendId"
+               matInput
+               [placeholder]="LABELS.IDENTITY"
+               required
+               [pattern]="PATTERNS.IDENTITY"
+               [readonly]="editMode"
+               #friendId="ngModel"
+               [(ngModel)]="friend.id">
+        <mat-error *ngIf="friendId.getError('required')">
+            {{ LABELS.IDENTITY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="friendId.getError('pattern')">
+            {{ PATTERNS.IDENTITY | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="friendName"
+               matInput
+               [placeholder]="LABELS.NAME"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #friendName="ngModel"
+               [(ngModel)]="friend.name">
+        <mat-error *ngIf="friendName.getError('required')">
+            {{ LABELS.NAME | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="friendName.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="url"
+               matInput
+               [placeholder]="LABELS.URL"
+               [pattern]="PATTERNS.URI"
+               #url="ngModel"
+               [(ngModel)]="friend.url">
+        <mat-error *ngIf="url.getError('pattern')">
+            {{ PATTERNS.URI | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea name="description"
+                  matInput
+                  [cdkTextareaAutosize]="true"
+                  [placeholder]="LABELS.DESCRIPTION"
+                  required
+                  [pattern]="PATTERNS.REQUIRED_STRING"
+                  #description="ngModel"
+                  [(ngModel)]="friend.description"></textarea>
+        <mat-error *ngIf="description.getError('required')">
+            {{ LABELS.DESCRIPTION | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="description.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+</form>

@@ -1,14 +1,19 @@
 export const API_ENDPOINTS = {
+    addFriendUrl: "api/Friend/AddFriend",
     addSpeakerUrl: "api/Speaker/AddSpeaker",
     addTalkUrl: "api/Talk/AddTalk",
     addVenueUrl: "api/Venue/AddVenue",
+    getFriendUrl: "api/Friend/GetFriend/{{friendId}}",
+    getFriendsUrl: "api/Friend/GetFriends",
     getSpeakerUrl: "api/Speaker/GetSpeaker/{{speakerId}}",
     getSpeakersUrl: "api/Speaker/GetSpeakers",
     getTalkUrl: "api/Talk/GetTalk/{{talkId}}",
     getTalksUrl: "api/Talk/GetTalks",
     getVenueUrl: "api/Venue/GetVenue/{{venueId}}",
     getVenuesUrl: "api/Venue/GetVenues",
+    storeFriendAvatarUrl: "api/File/StoreFriendAvatar/{{friendId}}",
     storeSpeakerAvatarUrl: "api/File/StoreSpeakerAvatar/{{speakerId}}",
+    updateFriendUrl: "api/Friend/UpdateFriend",
     updateSpeakerUrl: "api/Speaker/UpdateSpeaker",
     updateTalkUrl: "api/Talk/UpdateTalk",
     updateVenueUrl: "api/Venue/UpdateVenue",
@@ -30,6 +35,7 @@ export const LABELS = {
     SLIDES_URL: "Ссылка на слайды",
     TITLE: "Название",
     TWITTER_URL: "Ссылка на твиттер",
+    URL: "Ссылка",
     VIDEO_URL: "Ссылка на видео",
 };
 
@@ -40,7 +46,8 @@ export const PATTERNS = {
 };
 
 export const MIME_TYPES = {
-    AVATAR: "image/png,image/jpeg",
+    JPEG: "image/jpeg",
+    PNG: "image/png",
 };
 
 export const FILE_SIZES = {

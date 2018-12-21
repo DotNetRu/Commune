@@ -35,4 +35,12 @@ export class SearchPageComponent {
     public addVenue(): void {
         this._router.navigateByUrl(`venue-creator`);
     }
+
+    public onFriendSelected(friend: IAutocompleteRow): void {
+        this._router.navigateByUrl(`friend-editor/${friend.id}`);
+    }
+
+    public addFriend(): void {
+        this._router.navigateByUrl(`friend-creator`);
+    }
 }

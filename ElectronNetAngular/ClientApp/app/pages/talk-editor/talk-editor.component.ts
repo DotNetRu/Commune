@@ -17,8 +17,6 @@ import { TalkEditorService } from "./talk-editor.service";
 export class TalkEditorComponent implements OnInit, OnDestroy {
     public readonly LABELS = LABELS;
     public readonly PATTERNS = PATTERNS;
-    public readonly AVATAR_MIME_TYPES = MIME_TYPES.AVATAR;
-    public readonly AVATAR_MAX_SIZE = FILE_SIZES.AVATAR_MAX_SIZE;
 
     // todo: create service method getDefaultTalk
     public talk: ITalk = { id: "", speakerIds: [], title: "", description: "" };

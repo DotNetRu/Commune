@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { MatSidenavModule } from "@angular/material";
 import { RouterModule } from "@angular/router";
 import { CoreModule } from "@dotnetru/core";
+import { FriendEditorModule } from "@dotnetru/pages/friend-editor";
 import { SearchPageModule } from "@dotnetru/pages/search";
 import { SpeakerEditorModule } from "@dotnetru/pages/speaker-editor";
 import { TalkEditorModule } from "@dotnetru/pages/talk-editor";
@@ -35,6 +36,7 @@ import { SearchPageComponent } from "./pages/search/search.component";
         SpeakerEditorModule,
         SpeakerListModule,
 
+        FriendEditorModule,
         TalkEditorModule,
         VenueEditorModule,
 

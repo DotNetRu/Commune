@@ -4,36 +4,31 @@ import { FILE_SIZES, LABELS, LayoutService, MIME_TYPES, PATTERNS } from "@dotnet
 import { IAcceptedFile, IRejectedFile, RejectionReason } from "@dotnetru/shared/file-dialog";
 import { Subscription } from "rxjs";
 
-import { ISpeaker } from "./interfaces";
-import { SpeakerEditorService } from "./speaker-editor.service";
+import { FriendEditorService } from "./friend-editor.service";
+import { IFriend } from "./interfaces";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [SpeakerEditorService],
-    selector: "mtp-speaker-editor",
-    styleUrls: ["./speaker-editor.component.css"],
-    templateUrl: "./speaker-editor.component.html",
+    providers: [FriendEditorService],
+    selector: "mtp-friend-editor",
+    styleUrls: ["./friend-editor.component.css"],
+    templateUrl: "./friend-editor.component.html",
 })
-export class SpeakerEditorComponent implements OnInit, OnDestroy {
+export class FriendEditorComponent implements OnInit, OnDestroy {
     public readonly LABELS = LABELS;
     public readonly PATTERNS = PATTERNS;
-    public readonly AVATAR_MIME_TYPES = MIME_TYPES.JPEG;
+    public readonly AVATAR_MIME_TYPES = MIME_TYPES.PNG;
     public readonly AVATAR_MAX_SIZE = FILE_SIZES.AVATAR_MAX_SIZE;
 
-    // todo: create service method getDefaultSpeaker
-    public speaker: ISpeaker = {
-        companyName: "test company name",
-        description: "test description",
-        id: "Test-Id",
-        name: "Test Name",
-    };
+    // todo: create service method getDefaultFriend
+    public friend: IFriend = { id: "", name: "", url: "", description: "" };
 
     public editMode: boolean = true;
 
     private _subs: Subscription[] = [];
 
     constructor(
-        private _speakerEditorService: SpeakerEditorService,
+        private _friendEditorService: FriendEditorService,
         private _layoutService: LayoutService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
@@ -44,15 +39,15 @@ export class SpeakerEditorComponent implements OnInit, OnDestroy {
         this._subs = [
             this._activatedRoute.params
                 .subscribe((params) => {
-                    if (typeof params.speakerId === "string" && params.speakerId.length > 0) {
-                        this._speakerEditorService.fetchSpeaker(params.speakerId);
+                    if (typeof params.friendId === "string" && params.friendId.length > 0) {
+                        this._friendEditorService.fetchFriend(params.friendId);
                     } else {
                         this.editMode = false;
                     }
                 }),
-            this._speakerEditorService.speaker$
-                .subscribe((speaker: ISpeaker) => {
-                    this.speaker = speaker;
+            this._friendEditorService.friend$
+                .subscribe((friend: IFriend) => {
+                    this.friend = friend;
                     this._changeDetectorRef.detectChanges();
                 }),
         ];
@@ -63,8 +58,8 @@ export class SpeakerEditorComponent implements OnInit, OnDestroy {
     }
 
     public goBack(): void {
-        if (!this._speakerEditorService.hasChanges(this.speaker)) {
-            this._router.navigateByUrl("/speaker-list");
+        if (!this._friendEditorService.hasChanges(this.friend)) {
+            this._router.navigateByUrl("/friend-list");
         } else {
             this._layoutService.showWarning("Потеря введенных данных предотвращена");
         }
@@ -72,19 +67,19 @@ export class SpeakerEditorComponent implements OnInit, OnDestroy {
 
     public save(): void {
         if (this.editMode) {
-            this._speakerEditorService.updateSpeaker(this.speaker);
+            this._friendEditorService.updateFriend(this.friend);
         } else {
-            this._speakerEditorService.addSpeaker(this.speaker);
+            this._friendEditorService.addFriend(this.friend);
         }
     }
 
     public reset(): void {
-        this._speakerEditorService.reset();
+        this._friendEditorService.reset();
     }
 
     public onFilesAccepted(files: IAcceptedFile[]): void {
         for (const acceptedFile of files) {
-            this._speakerEditorService.storeSpeakerAvatar(this.speaker.id, acceptedFile.file);
+            this._friendEditorService.storeFriendAvatar(this.friend.id, acceptedFile.file);
         }
     }
 
