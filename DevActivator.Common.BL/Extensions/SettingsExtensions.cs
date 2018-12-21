@@ -10,11 +10,15 @@ namespace DevActivator.Common.BL.Extensions
     {
         private const string IndexFileName = "index.xml";
         private const string AvatarFileName = "avatar.jpg";
+        private const string LogoFileName = "logo.png";
 
         private const string Db = "db";
 
         public static string GetSpeakerAvatarFilePath(this Settings settings, string speakerId)
             => Path.Combine(settings.GetDirectory("speakers"), speakerId, AvatarFileName);
+        
+        public static string GetFriendAvatarFilePath(this Settings settings, string friendId)
+            => Path.Combine(settings.GetDirectory("friends"), friendId, LogoFileName);
 
         public static string GetSpeakerFilePath(this Settings settings, string speakerId)
             => Path.Combine(settings.GetDirectory("speakers"), speakerId, IndexFileName);

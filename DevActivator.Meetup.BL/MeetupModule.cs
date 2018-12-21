@@ -6,10 +6,11 @@ using DevActivator.Meetup.BL.Services;
 
 namespace DevActivator.Meetup.BL
 {
-    public class MeetupModule<TSpeakerProvider, TTalkProvider, TVenueProvider> : Module
+    public class MeetupModule<TSpeakerProvider, TTalkProvider, TVenueProvider, TFriendProvider> : Module
         where TSpeakerProvider : ISpeakerProvider
         where TTalkProvider : ITalkProvider
         where TVenueProvider : IVenueProvider
+        where TFriendProvider : IFriendProvider
     {
         private const string PureImplementation = nameof(PureImplementation);
 
@@ -40,6 +41,12 @@ namespace DevActivator.Meetup.BL
             builder.RegisterType<VenueService>().Named<IVenueService>(PureImplementation);
             builder.RegisterDecorator<IVenueService>(
                     (c, inner) => new CachedVenueService(c.Resolve<ICache>(), inner), PureImplementation)
+                .SingleInstance();
+
+            builder.RegisterType<TFriendProvider>().As<IFriendProvider>().SingleInstance();
+            builder.RegisterType<FriendService>().Named<IFriendService>(PureImplementation);
+            builder.RegisterDecorator<IFriendService>(
+                    (c, inner) => new CachedFriendService(c.Resolve<ICache>(), inner), PureImplementation)
                 .SingleInstance();
         }
     }

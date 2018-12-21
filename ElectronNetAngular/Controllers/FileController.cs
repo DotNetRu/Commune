@@ -38,5 +38,26 @@ namespace ElectronNetAngular.Controllers
                 await formFile.CopyToAsync(stream).ConfigureAwait(true);
             }
         }
+
+        [HttpPut("[action]/{friendId}")]
+        public async Task StoreFriendAvatar([FromRoute] string friendId, [FromForm] IFormFile formFile)
+        {
+            if (formFile == null || formFile.Length <= 0)
+            {
+                throw new ArgumentException("Can't read the file", nameof(formFile));
+            }
+
+            if (formFile.Length > _settings.AvatarMaxSize)
+            {
+                throw new ArgumentOutOfRangeException(nameof(formFile),
+                    $"File size must be lower than {_settings.AvatarMaxSize.ToString()}");
+            }
+
+            var filePath = _settings.GetFriendAvatarFilePath(friendId);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await formFile.CopyToAsync(stream).ConfigureAwait(true);
+            }
+        }
     }
 }
