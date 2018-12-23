@@ -13,6 +13,11 @@ To apply the patch, change the buildType with id = 'Build'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Build")) {
+    check(artifactRules == "") {
+        "Unexpected option value: artifactRules = $artifactRules"
+    }
+    artifactRules = """+:DevActivator\obj\desktop\win\DevActivator\bin\desktop\app.%build.number%.zip"""
+
     check(buildNumberPattern == "%build.counter%") {
         "Unexpected option value: buildNumberPattern = $buildNumberPattern"
     }
