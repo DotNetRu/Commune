@@ -4,6 +4,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.BuildStep
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dotnetRestore
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.powerShell
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
 
 /*
@@ -33,6 +34,15 @@ changeBuildType(RelativeId("Build")) {
     steps {
         update<BuildStep>(1) {
             param("teamcity.build.workingDir", "DevActivator")
+        }
+        insert(3) {
+            powerShell {
+                name = "electronize"
+                workingDir = "DevActivator"
+                scriptMode = script {
+                    content = "electronize build /target win"
+                }
+            }
         }
     }
 }
