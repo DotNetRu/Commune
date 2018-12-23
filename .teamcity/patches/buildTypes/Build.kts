@@ -16,7 +16,7 @@ changeBuildType(RelativeId("Build")) {
     check(buildNumberPattern == "%build.counter%") {
         "Unexpected option value: buildNumberPattern = $buildNumberPattern"
     }
-    buildNumberPattern = "1.0.%build.counter%-%vcsroot.branch%"
+    buildNumberPattern = "1.0.%build.counter%-%teamcity.build.branch%"
 
     expectSteps {
         dotnetRestore {
