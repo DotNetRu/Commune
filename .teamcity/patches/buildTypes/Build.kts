@@ -13,6 +13,11 @@ To apply the patch, change the buildType with id = 'Build'
 accordingly, and delete the patch script.
 */
 changeBuildType(RelativeId("Build")) {
+    check(buildNumberPattern == "%build.counter%") {
+        "Unexpected option value: buildNumberPattern = $buildNumberPattern"
+    }
+    buildNumberPattern = "1.0.%build.counter%"
+
     expectSteps {
         dotnetRestore {
             name = "nuget restore"
