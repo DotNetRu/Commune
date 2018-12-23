@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace DevActivator.Meetups.BL.Helpers
@@ -21,9 +22,17 @@ namespace DevActivator.Meetups.BL.Helpers
                 }
             };
 
-            process.Start();
-            var result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
+            string result;
+            try
+            {
+                process.Start();
+                result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+            }
+            catch (Exception _)
+            {
+                result = "bash error";
+            }
 
             return result.TrimEnd('\r', '\n');
         }
