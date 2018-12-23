@@ -1,0 +1,105 @@
+<form #meetupForm="ngForm"
+      class="base-component-container">
+
+    <div class="actions">
+        <button type="button"
+                color="primary"
+                mat-icon-button
+                (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="!editMode"
+                (click)="reset()">
+            <mat-icon>close</mat-icon>
+            <span>Сбросить</span>
+        </button>
+        <button type="button"
+                color="primary"
+                mat-button
+                [disabled]="meetupForm.invalid"
+                (click)="save()">
+            <mat-icon>{{ editMode ? 'save' : 'add' }}</mat-icon>
+            <span>{{ editMode ? 'Сохранить' : 'Добавить' }}</span>
+        </button>
+    </div>
+
+    <mat-form-field>
+        <input type="text"
+               name="meetupId"
+               matInput
+               [placeholder]="LABELS.IDENTITY"
+               required
+               [pattern]="PATTERNS.IDENTITY"
+               [readonly]="editMode"
+               #meetupId="ngModel"
+               [(ngModel)]="meetup.id">
+        <mat-error *ngIf="meetupId.getError('required')">
+            {{ LABELS.IDENTITY | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="meetupId.getError('pattern')">
+            {{ PATTERNS.IDENTITY | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input type="text"
+               name="meetupName"
+               matInput
+               [placeholder]="LABELS.TITLE"
+               required
+               [pattern]="PATTERNS.REQUIRED_STRING"
+               #meetupName="ngModel"
+               [(ngModel)]="meetup.name">
+        <mat-error *ngIf="meetupName.getError('required')">
+            {{ LABELS.TITLE | requiredErrorMessage }}
+        </mat-error>
+        <mat-error *ngIf="meetupName.getError('pattern')">
+            {{ PATTERNS.REQUIRED_STRING | patternErrorMessage }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-card>
+        <mtp-friend-list *ngFor="let rel of meetup.friendIds; let idx = index"
+                         [title]="'Друг №' + (idx+1)"
+                         [iconName]="'delete_forever'"
+                         [iconText]="'Убрать'"
+                         [friendLink]="rel"
+                         (selected)="onFriendSelected($event, idx)"
+                         (iconClicked)="removeFriend(idx)"></mtp-friend-list>
+        <button type="button"
+                color="primary"
+                mat-button
+                (click)="addFriend()">
+            <mat-icon>exposure_plus_1</mat-icon>
+            <span>Добавить друга</span>
+        </button>
+    </mat-card>
+
+    <mtp-venue-list [title]="'Площадка'"
+                    [venueLink]="meetup"
+                    (selected)="onVenueSelected($event)"></mtp-venue-list>
+
+    <mat-card>
+        <ng-container *ngFor="let session of meetup.sessions; let idx = index">
+            <mtp-talk-list [title]="'Сессия №' + (idx+1)"
+                           [iconName]="'delete_forever'"
+                           [iconText]="'Убрать'"
+                           [talkLink]="session"
+                           (selected)="onTalkSelected($event, idx)"
+                           (iconClicked)="removeTalk(idx)"></mtp-talk-list>
+            <pre>{{ session.startTime }}</pre>
+            <pre>{{ session.endTime }}</pre>
+        </ng-container>
+        <button type="button"
+                color="primary"
+                mat-button
+                (click)="addTalk()">
+            <mat-icon>exposure_plus_1</mat-icon>
+            <span>Добавить сессию</span>
+        </button>
+    </mat-card>
+
+</form>

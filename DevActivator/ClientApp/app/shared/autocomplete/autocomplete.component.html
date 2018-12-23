@@ -1,0 +1,27 @@
+<mat-form-field class="full-width">
+
+    <input type="text"
+           [placeholder]="title"
+           matInput
+           [formControl]="queryControl"
+           [matAutocomplete]="auto">
+
+    <mat-autocomplete autoActiveFirstOption
+                      #auto="matAutocomplete"
+                      (optionSelected)="onSelected($event.option.value)">
+        <mat-option *ngFor="let data of data$ | async"
+                    [value]="data">
+            {{ data.name }}
+        </mat-option>
+    </mat-autocomplete>
+
+    <a color="primary"
+       mat-button
+       matSuffix
+       *ngIf="iconName || iconText"
+       (click)="onIconClick()">
+        <mat-icon>{{ iconName }}</mat-icon>
+        <span>{{ iconText }}</span>
+    </a>
+
+</mat-form-field>
