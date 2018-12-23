@@ -56,5 +56,12 @@ changeBuildType(RelativeId("Build")) {
                 }
             }
         }
+        insert(5) {
+            powerShell {
+                scriptMode = script {
+                    content = """Compress-Archive -Path %system.teamcity.build.workingDir%\DevActivator\obj\desktop\win\DevActivator\bin\desktop\* -CompressionLevel Fastest -DestinationPath %system.teamcity.build.workingDir%\DevActivator\obj\desktop\win\DevActivator\bin\desktop\app.%build.number%.zip"""
+                }
+            }
+        }
     }
 }
