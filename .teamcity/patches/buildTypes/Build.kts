@@ -44,5 +44,17 @@ changeBuildType(RelativeId("Build")) {
                 }
             }
         }
+        insert(4) {
+            powerShell {
+                name = "electron-packager"
+                workingDir = "DevActivator/obj/desktop/win"
+                scriptMode = script {
+                    content = """
+                        npm install
+                        electron-packager . --platform=win32 --arch=x64  --out="%system.teamcity.build.workingDir%\DevActivator\bin\desktop" --overwrite --electron-version=4.0.0
+                    """.trimIndent()
+                }
+            }
+        }
     }
 }
