@@ -18,7 +18,6 @@ changeBuildType(RelativeId("Build")) {
                     authType = token {
                         token = "credentialsJSON:c97a1c72-0f46-4979-a3de-93abed177766"
                     }
-                    filterTargetBranch = "master"
                     filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
                 }
             }
