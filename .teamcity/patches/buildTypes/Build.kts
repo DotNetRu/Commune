@@ -2,6 +2,7 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.PullRequests
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
 
@@ -19,6 +20,16 @@ changeBuildType(RelativeId("Build")) {
                         token = "credentialsJSON:c97a1c72-0f46-4979-a3de-93abed177766"
                     }
                     filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
+                }
+            }
+        }
+        add {
+            commitStatusPublisher {
+                publisher = github {
+                    githubUrl = "https://api.github.com"
+                    authType = personalToken {
+                        token = "credentialsJSON:c97a1c72-0f46-4979-a3de-93abed177766"
+                    }
                 }
             }
         }
