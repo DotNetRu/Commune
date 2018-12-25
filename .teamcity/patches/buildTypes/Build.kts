@@ -14,11 +14,6 @@ accordingly, and delete the patch script.
 changeBuildType(RelativeId("Build")) {
     vcs {
 
-        check(checkoutMode == CheckoutMode.AUTO) {
-            "Unexpected option value: checkoutMode = $checkoutMode"
-        }
-        checkoutMode = CheckoutMode.ON_AGENT
-
         check(cleanCheckout == false) {
             "Unexpected option value: cleanCheckout = $cleanCheckout"
         }
