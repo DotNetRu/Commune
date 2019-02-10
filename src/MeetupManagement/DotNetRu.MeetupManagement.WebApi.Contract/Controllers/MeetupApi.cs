@@ -45,8 +45,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateMeetupDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(MeetupDraft), description: "Draft was successfully created")]
-        public abstract MeetupDraft CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
-
+        public abstract ActionResult<MeetupDraft> CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
+        
         /// <summary>
         /// Delete meetup draft
         /// </summary>
@@ -60,8 +60,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteMeetupDraft")]
-        public abstract void DeleteMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
-
+        public abstract EmptyResult DeleteMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
+        
         /// <summary>
         /// Get meetup draft
         /// </summary>
@@ -76,8 +76,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetMeetupDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(MeetupDraft), description: "OK")]
-        public abstract MeetupDraft GetMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
-
+        public abstract ActionResult<MeetupDraft> GetMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
+        
         /// <summary>
         /// Update meetup draft
         /// </summary>
@@ -95,7 +95,39 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("UpdateMeetupDraft")]
         [SwaggerResponse(statusCode: 422, type: typeof(string), description: "Parameters cannot be processed")]
-        public abstract void UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdateMeetupDraftParameters updateMeetupDraftProperties);
+        public abstract EmptyResult UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdateMeetupDraftParameters updateMeetupDraftProperties);
+        
+        /// <summary>
+        /// Get route values for CreateMeetupDraft action
+        /// </summary>
+        protected static object GetCreateMeetupDraftRouteValues([FromRoute][Required]string communityId)
+        {
+            return new { communityId };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteMeetupDraft action
+        /// </summary>
+        protected static object GetDeleteMeetupDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId)
+        {
+            return new { communityId,  meetupId };
+        }
+
+        /// <summary>
+        /// Get route values for GetMeetupDraft action
+        /// </summary>
+        protected static object GetGetMeetupDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId)
+        {
+            return new { communityId,  meetupId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateMeetupDraft action
+        /// </summary>
+        protected static object GetUpdateMeetupDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId)
+        {
+            return new { communityId,  meetupId };
+        }
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

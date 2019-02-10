@@ -43,8 +43,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateSpeakerDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(SpeakerDraft), description: "Draft was successfully created")]
-        public abstract SpeakerDraft CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
-
+        public abstract ActionResult<SpeakerDraft> CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
+        
         /// <summary>
         /// Delete speaker draft
         /// </summary>
@@ -57,8 +57,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteSpeakerDraft")]
-        public abstract void DeleteSpeakerDraft([FromRoute][Required]string speakerId);
-
+        public abstract EmptyResult DeleteSpeakerDraft([FromRoute][Required]string speakerId);
+        
         /// <summary>
         /// Get speaker draft
         /// </summary>
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetSpeakerDrafts")]
         [SwaggerResponse(statusCode: 200, type: typeof(SpeakerDraft), description: "OK")]
-        public abstract SpeakerDraft GetSpeakerDrafts([FromRoute][Required]string speakerId);
-
+        public abstract ActionResult<SpeakerDraft> GetSpeakerDrafts([FromRoute][Required]string speakerId);
+        
         /// <summary>
         /// Update speaker draft
         /// </summary>
@@ -88,7 +88,39 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateSpeakerDraft")]
-        public abstract void UpdateSpeakerDraft([FromRoute][Required]string speakerId, [FromBody]UpdateSpeakerDraftParameters body);
+        public abstract EmptyResult UpdateSpeakerDraft([FromRoute][Required]string speakerId, [FromBody]UpdateSpeakerDraftParameters body);
+        
+        /// <summary>
+        /// Get route values for CreateSpeakerDraft action
+        /// </summary>
+        protected static object GetCreateSpeakerDraftRouteValues()
+        {
+            return new { };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteSpeakerDraft action
+        /// </summary>
+        protected static object GetDeleteSpeakerDraftRouteValues([FromRoute][Required]string speakerId)
+        {
+            return new { speakerId };
+        }
+
+        /// <summary>
+        /// Get route values for GetSpeakerDrafts action
+        /// </summary>
+        protected static object GetGetSpeakerDraftsRouteValues([FromRoute][Required]string speakerId)
+        {
+            return new { speakerId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateSpeakerDraft action
+        /// </summary>
+        protected static object GetUpdateSpeakerDraftRouteValues([FromRoute][Required]string speakerId)
+        {
+            return new { speakerId };
+        }
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

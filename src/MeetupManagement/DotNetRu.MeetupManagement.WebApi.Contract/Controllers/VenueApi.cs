@@ -43,8 +43,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateVenueDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(VenueDraft), description: "Draft was successfully created")]
-        public abstract VenueDraft CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
-
+        public abstract ActionResult<VenueDraft> CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
+        
         /// <summary>
         /// Delete venue draft
         /// </summary>
@@ -57,8 +57,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteVenueDraft")]
-        public abstract void DeleteVenueDraft([FromRoute][Required]string venueId);
-
+        public abstract EmptyResult DeleteVenueDraft([FromRoute][Required]string venueId);
+        
         /// <summary>
         /// Get venue draft
         /// </summary>
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetVenueDrafts")]
         [SwaggerResponse(statusCode: 200, type: typeof(VenueDraft), description: "OK")]
-        public abstract VenueDraft GetVenueDrafts([FromRoute][Required]string venueId);
-
+        public abstract ActionResult<VenueDraft> GetVenueDrafts([FromRoute][Required]string venueId);
+        
         /// <summary>
         /// Update venue draft
         /// </summary>
@@ -88,7 +88,39 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateVenueDraft")]
-        public abstract void UpdateVenueDraft([FromRoute][Required]string venueId, [FromBody]UpdateVenueDraftParameters properties);
+        public abstract EmptyResult UpdateVenueDraft([FromRoute][Required]string venueId, [FromBody]UpdateVenueDraftParameters properties);
+        
+        /// <summary>
+        /// Get route values for CreateVenueDraft action
+        /// </summary>
+        protected static object GetCreateVenueDraftRouteValues()
+        {
+            return new { };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteVenueDraft action
+        /// </summary>
+        protected static object GetDeleteVenueDraftRouteValues([FromRoute][Required]string venueId)
+        {
+            return new { venueId };
+        }
+
+        /// <summary>
+        /// Get route values for GetVenueDrafts action
+        /// </summary>
+        protected static object GetGetVenueDraftsRouteValues([FromRoute][Required]string venueId)
+        {
+            return new { venueId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateVenueDraft action
+        /// </summary>
+        protected static object GetUpdateVenueDraftRouteValues([FromRoute][Required]string venueId)
+        {
+            return new { venueId };
+        }
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

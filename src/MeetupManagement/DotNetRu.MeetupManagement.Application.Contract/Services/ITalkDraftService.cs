@@ -8,7 +8,7 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Services
         ///  Create new talk draft.
         /// </summary>
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
-        TalkDraft CreateTalkDraft(string communityId, string title, string comment);
+        TalkDraft CreateTalkDraft(string communityId, string id, string title, string description);
 
         /// <summary>
         ///  Delete talk draft.

@@ -519,7 +519,19 @@ definitions:
         
   # Description for meetup
   
-  MeetupDraftProperties:
+  CreateMeetupDraftParameters:
+    allOf:
+      - $ref: "#/definitions/UniqueIdentifier"
+      - required:
+          - Name
+        properties:
+          Name:
+            type: string
+            maxLength: 256  
+    x-restlet:
+      section: "DraftModels"
+
+  UpdateMeetupDraftParameters:
   #use explicit definition for properties to correct generate code for array items of pod type
     required:
       - Name
@@ -540,17 +552,6 @@ definitions:
         items:
           type: string
           maxLength: 64  
-          
-  CreateMeetupDraftParameters:
-    allOf:
-      - $ref: "#/definitions/UniqueIdentifier"
-      - $ref: "#/definitions/MeetupDraftProperties"
-    x-restlet:
-      section: "DraftModels"
-
-  UpdateMeetupDraftParameters:
-    allOf:
-      - $ref: "#/definitions/MeetupDraftProperties"
     x-restlet:
       section: "DraftModels"     
 
@@ -620,6 +621,8 @@ definitions:
     - required:
         - Title
       properties:
+        Title:
+          type: "string"
         Description:
           type: "string"
         TalkRehearsals:
@@ -664,7 +667,8 @@ definitions:
           - Time
         properties:
           Time:
-            type: "string"    
+            type: "string"
+            format: "date-time"
       
   TalkRehearsal:
     allOf:

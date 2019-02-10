@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotNetRu.MeetupManagement.Application.Contract.Models
+namespace DotNetRu.MeetupManagement.Domain
 {
     public class SpeakerReference
     {

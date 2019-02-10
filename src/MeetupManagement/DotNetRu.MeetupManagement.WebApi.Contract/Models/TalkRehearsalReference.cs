@@ -47,7 +47,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         /// </summary>
         [Required]
         [DataMember(Name="Time")]
-        public string Time { get; set; }
+        public DateTimeOffset? Time { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

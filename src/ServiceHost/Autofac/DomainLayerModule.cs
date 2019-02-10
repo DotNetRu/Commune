@@ -1,12 +1,13 @@
 ﻿namespace DotNetRu.ServiceHost.Autofac
 {
+    using MeetupManagement.Domain.Drafts;
     using global::Autofac;
 
-    public class BusinessLayerModule : Module
+    public class DomainLayerModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // register components
+            builder.RegisterType<TalkDraftService>().AsImplementedInterfaces();
         }
     }
 }

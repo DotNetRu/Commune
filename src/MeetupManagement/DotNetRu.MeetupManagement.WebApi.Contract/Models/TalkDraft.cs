@@ -43,6 +43,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets Title
+        /// </summary>
+        [Required]
+        [DataMember(Name="Title")]
+        public string Title { get; set; }
+
+        /// <summary>
         /// Gets or sets Description
         /// </summary>
         [DataMember(Name="Description")]
@@ -75,6 +82,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class TalkDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  TalkRehearsals: ").Append(TalkRehearsals).Append("\n");
             sb.Append("  MeetupDraft: ").Append(MeetupDraft).Append("\n");
@@ -135,6 +143,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 ) &&
                 (
                     // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Title, other.Title) ||
+                    (Title != null && Title.Equals(other.Title))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
                     string.Equals(Description, other.Description) ||
                     (Description != null && Description.Equals(other.Description))
                 ) &&
@@ -177,6 +190,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Id.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Title != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Title.GetHashCode();
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode

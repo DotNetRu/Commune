@@ -33,82 +33,88 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// Create talk draft
         /// </summary>
         /// <remarks>Create new talk draft.</remarks>
+        /// <param name="communityId"></param>
         /// <param name="talkDraft"></param>
         /// <response code="201">Draft was successfully created</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="409">Draft is already exists</response>
         [HttpPost]
-        [Route("/talks/draft")]
+        [Route("/communities/{communityId}/talks/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateTalkDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(TalkDraft), description: "Draft was successfully created")]
-        public abstract TalkDraft CreateTalkDraft([FromBody]CreateTalkDraftParameters talkDraft);
-
+        public abstract ActionResult<TalkDraft> CreateTalkDraft([FromRoute][Required]string communityId, [FromBody]CreateTalkDraftParameters talkDraft);
+        
         /// <summary>
         /// Delete talk draft
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpDelete]
-        [Route("/talks/{talkId}/draft")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteTalkDraft")]
-        public abstract void DeleteTalkDraft([FromRoute][Required]string talkId);
-
+        public abstract EmptyResult DeleteTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId);
+        
         /// <summary>
         /// Delete talk rehearsal
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="talkRehearsalId"></param>
         /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk or rehearsal not found</response>
         [HttpDelete]
-        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
         [ValidateModelState]
         [SwaggerOperation("DeleteTalkRehearsal")]
-        public abstract void DeleteTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
-
+        public abstract EmptyResult DeleteTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
+        
         /// <summary>
         /// Get talk draft
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <response code="200">OK</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpGet]
-        [Route("/talks/{talkId}/draft")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetTalkDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(TalkDraft), description: "OK")]
-        public abstract TalkDraft GetTalkDraft([FromRoute][Required]string talkId);
-
+        public abstract ActionResult<TalkDraft> GetTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId);
+        
         /// <summary>
         /// Get talk rehearsal
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="talkRehearsalId"></param>
         /// <response code="200">OK</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk or rehearsal not found</response>
         [HttpGet]
-        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
         [ValidateModelState]
         [SwaggerOperation("GetTalkRehearsal")]
         [SwaggerResponse(statusCode: 200, type: typeof(TalkRehearsal), description: "OK")]
-        public abstract TalkRehearsal GetTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
-
+        public abstract ActionResult<TalkRehearsal> GetTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
+        
         /// <summary>
         /// Update talk draft
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="body"></param>
         /// <response code="204">Draft was successfuly updated</response>
@@ -116,15 +122,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpPut]
-        [Route("/talks/{talkId}/draft")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkDraft")]
-        public abstract void UpdateTalkDraft([FromRoute][Required]string talkId, [FromBody]UpdateTalkDraftParameters body);
-
+        public abstract EmptyResult UpdateTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromBody]UpdateTalkDraftParameters body);
+        
         /// <summary>
         /// Update talk rehearsal
         /// </summary>
         
+        /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="talkRehearsalId"></param>
         /// <param name="parameters"></param>
@@ -133,10 +140,66 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk or rehearsal not found</response>
         [HttpPut]
-        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [Route("/communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkRehearsal")]
-        public abstract void UpdateTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId, [FromBody]UpdateTalkRehearsalParameters parameters);
+        public abstract EmptyResult UpdateTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId, [FromBody]UpdateTalkRehearsalParameters parameters);
+        
+        /// <summary>
+        /// Get route values for CreateTalkDraft action
+        /// </summary>
+        protected static object GetCreateTalkDraftRouteValues([FromRoute][Required]string communityId)
+        {
+            return new { communityId };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteTalkDraft action
+        /// </summary>
+        protected static object GetDeleteTalkDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId)
+        {
+            return new { communityId,  talkId };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteTalkRehearsal action
+        /// </summary>
+        protected static object GetDeleteTalkRehearsalRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId)
+        {
+            return new { communityId,  talkId,  talkRehearsalId };
+        }
+
+        /// <summary>
+        /// Get route values for GetTalkDraft action
+        /// </summary>
+        protected static object GetGetTalkDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId)
+        {
+            return new { communityId,  talkId };
+        }
+
+        /// <summary>
+        /// Get route values for GetTalkRehearsal action
+        /// </summary>
+        protected static object GetGetTalkRehearsalRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId)
+        {
+            return new { communityId,  talkId,  talkRehearsalId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateTalkDraft action
+        /// </summary>
+        protected static object GetUpdateTalkDraftRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId)
+        {
+            return new { communityId,  talkId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateTalkRehearsal action
+        /// </summary>
+        protected static object GetUpdateTalkRehearsalRouteValues([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId)
+        {
+            return new { communityId,  talkId,  talkRehearsalId };
+        }
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

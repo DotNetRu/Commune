@@ -29,7 +29,10 @@ namespace DotNetRu.ServiceHost
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             _meetupServiceStartup.ConfigureServices(services);
-            services.AddMvcCore().AddControllersAsServices();
+            services.AddMvcCore().
+                AddJsonFormatters()
+                .AddDataAnnotations()
+                .AddControllersAsServices();
             _containerBuilder.Populate(services);
             return BuildServiceProvider();
         }

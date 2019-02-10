@@ -15,7 +15,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
 
         public TalkKey Key { get; }
         public string Title { get; set; }
-        public string Comments { get; set; }
+        public string Description { get; set; }
         public ICollection<SpeakerReference> Speakers { get; }
         public ICollection<TalkRehearsal> Rehearsals { get; set; }
     }

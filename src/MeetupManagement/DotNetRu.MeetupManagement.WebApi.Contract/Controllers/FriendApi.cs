@@ -43,8 +43,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateFriendDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(FriendDraft), description: "Draft was successfully created")]
-        public abstract FriendDraft CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
-
+        public abstract ActionResult<FriendDraft> CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
+        
         /// <summary>
         /// Delete friend draft
         /// </summary>
@@ -57,8 +57,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteFriendDraft")]
-        public abstract void DeleteFriendDraft([FromRoute][Required]string friendId);
-
+        public abstract EmptyResult DeleteFriendDraft([FromRoute][Required]string friendId);
+        
         /// <summary>
         /// Get friend draft
         /// </summary>
@@ -72,8 +72,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetFriendDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(FriendDraft), description: "OK")]
-        public abstract FriendDraft GetFriendDraft([FromRoute][Required]string friendId);
-
+        public abstract ActionResult<FriendDraft> GetFriendDraft([FromRoute][Required]string friendId);
+        
         /// <summary>
         /// Update friend draft
         /// </summary>
@@ -88,7 +88,39 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateFriendDraft")]
-        public abstract void UpdateFriendDraft([FromRoute][Required]string friendId, [FromBody]UpdateFriendDraftParameters body);
+        public abstract EmptyResult UpdateFriendDraft([FromRoute][Required]string friendId, [FromBody]UpdateFriendDraftParameters body);
+        
+        /// <summary>
+        /// Get route values for CreateFriendDraft action
+        /// </summary>
+        protected static object GetCreateFriendDraftRouteValues()
+        {
+            return new { };
+        }
+
+        /// <summary>
+        /// Get route values for DeleteFriendDraft action
+        /// </summary>
+        protected static object GetDeleteFriendDraftRouteValues([FromRoute][Required]string friendId)
+        {
+            return new { friendId };
+        }
+
+        /// <summary>
+        /// Get route values for GetFriendDraft action
+        /// </summary>
+        protected static object GetGetFriendDraftRouteValues([FromRoute][Required]string friendId)
+        {
+            return new { friendId };
+        }
+
+        /// <summary>
+        /// Get route values for UpdateFriendDraft action
+        /// </summary>
+        protected static object GetUpdateFriendDraftRouteValues([FromRoute][Required]string friendId)
+        {
+            return new { friendId };
+        }
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

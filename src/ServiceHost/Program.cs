@@ -2,6 +2,7 @@
 using System.IO;
 using Autofac;
 using DotNetRu.MeetupManagement.Infrastructure.DependencyInjection;
+using DotNetRu.ServiceHost.Autofac;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,8 @@ namespace DotNetRu.ServiceHost
                 .CreateLogger();
 
             var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule(new ApplicationLayerModule());
+            containerBuilder.RegisterModule(new DomainLayerModule());
             containerBuilder.RegisterModule(new DataLayerModule());
             try
             {

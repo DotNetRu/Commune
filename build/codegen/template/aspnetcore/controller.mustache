@@ -30,7 +30,17 @@ namespace {{packageName}}.Controllers
         [ValidateModelState]
         [SwaggerOperation("{{operationId}}")]{{#responses}}{{#dataType}}
         [SwaggerResponse(statusCode: {{code}}, type: typeof({{&dataType}}), description: "{{message}}")]{{/dataType}}{{^dataType}}{{/dataType}}{{/responses}}
-        public abstract {{#returnType}}{{&returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        public abstract {{#returnType}}ActionResult<{{&returnType}}>{{/returnType}}{{^returnType}}EmptyResult{{/returnType}} {{operationId}}({{#allParams}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/operation}}{{#operation}}
+        /// <summary>
+        /// Get route values for {{operationId}} action
+        /// </summary>
+        protected static object Get{{operationId}}RouteValues({{#pathParams}}{{>pathParam}}{{#hasMore}}, {{/hasMore}}{{/pathParams}})
+        {
+          {{=<% %>=}}
+            return new {<%#pathParams%> <%paramName%><%#hasMore%>, <%/hasMore%><%/pathParams%> };
+          <%={{ }}=%>
+        }
         {{/operation}}
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace

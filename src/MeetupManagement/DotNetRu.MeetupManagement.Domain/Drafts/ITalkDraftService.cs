@@ -10,7 +10,8 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         TalkDraft GetTalkDraft(TalkKey key);
 
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
-        TalkDraft CreateTalkDraft(string communityId, string title, string comments);
+        /// <exception cref="Contract.Exceptions.TalkExistsException" />
+        TalkDraft CreateTalkDraft(string communityId, string id, string title, string comments);
 
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Contract.Exceptions.TalkNotFoundException" />
