@@ -50,30 +50,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets Venue
-        /// </summary>
-        [DataMember(Name="Venue")]
-        public VenueReference Venue { get; set; }
-
-        /// <summary>
-        /// Gets or sets Speakers
-        /// </summary>
-        [DataMember(Name="Speakers")]
-        public Collection<SpeakerReference> Speakers { get; set; }
-
-        /// <summary>
-        /// Gets or sets Talks
-        /// </summary>
-        [DataMember(Name="Talks")]
-        public Collection<TalkReference> Talks { get; set; }
-
-        /// <summary>
-        /// Gets or sets Friends
-        /// </summary>
-        [DataMember(Name="Friends")]
-        public Collection<FriendReference> Friends { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -83,10 +59,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class MeetupDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Venue: ").Append(Venue).Append("\n");
-            sb.Append("  Speakers: ").Append(Speakers).Append("\n");
-            sb.Append("  Talks: ").Append(Talks).Append("\n");
-            sb.Append("  Friends: ").Append(Friends).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -145,23 +117,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Name, other.Name) ||
                     (Name != null && Name.Equals(other.Name))
-                ) &&
-                (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(Venue, other.Venue) ||
-                    (Venue != null && Venue.Equals(other.Venue))
-                ) &&
-                (
-                    Speakers == other.Speakers ||
-                    (Speakers != null && Speakers.SequenceEqual(other.Speakers))
-                ) &&
-                (
-                    Talks == other.Talks ||
-                    (Talks != null && Talks.SequenceEqual(other.Talks))
-                ) &&
-                (
-                    Friends == other.Friends ||
-                    (Friends != null && Friends.SequenceEqual(other.Friends))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -196,34 +151,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Name.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Venue != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Venue.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Speakers != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Speakers.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Talks != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Talks.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Friends != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Friends.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

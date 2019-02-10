@@ -17,7 +17,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public override void CreateMeetupDraft([FromRoute, Required] string communityId, [FromBody] CreateMeetupDraftParameters meetupDraft)
+        public override MeetupDraft CreateMeetupDraft([FromRoute, Required] string communityId, [FromBody] CreateMeetupDraftParameters meetupDraft)
         {
             throw new NotImplementedException();
         }

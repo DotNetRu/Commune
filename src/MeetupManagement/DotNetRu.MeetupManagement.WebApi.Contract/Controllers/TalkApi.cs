@@ -42,21 +42,37 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/talks/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateTalkDraft")]
-        public abstract void CreateTalkDraft([FromBody]CreateTalkDraftParameters talkDraft);
+        [SwaggerResponse(statusCode: 201, type: typeof(TalkDraft), description: "Draft was successfully created")]
+        public abstract TalkDraft CreateTalkDraft([FromBody]CreateTalkDraftParameters talkDraft);
 
         /// <summary>
         /// Delete talk draft
         /// </summary>
         
         /// <param name="talkId"></param>
-        /// <response code="204">Draft was successfully deleted</response>
+        /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpDelete]
-        [Route("/talk/{talkId}/draft")]
+        [Route("/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteTalkDraft")]
         public abstract void DeleteTalkDraft([FromRoute][Required]string talkId);
+
+        /// <summary>
+        /// Delete talk rehearsal
+        /// </summary>
+        
+        /// <param name="talkId"></param>
+        /// <param name="talkRehearsalId"></param>
+        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Talk or rehearsal not found</response>
+        [HttpDelete]
+        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [ValidateModelState]
+        [SwaggerOperation("DeleteTalkRehearsal")]
+        public abstract void DeleteTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
 
         /// <summary>
         /// Get talk draft
@@ -67,11 +83,27 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpGet]
-        [Route("/talk/{talkId}/draft")]
+        [Route("/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("GetTalkDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(TalkDraft), description: "OK")]
         public abstract TalkDraft GetTalkDraft([FromRoute][Required]string talkId);
+
+        /// <summary>
+        /// Get talk rehearsal
+        /// </summary>
+        
+        /// <param name="talkId"></param>
+        /// <param name="talkRehearsalId"></param>
+        /// <response code="200">OK</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Talk or rehearsal not found</response>
+        [HttpGet]
+        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [ValidateModelState]
+        [SwaggerOperation("GetTalkRehearsal")]
+        [SwaggerResponse(statusCode: 200, type: typeof(TalkRehearsal), description: "OK")]
+        public abstract TalkRehearsal GetTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
 
         /// <summary>
         /// Update talk draft
@@ -79,15 +111,32 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="talkId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfully updated</response>
+        /// <response code="204">Draft was successfuly updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpPut]
-        [Route("/talk/{talkId}/draft")]
+        [Route("/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkDraft")]
         public abstract void UpdateTalkDraft([FromRoute][Required]string talkId, [FromBody]UpdateTalkDraftParameters body);
+
+        /// <summary>
+        /// Update talk rehearsal
+        /// </summary>
+        
+        /// <param name="talkId"></param>
+        /// <param name="talkRehearsalId"></param>
+        /// <param name="parameters"></param>
+        /// <response code="204">Rehearsal was successfuly updated</response>
+        /// <response code="400">Invalid request parameters</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Talk or rehearsal not found</response>
+        [HttpPut]
+        [Route("/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
+        [ValidateModelState]
+        [SwaggerOperation("UpdateTalkRehearsal")]
+        public abstract void UpdateTalkRehearsal([FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId, [FromBody]UpdateTalkRehearsalParameters parameters);
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
 }

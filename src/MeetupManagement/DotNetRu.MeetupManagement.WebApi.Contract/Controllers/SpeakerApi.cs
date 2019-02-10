@@ -42,14 +42,15 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateSpeakerDraft")]
-        public abstract void CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
+        [SwaggerResponse(statusCode: 201, type: typeof(SpeakerDraft), description: "Draft was successfully created")]
+        public abstract SpeakerDraft CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
 
         /// <summary>
         /// Delete speaker draft
         /// </summary>
         
         /// <param name="speakerId"></param>
-        /// <response code="204">Draft was successfully deleted</response>
+        /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
         [HttpDelete]
@@ -79,7 +80,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="speakerId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfully updated</response>
+        /// <response code="204">Draft was successfuly updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>

@@ -44,7 +44,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateMeetupDraft")]
-        public abstract void CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
+        [SwaggerResponse(statusCode: 201, type: typeof(MeetupDraft), description: "Draft was successfully created")]
+        public abstract MeetupDraft CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
 
         /// <summary>
         /// Delete meetup draft
@@ -52,7 +53,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
-        /// <response code="204">Draft was successfully deleted</response>
+        /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
         [HttpDelete]
@@ -84,14 +85,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
         /// <param name="updateMeetupDraftProperties"></param>
-        /// <response code="204">Draft was successfully updated</response>
+        /// <response code="204">Draft was successfuly updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
+        /// <response code="422">Parameters cannot be processed</response>
         [HttpPut]
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateMeetupDraft")]
+        [SwaggerResponse(statusCode: 422, type: typeof(string), description: "Parameters cannot be processed")]
         public abstract void UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdateMeetupDraftParameters updateMeetupDraftProperties);
     }
 #pragma warning restore SA1028 // Code must not contain trailing whitespace

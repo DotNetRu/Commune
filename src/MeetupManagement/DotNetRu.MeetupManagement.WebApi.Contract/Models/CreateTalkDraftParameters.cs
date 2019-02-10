@@ -43,13 +43,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets Title
-        /// </summary>
-        [Required]
-        [DataMember(Name="Title")]
-        public string Title { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -58,7 +51,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class CreateTalkDraftParameters {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -112,11 +104,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Id, other.Id) ||
                     (Id != null && Id.Equals(other.Id))
-                ) &&
-                (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(Title, other.Title) ||
-                    (Title != null && Title.Equals(other.Title))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -144,13 +131,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Id.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Title != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Title.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

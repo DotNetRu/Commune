@@ -31,7 +31,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// </summary>
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
     [DataContract]
-    public class CreateSpeakerDraftParameters : IEquatable<CreateSpeakerDraftParameters>
+    public class TalkRehearsalReference : IEquatable<TalkRehearsalReference>
 #pragma warning disable SA1028 // Code must not contain trailing whitespace
     {
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
@@ -49,7 +49,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateSpeakerDraftParameters {\n");
+            sb.Append("class TalkRehearsalReference {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -77,16 +77,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            return obj.GetType() == GetType() && Equals((CreateSpeakerDraftParameters)obj);
+            return obj.GetType() == GetType() && Equals((TalkRehearsalReference)obj);
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// Returns true if CreateSpeakerDraftParameters instances are equal
+        /// Returns true if TalkRehearsalReference instances are equal
         /// </summary>
-        /// <param name="other">Instance of CreateSpeakerDraftParameters to be compared</param>
+        /// <param name="other">Instance of TalkRehearsalReference to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateSpeakerDraftParameters other)
+        public bool Equals(TalkRehearsalReference other)
         {
 #pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other))
@@ -141,13 +141,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
         #pragma warning disable SA1201 // Elements must appear in the correct order
-        public static bool operator ==(CreateSpeakerDraftParameters left, CreateSpeakerDraftParameters right)
+        public static bool operator ==(TalkRehearsalReference left, TalkRehearsalReference right)
         {
             return Equals(left, right);
         }
         #pragma warning restore SA1201 // Elements must appear in the correct order
 
-        public static bool operator !=(CreateSpeakerDraftParameters left, CreateSpeakerDraftParameters right)
+        public static bool operator !=(TalkRehearsalReference left, TalkRehearsalReference right)
         {
             return !Equals(left, right);
         }

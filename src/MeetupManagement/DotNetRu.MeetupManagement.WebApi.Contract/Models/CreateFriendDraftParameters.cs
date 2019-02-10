@@ -50,6 +50,18 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets Url
+        /// </summary>
+        [DataMember(Name="Url")]
+        public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets Description
+        /// </summary>
+        [DataMember(Name="Description")]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -59,6 +71,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class CreateFriendDraftParameters {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -117,6 +131,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Name, other.Name) ||
                     (Name != null && Name.Equals(other.Name))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Url, other.Url) ||
+                    (Url != null && Url.Equals(other.Url))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Description, other.Description) ||
+                    (Description != null && Description.Equals(other.Description))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -151,6 +175,20 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Name.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Url != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Url.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Description != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Description.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

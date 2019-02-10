@@ -42,14 +42,15 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateVenueDraft")]
-        public abstract void CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
+        [SwaggerResponse(statusCode: 201, type: typeof(VenueDraft), description: "Draft was successfully created")]
+        public abstract VenueDraft CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
 
         /// <summary>
         /// Delete venue draft
         /// </summary>
         
         /// <param name="venueId"></param>
-        /// <response code="204">Draft was successfully deleted</response>
+        /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>
         [HttpDelete]
@@ -79,7 +80,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="venueId"></param>
         /// <param name="properties"></param>
-        /// <response code="204">Draft was successfully updated</response>
+        /// <response code="204">Draft was successfuly updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>

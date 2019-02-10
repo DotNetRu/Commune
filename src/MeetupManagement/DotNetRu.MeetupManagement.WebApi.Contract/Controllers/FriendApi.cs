@@ -42,14 +42,15 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/draft")]
         [ValidateModelState]
         [SwaggerOperation("CreateFriendDraft")]
-        public abstract void CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
+        [SwaggerResponse(statusCode: 201, type: typeof(FriendDraft), description: "Draft was successfully created")]
+        public abstract FriendDraft CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
 
         /// <summary>
         /// Delete friend draft
         /// </summary>
         
         /// <param name="friendId"></param>
-        /// <response code="204">Draft was successfully deleted</response>
+        /// <response code="204">Draft was successfuly deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
         [HttpDelete]
@@ -79,7 +80,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="friendId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfully updated</response>
+        /// <response code="204">Draft was successfuly updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Friend not found</response>

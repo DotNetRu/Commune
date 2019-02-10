@@ -43,20 +43,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets FirstName
-        /// </summary>
-        [Required]
-        [DataMember(Name="FirstName")]
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Gets or sets LastName
-        /// </summary>
-        [Required]
-        [DataMember(Name="LastName")]
-        public string LastName { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -65,8 +51,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class SpeakerReference {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  FirstName: ").Append(FirstName).Append("\n");
-            sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -120,16 +104,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Id, other.Id) ||
                     (Id != null && Id.Equals(other.Id))
-                ) &&
-                (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(FirstName, other.FirstName) ||
-                    (FirstName != null && FirstName.Equals(other.FirstName))
-                ) &&
-                (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(LastName, other.LastName) ||
-                    (LastName != null && LastName.Equals(other.LastName))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -157,20 +131,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Id.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (FirstName != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + FirstName.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (LastName != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + LastName.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

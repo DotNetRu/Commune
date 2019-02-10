@@ -31,16 +31,34 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// </summary>
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
     [DataContract]
-    public class FriendIdentifier : IEquatable<FriendIdentifier>
+    public class MeetupDraftProperties : IEquatable<MeetupDraftProperties>
 #pragma warning disable SA1028 // Code must not contain trailing whitespace
     {
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
         /// <summary>
-        /// Gets or sets FriendId
+        /// Gets or sets Name
         /// </summary>
         [Required]
-        [DataMember(Name="FriendId")]
-        public string FriendId { get; set; }
+        [DataMember(Name="Name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets VenueId
+        /// </summary>
+        [DataMember(Name="VenueId")]
+        public string VenueId { get; set; }
+
+        /// <summary>
+        /// Gets or sets FriendIds
+        /// </summary>
+        [DataMember(Name="FriendIds")]
+        public Collection<string> FriendIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets TalkDraftIds
+        /// </summary>
+        [DataMember(Name="TalkDraftIds")]
+        public Collection<string> TalkDraftIds { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -49,8 +67,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class FriendIdentifier {\n");
-            sb.Append("  FriendId: ").Append(FriendId).Append("\n");
+            sb.Append("class MeetupDraftProperties {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  VenueId: ").Append(VenueId).Append("\n");
+            sb.Append("  FriendIds: ").Append(FriendIds).Append("\n");
+            sb.Append("  TalkDraftIds: ").Append(TalkDraftIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -77,16 +98,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            return obj.GetType() == GetType() && Equals((FriendIdentifier)obj);
+            return obj.GetType() == GetType() && Equals((MeetupDraftProperties)obj);
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// Returns true if FriendIdentifier instances are equal
+        /// Returns true if MeetupDraftProperties instances are equal
         /// </summary>
-        /// <param name="other">Instance of FriendIdentifier to be compared</param>
+        /// <param name="other">Instance of MeetupDraftProperties to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FriendIdentifier other)
+        public bool Equals(MeetupDraftProperties other)
         {
 #pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other))
@@ -102,8 +123,21 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
 #pragma warning disable SA1119 // Statement must not use unnecessary parenthesis
                 (
                     // ReSharper disable once RedundantNameQualifier
-                    string.Equals(FriendId, other.FriendId) ||
-                    (FriendId != null && FriendId.Equals(other.FriendId))
+                    string.Equals(Name, other.Name) ||
+                    (Name != null && Name.Equals(other.Name))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(VenueId, other.VenueId) ||
+                    (VenueId != null && VenueId.Equals(other.VenueId))
+                ) &&
+                (
+                    FriendIds == other.FriendIds ||
+                    (FriendIds != null && FriendIds.SequenceEqual(other.FriendIds))
+                ) &&
+                (
+                    TalkDraftIds == other.TalkDraftIds ||
+                    (TalkDraftIds != null && TalkDraftIds.SequenceEqual(other.TalkDraftIds))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -127,10 +161,31 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
 #pragma warning disable CA1307 // Specify StringComparison
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (FriendId != null)
+                    if (Name != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + FriendId.GetHashCode();
+                    hashCode = (hashCode * 59) + Name.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (VenueId != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + VenueId.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (FriendIds != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + FriendIds.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (TalkDraftIds != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + TalkDraftIds.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
@@ -141,13 +196,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
         #pragma warning disable SA1201 // Elements must appear in the correct order
-        public static bool operator ==(FriendIdentifier left, FriendIdentifier right)
+        public static bool operator ==(MeetupDraftProperties left, MeetupDraftProperties right)
         {
             return Equals(left, right);
         }
         #pragma warning restore SA1201 // Elements must appear in the correct order
 
-        public static bool operator !=(FriendIdentifier left, FriendIdentifier right)
+        public static bool operator !=(MeetupDraftProperties left, MeetupDraftProperties right)
         {
             return !Equals(left, right);
         }

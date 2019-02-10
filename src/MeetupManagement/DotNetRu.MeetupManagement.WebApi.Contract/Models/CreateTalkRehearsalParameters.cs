@@ -31,16 +31,34 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
     /// </summary>
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
     [DataContract]
-    public class VenueIdentifier : IEquatable<VenueIdentifier>
+    public class CreateTalkRehearsalParameters : IEquatable<CreateTalkRehearsalParameters>
 #pragma warning disable SA1028 // Code must not contain trailing whitespace
     {
 #pragma warning restore SA1028 // Code must not contain trailing whitespace
         /// <summary>
-        /// Gets or sets VenueId
+        /// Gets or sets Time
         /// </summary>
         [Required]
-        [DataMember(Name="VenueId")]
-        public string VenueId { get; set; }
+        [DataMember(Name="Time")]
+        public DateTimeOffset? Time { get; set; }
+
+        /// <summary>
+        /// Gets or sets SlidesUrl
+        /// </summary>
+        [DataMember(Name="SlidesUrl")]
+        public string SlidesUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets VideoUrl
+        /// </summary>
+        [DataMember(Name="VideoUrl")]
+        public string VideoUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets Comment
+        /// </summary>
+        [DataMember(Name="Comment")]
+        public string Comment { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -49,8 +67,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class VenueIdentifier {\n");
-            sb.Append("  VenueId: ").Append(VenueId).Append("\n");
+            sb.Append("class CreateTalkRehearsalParameters {\n");
+            sb.Append("  Time: ").Append(Time).Append("\n");
+            sb.Append("  SlidesUrl: ").Append(SlidesUrl).Append("\n");
+            sb.Append("  VideoUrl: ").Append(VideoUrl).Append("\n");
+            sb.Append("  Comment: ").Append(Comment).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -77,16 +98,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            return obj.GetType() == GetType() && Equals((VenueIdentifier)obj);
+            return obj.GetType() == GetType() && Equals((CreateTalkRehearsalParameters)obj);
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// Returns true if VenueIdentifier instances are equal
+        /// Returns true if CreateTalkRehearsalParameters instances are equal
         /// </summary>
-        /// <param name="other">Instance of VenueIdentifier to be compared</param>
+        /// <param name="other">Instance of CreateTalkRehearsalParameters to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(VenueIdentifier other)
+        public bool Equals(CreateTalkRehearsalParameters other)
         {
 #pragma warning disable IDE0041 // Use 'is null' check
             if (ReferenceEquals(null, other))
@@ -102,8 +123,23 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
 #pragma warning disable SA1119 // Statement must not use unnecessary parenthesis
                 (
                     // ReSharper disable once RedundantNameQualifier
-                    string.Equals(VenueId, other.VenueId) ||
-                    (VenueId != null && VenueId.Equals(other.VenueId))
+                    string.Equals(Time, other.Time) ||
+                    (Time != null && Time.Equals(other.Time))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(SlidesUrl, other.SlidesUrl) ||
+                    (SlidesUrl != null && SlidesUrl.Equals(other.SlidesUrl))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(VideoUrl, other.VideoUrl) ||
+                    (VideoUrl != null && VideoUrl.Equals(other.VideoUrl))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Comment, other.Comment) ||
+                    (Comment != null && Comment.Equals(other.Comment))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -127,10 +163,31 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
 #pragma warning disable CA1307 // Specify StringComparison
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (VenueId != null)
+                    if (Time != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + VenueId.GetHashCode();
+                    hashCode = (hashCode * 59) + Time.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (SlidesUrl != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + SlidesUrl.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (VideoUrl != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + VideoUrl.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Comment != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Comment.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
@@ -141,13 +198,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         #region Operators
         #pragma warning disable 1591
         #pragma warning disable SA1201 // Elements must appear in the correct order
-        public static bool operator ==(VenueIdentifier left, VenueIdentifier right)
+        public static bool operator ==(CreateTalkRehearsalParameters left, CreateTalkRehearsalParameters right)
         {
             return Equals(left, right);
         }
         #pragma warning restore SA1201 // Elements must appear in the correct order
 
-        public static bool operator !=(VenueIdentifier left, VenueIdentifier right)
+        public static bool operator !=(CreateTalkRehearsalParameters left, CreateTalkRehearsalParameters right)
         {
             return !Equals(left, right);
         }
