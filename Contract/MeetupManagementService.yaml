@@ -264,7 +264,9 @@ paths:
         404:
           description: "Venue not found"
 
-  /talks/draft:
+  /communities/{communityId}/talks/draft:
+    parameters:
+      - $ref: '#/parameters/communityIdPathParam'
     post:
       tags:
       - Talk
@@ -289,8 +291,9 @@ paths:
         409:
           description: "Draft is already exists"  
           
-  /talks/{talkId}/draft:
+  /communities/{communityId}/talks/{talkId}/draft:
     parameters:
+      - $ref: '#/parameters/communityIdPathParam'  
       - name: "talkId"
         in: "path"
         required: true
@@ -342,8 +345,9 @@ paths:
         404:
           description: "Talk not found"
 
-  /talks/{talkId}/draft/{talkRehearsalId}/rehearsal:
+  /communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal:
     parameters:
+      - $ref: '#/parameters/communityIdPathParam'  
       - in: "path"
         name: "talkId"
         required: true
@@ -577,14 +581,8 @@ definitions:
   # Description for talk
   CreateTalkDraftParameters:
     allOf:
-      - $ref: "#/definitions/UniqueIdentifier"       
-    required:
-      - Title
-    properties:
-      Title:
-        type: "string"
-      Description:
-        type: "string"        
+      - $ref: "#/definitions/UniqueIdentifier" 
+      - $ref: "#/definitions/UpdateTalkDraftParameters"
             
   UpdateTalkDraftParameters:
     required:
@@ -687,7 +685,7 @@ definitions:
   CreateFriendDraftParameters:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    - $ref:  "#/definitions/UpdateFriendDraftParameters"
+    - $ref: "#/definitions/UpdateFriendDraftParameters"
     x-restlet:
       section: "DraftModels" 
       
@@ -777,15 +775,7 @@ definitions:
   CreateSpeakerDraftParameters:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
-    required:
-      - FirstName
-      - LastName
-    properties:
-      FirstName:
-        type: "string"
-      LastName:
-        type: "string"
-          
+    - $ref: "#/definitions/UpdateSpeakerDraftParameters"
     x-restlet:
       section: "DraftModels"
       
