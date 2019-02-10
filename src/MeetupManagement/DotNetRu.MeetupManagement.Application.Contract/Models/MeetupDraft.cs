@@ -16,7 +16,7 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Models
         public string Id { get; }
         public string CommunityId { get; }
         public ICollection<TalkDraft> Talks { get; }
-        public ICollection<FriendReference> Friends { get; set; }
+        public ICollection<FriendReference> Friends { get; }
         public VenueReference Venue { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(SolutionDir)\Common.props"/>
-  <Import Project="$(SolutionDir)\CodeAnalysis.props"/>
+  <Import Project="$(SolutionDir)\Common.props" />
+  <Import Project="$(SolutionDir)\CodeAnalysis.props" />
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputPath>..\..\bin\$(Configuration)</OutputPath>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>

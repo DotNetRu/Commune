@@ -17,6 +17,6 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         public string Title { get; set; }
         public string Description { get; set; }
         public ICollection<SpeakerReference> Speakers { get; }
-        public ICollection<TalkRehearsal> Rehearsals { get; set; }
+        public ICollection<TalkRehearsal> Rehearsals { get; }
     }
 }
