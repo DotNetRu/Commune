@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DotNetRu.Common.Collections;
 using DotNetRu.MeetupManagement.Application.Contract.Exceptions;
@@ -21,11 +22,11 @@ namespace DotNetRu.MeetupManagement.Application.Services
             _draftTalkService = draftTalkService ?? throw new ArgumentNullException(nameof(draftTalkService));
         }
 
-        public TalkDraft CreateTalkDraft(string communityId, string title, string comment)
+        public TalkDraft CreateTalkDraft(string communityId, string id, string title, string comment)
         {
             try
             {
-                var draftTalk = _draftTalkService.CreateTalkDraft(communityId, title, comment);
+                var draftTalk = _draftTalkService.CreateTalkDraft(communityId, id, title, comment);
                 return Convert(draftTalk);
             }
             catch (Exception ex)
@@ -64,6 +65,8 @@ namespace DotNetRu.MeetupManagement.Application.Services
             }
         }
 
+        public void SetSpeakers(string communityId, string talkDraftId, ISet<string> speakers) => throw new NotImplementedException();
+
         public void RemoveSpeaker(string communityId, string talkDraftId, string speakerId)
         {
             try
@@ -89,13 +92,15 @@ namespace DotNetRu.MeetupManagement.Application.Services
             throw new NotImplementedException();
         }
 
+        public void RemoveRehearsal(string communityId, string talkDraftId, string rehearsalId) => throw new NotImplementedException();
+
         private static TalkDraft Convert(Domain.Drafts.TalkDraft source)
         {
             var result = new TalkDraft(source.Key.Id)
             {
                 CommunityId = source.Key.CommunityId,
                 Title = source.Title,
-                Comments = source.Comments
+                Description = source.Description
             };
             result.Rehearsals.Assign(source.Rehearsals.Select(Convert));
             result.Speakers.Assign(source.Speakers.Select(GetSpeakerReference));
@@ -104,15 +109,15 @@ namespace DotNetRu.MeetupManagement.Application.Services
 
         private static TalkRehearsal Convert(Domain.Drafts.TalkRehearsal source)
         {
-            return new TalkRehearsal(source.Id)
+            return new TalkRehearsal(source.Id, DateTimeOffset.UtcNow)
             {
                 Comment = source.Comment
             };
         }
 
-        private static SpeakerReference GetSpeakerReference(EntityReference source)
+        private static SpeakerReference GetSpeakerReference(Domain.SpeakerReference source)
         {
-            return new SpeakerReference(source.Id, source.Name, source.IsDraft);
+            return new SpeakerReference(source.Id, source.FirstName, source.LastName, source.IsDraft);
         }
 
         private static Contract.Models.Company Convert(Company source)

@@ -43,46 +43,35 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets Title
+        /// </summary>
+        [Required]
+        [DataMember(Name="Title")]
+        public string Title { get; set; }
+
+        /// <summary>
         /// Gets or sets Description
         /// </summary>
         [DataMember(Name="Description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets SlidesUrl
+        /// Gets or sets TalkRehearsals
         /// </summary>
-        [DataMember(Name="SlidesUrl")]
-        public string SlidesUrl { get; set; }
+        [DataMember(Name="TalkRehearsals")]
+        public Collection<TalkRehearsalReference> TalkRehearsals { get; set; }
 
         /// <summary>
-        /// Gets or sets VideoUrl
+        /// Gets or sets MeetupDraft
         /// </summary>
-        [DataMember(Name="VideoUrl")]
-        public string VideoUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets Meetups
-        /// </summary>
-        [DataMember(Name="Meetups")]
-        public Collection<MeetupReference> Meetups { get; set; }
+        [DataMember(Name="MeetupDraft")]
+        public MeetupReference MeetupDraft { get; set; }
 
         /// <summary>
         /// Gets or sets Speakers
         /// </summary>
         [DataMember(Name="Speakers")]
         public Collection<SpeakerReference> Speakers { get; set; }
-
-        /// <summary>
-        /// Gets or sets Friends
-        /// </summary>
-        [DataMember(Name="Friends")]
-        public Collection<FriendReference> Friends { get; set; }
-
-        /// <summary>
-        /// Gets or sets Venues
-        /// </summary>
-        [DataMember(Name="Venues")]
-        public Collection<VenueReference> Venues { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -93,13 +82,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class TalkDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  SlidesUrl: ").Append(SlidesUrl).Append("\n");
-            sb.Append("  VideoUrl: ").Append(VideoUrl).Append("\n");
-            sb.Append("  Meetups: ").Append(Meetups).Append("\n");
+            sb.Append("  TalkRehearsals: ").Append(TalkRehearsals).Append("\n");
+            sb.Append("  MeetupDraft: ").Append(MeetupDraft).Append("\n");
             sb.Append("  Speakers: ").Append(Speakers).Append("\n");
-            sb.Append("  Friends: ").Append(Friends).Append("\n");
-            sb.Append("  Venues: ").Append(Venues).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -156,34 +143,26 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                 ) &&
                 (
                     // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Title, other.Title) ||
+                    (Title != null && Title.Equals(other.Title))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
                     string.Equals(Description, other.Description) ||
                     (Description != null && Description.Equals(other.Description))
                 ) &&
                 (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(SlidesUrl, other.SlidesUrl) ||
-                    (SlidesUrl != null && SlidesUrl.Equals(other.SlidesUrl))
+                    TalkRehearsals == other.TalkRehearsals ||
+                    (TalkRehearsals != null && TalkRehearsals.SequenceEqual(other.TalkRehearsals))
                 ) &&
                 (
                     // ReSharper disable once RedundantNameQualifier
-                    string.Equals(VideoUrl, other.VideoUrl) ||
-                    (VideoUrl != null && VideoUrl.Equals(other.VideoUrl))
-                ) &&
-                (
-                    Meetups == other.Meetups ||
-                    (Meetups != null && Meetups.SequenceEqual(other.Meetups))
+                    string.Equals(MeetupDraft, other.MeetupDraft) ||
+                    (MeetupDraft != null && MeetupDraft.Equals(other.MeetupDraft))
                 ) &&
                 (
                     Speakers == other.Speakers ||
                     (Speakers != null && Speakers.SequenceEqual(other.Speakers))
-                ) &&
-                (
-                    Friends == other.Friends ||
-                    (Friends != null && Friends.SequenceEqual(other.Friends))
-                ) &&
-                (
-                    Venues == other.Venues ||
-                    (Venues != null && Venues.SequenceEqual(other.Venues))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -214,6 +193,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Title != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Title.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
                     if (Description != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
@@ -221,24 +207,17 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (SlidesUrl != null)
+                    if (TalkRehearsals != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + SlidesUrl.GetHashCode();
+                    hashCode = (hashCode * 59) + TalkRehearsals.GetHashCode();
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (VideoUrl != null)
+                    if (MeetupDraft != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + VideoUrl.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Meetups != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Meetups.GetHashCode();
+                    hashCode = (hashCode * 59) + MeetupDraft.GetHashCode();
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
@@ -246,20 +225,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Speakers.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Friends != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Friends.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Venues != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Venues.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

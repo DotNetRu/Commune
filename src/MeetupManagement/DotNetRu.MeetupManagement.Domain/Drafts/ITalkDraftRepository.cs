@@ -8,11 +8,13 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         /// Store talk draft
         /// </summary>
         /// <param name="communityId"></param>
+        /// <param name="id"></param>
         /// <param name="title"></param>
         /// <param name="comments"></param>
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Contract.Exceptions.TalkNotFoundException" />
-        TalkDraft Create(string communityId, string title, string comments);
+        /// <exception cref="Contract.Exceptions.TalkExistsException" />
+        TalkDraft Create(string communityId, string id, string title, string comments);
 
         /// <summary>
         /// Store association speaker reference for talk draft
@@ -20,7 +22,7 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
         /// <exception cref="Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Contract.Exceptions.TalkNotFoundException" />
         /// <exception cref="Contract.Exceptions.SpeakerNotFoundException" />
-        EntityReference AddSpeaker(TalkKey key, string speakerId);
+        SpeakerReference AddSpeaker(TalkKey key, string speakerId);
 
         /// <summary>
         /// Remove association speaker reference from talk draft

@@ -49,24 +49,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets SlidesUrl
-        /// </summary>
-        [DataMember(Name="SlidesUrl")]
-        public string SlidesUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets VideoUrl
-        /// </summary>
-        [DataMember(Name="VideoUrl")]
-        public string VideoUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets MeetupIds
-        /// </summary>
-        [DataMember(Name="MeetupIds")]
-        public Collection<string> MeetupIds { get; set; }
-
-        /// <summary>
         /// Gets or sets SpeakerIds
         /// </summary>
         [DataMember(Name="SpeakerIds")]
@@ -82,9 +64,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class UpdateTalkDraftParameters {\n");
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  SlidesUrl: ").Append(SlidesUrl).Append("\n");
-            sb.Append("  VideoUrl: ").Append(VideoUrl).Append("\n");
-            sb.Append("  MeetupIds: ").Append(MeetupIds).Append("\n");
             sb.Append("  SpeakerIds: ").Append(SpeakerIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -146,20 +125,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     (Description != null && Description.Equals(other.Description))
                 ) &&
                 (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(SlidesUrl, other.SlidesUrl) ||
-                    (SlidesUrl != null && SlidesUrl.Equals(other.SlidesUrl))
-                ) &&
-                (
-                    // ReSharper disable once RedundantNameQualifier
-                    string.Equals(VideoUrl, other.VideoUrl) ||
-                    (VideoUrl != null && VideoUrl.Equals(other.VideoUrl))
-                ) &&
-                (
-                    MeetupIds == other.MeetupIds ||
-                    (MeetupIds != null && MeetupIds.SequenceEqual(other.MeetupIds))
-                ) &&
-                (
                     SpeakerIds == other.SpeakerIds ||
                     (SpeakerIds != null && SpeakerIds.SequenceEqual(other.SpeakerIds))
                 );
@@ -196,27 +161,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Description.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (SlidesUrl != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + SlidesUrl.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (VideoUrl != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + VideoUrl.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (MeetupIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + MeetupIds.GetHashCode();
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode

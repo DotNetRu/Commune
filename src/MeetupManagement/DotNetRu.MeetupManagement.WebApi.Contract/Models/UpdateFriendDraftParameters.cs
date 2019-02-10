@@ -55,24 +55,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets MeetupIds
-        /// </summary>
-        [DataMember(Name="MeetupIds")]
-        public Collection<string> MeetupIds { get; set; }
-
-        /// <summary>
-        /// Gets or sets SpeakerIds
-        /// </summary>
-        [DataMember(Name="SpeakerIds")]
-        public Collection<string> SpeakerIds { get; set; }
-
-        /// <summary>
-        /// Gets or sets TalkIds
-        /// </summary>
-        [DataMember(Name="TalkIds")]
-        public Collection<string> TalkIds { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -83,9 +65,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  MeetupIds: ").Append(MeetupIds).Append("\n");
-            sb.Append("  SpeakerIds: ").Append(SpeakerIds).Append("\n");
-            sb.Append("  TalkIds: ").Append(TalkIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -149,18 +128,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Description, other.Description) ||
                     (Description != null && Description.Equals(other.Description))
-                ) &&
-                (
-                    MeetupIds == other.MeetupIds ||
-                    (MeetupIds != null && MeetupIds.SequenceEqual(other.MeetupIds))
-                ) &&
-                (
-                    SpeakerIds == other.SpeakerIds ||
-                    (SpeakerIds != null && SpeakerIds.SequenceEqual(other.SpeakerIds))
-                ) &&
-                (
-                    TalkIds == other.TalkIds ||
-                    (TalkIds != null && TalkIds.SequenceEqual(other.TalkIds))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -202,27 +169,6 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Description.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (MeetupIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + MeetupIds.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (SpeakerIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + SpeakerIds.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (TalkIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + TalkIds.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

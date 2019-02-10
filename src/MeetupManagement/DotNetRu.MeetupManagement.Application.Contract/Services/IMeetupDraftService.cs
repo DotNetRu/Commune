@@ -15,13 +15,13 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Services
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.MeetupNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
-        /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
+        /// <exception cref="Domain.Contract.Exceptions.FriendNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.VenueNotFoundException" />
         void UpdateMeetupDraft(
             string communityId,
             string meetupId,
             ICollection<string> talksIds,
-            ICollection<string> speakerIds,
+            ICollection<string> friendIds,
             string venueId);
 
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />

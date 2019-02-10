@@ -15,9 +15,9 @@ namespace DotNetRu.MeetupManagement.Application.Contract.Models
         public string Id { get; set; }
         public string CommunityId { get; set; }
         public string Title { get; set; }
-        public string Comments { get; set; }
-
+        public string Description { get; set; }
+        public MeetupReference MeetupDraft { get; set; }
         public ICollection<SpeakerReference> Speakers { get; }
-        public ICollection<TalkRehearsal> Rehearsals { get; set; }
+        public ICollection<TalkRehearsal> Rehearsals { get; }
     }
 }

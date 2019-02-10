@@ -8,10 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotNetRu.MeetupManagement.Application.Contract\DotNetRu.MeetupManagement.Application.Contract.csproj" />
     <ProjectReference Include="..\DotNetRu.MeetupManagement.WebApi.Contract\DotNetRu.MeetupManagement.WebApi.Contract.csproj" />
   </ItemGroup>
 

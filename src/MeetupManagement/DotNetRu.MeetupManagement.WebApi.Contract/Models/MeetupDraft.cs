@@ -56,16 +56,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public VenueReference Venue { get; set; }
 
         /// <summary>
-        /// Gets or sets Speakers
+        /// Gets or sets TalkDrafts
         /// </summary>
-        [DataMember(Name="Speakers")]
-        public Collection<SpeakerReference> Speakers { get; set; }
-
-        /// <summary>
-        /// Gets or sets Talks
-        /// </summary>
-        [DataMember(Name="Talks")]
-        public Collection<TalkReference> Talks { get; set; }
+        [DataMember(Name="TalkDrafts")]
+        public Collection<TalkReference> TalkDrafts { get; set; }
 
         /// <summary>
         /// Gets or sets Friends
@@ -84,8 +78,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Venue: ").Append(Venue).Append("\n");
-            sb.Append("  Speakers: ").Append(Speakers).Append("\n");
-            sb.Append("  Talks: ").Append(Talks).Append("\n");
+            sb.Append("  TalkDrafts: ").Append(TalkDrafts).Append("\n");
             sb.Append("  Friends: ").Append(Friends).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -152,12 +145,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     (Venue != null && Venue.Equals(other.Venue))
                 ) &&
                 (
-                    Speakers == other.Speakers ||
-                    (Speakers != null && Speakers.SequenceEqual(other.Speakers))
-                ) &&
-                (
-                    Talks == other.Talks ||
-                    (Talks != null && Talks.SequenceEqual(other.Talks))
+                    TalkDrafts == other.TalkDrafts ||
+                    (TalkDrafts != null && TalkDrafts.SequenceEqual(other.TalkDrafts))
                 ) &&
                 (
                     Friends == other.Friends ||
@@ -206,17 +195,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Speakers != null)
+                    if (TalkDrafts != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Speakers.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (Talks != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + Talks.GetHashCode();
+                    hashCode = (hashCode * 59) + TalkDrafts.GetHashCode();
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode

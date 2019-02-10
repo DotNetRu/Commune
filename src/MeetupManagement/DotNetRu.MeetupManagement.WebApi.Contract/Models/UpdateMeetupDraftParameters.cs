@@ -49,22 +49,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string VenueId { get; set; }
 
         /// <summary>
-        /// Gets or sets SpeakerIds
-        /// </summary>
-        [DataMember(Name="SpeakerIds")]
-        public Collection<string> SpeakerIds { get; set; }
-
-        /// <summary>
-        /// Gets or sets TalkIds
-        /// </summary>
-        [DataMember(Name="TalkIds")]
-        public Collection<string> TalkIds { get; set; }
-
-        /// <summary>
         /// Gets or sets FriendIds
         /// </summary>
         [DataMember(Name="FriendIds")]
         public Collection<string> FriendIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets TalkDraftIds
+        /// </summary>
+        [DataMember(Name="TalkDraftIds")]
+        public Collection<string> TalkDraftIds { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -76,9 +70,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class UpdateMeetupDraftParameters {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  VenueId: ").Append(VenueId).Append("\n");
-            sb.Append("  SpeakerIds: ").Append(SpeakerIds).Append("\n");
-            sb.Append("  TalkIds: ").Append(TalkIds).Append("\n");
             sb.Append("  FriendIds: ").Append(FriendIds).Append("\n");
+            sb.Append("  TalkDraftIds: ").Append(TalkDraftIds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -139,16 +132,12 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     (VenueId != null && VenueId.Equals(other.VenueId))
                 ) &&
                 (
-                    SpeakerIds == other.SpeakerIds ||
-                    (SpeakerIds != null && SpeakerIds.SequenceEqual(other.SpeakerIds))
-                ) &&
-                (
-                    TalkIds == other.TalkIds ||
-                    (TalkIds != null && TalkIds.SequenceEqual(other.TalkIds))
-                ) &&
-                (
                     FriendIds == other.FriendIds ||
                     (FriendIds != null && FriendIds.SequenceEqual(other.FriendIds))
+                ) &&
+                (
+                    TalkDraftIds == other.TalkDraftIds ||
+                    (TalkDraftIds != null && TalkDraftIds.SequenceEqual(other.TalkDraftIds))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -186,24 +175,17 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     }
 
                 // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (SpeakerIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + SpeakerIds.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    if (TalkIds != null)
-                    {
-                    // ReSharper disable once NonReadonlyMemberInGetHashCode
-                    hashCode = (hashCode * 59) + TalkIds.GetHashCode();
-                    }
-
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
                     if (FriendIds != null)
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + FriendIds.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (TalkDraftIds != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + TalkDraftIds.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

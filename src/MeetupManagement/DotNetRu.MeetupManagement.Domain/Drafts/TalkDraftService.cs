@@ -21,9 +21,9 @@ namespace DotNetRu.MeetupManagement.Domain.Drafts
             return _talkDraftRepository.GetEntity(key);
         }
 
-        public TalkDraft CreateTalkDraft(string communityId, string title, string comments)
+        public TalkDraft CreateTalkDraft(string communityId, string id, string title, string comments)
         {
-            return _talkDraftRepository.Create(communityId, title, comments);
+            return _talkDraftRepository.Create(communityId,  id, title, comments);
         }
 
         public void DeleteTalkDraft(TalkKey key)

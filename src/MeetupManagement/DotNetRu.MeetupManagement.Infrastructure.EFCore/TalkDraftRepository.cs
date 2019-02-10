@@ -6,7 +6,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
     public class TalkDraftRepository : ITalkDraftRepository
     {
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
-        public TalkDraft Create(string communityId, string title, string comments)
+        public TalkDraft Create(string communityId, string id, string title, string comments)
         {
             throw new System.NotImplementedException();
         }
@@ -14,7 +14,7 @@ namespace DotNetRu.MeetupManagement.Infrastructure.EFCore
         /// <exception cref="Domain.Contract.Exceptions.CommunityNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.TalkNotFoundException" />
         /// <exception cref="Domain.Contract.Exceptions.SpeakerNotFoundException" />
-        public EntityReference AddSpeaker(TalkKey key, string speakerId)
+        public SpeakerReference AddSpeaker(TalkKey key, string speakerId)
         {
             throw new System.NotImplementedException();
         }

@@ -35,7 +35,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Config
 
         private void IncludeXmlComments(SwaggerGenOptions options)
         {
-            var commentsPath = $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_contractStartup.ContractXmlCommentsFileName}";
+            var commentsPath = $"{AppContext.BaseDirectory}{_contractStartup.ContractXmlCommentsFileName}";
 
             // options.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}DotNetRu.MeetupManagement.WebApi.Contract.xml");
             var comments = new XPathDocument(commentsPath);
