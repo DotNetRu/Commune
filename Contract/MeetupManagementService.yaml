@@ -493,7 +493,6 @@ responses:
 definitions:
 # Descriptions of unique identifiers
   UniqueIdentifier:
-    type: object
     required:
       - Id
     properties:
@@ -566,24 +565,30 @@ definitions:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"    
       - $ref: "#/definitions/NameProperty"
-    properties:
-      Venue:
-        $ref: "#/definitions/VenueReference"
-      TalkDrafts:
-        type: array
-        items:
-          $ref: "#/definitions/TalkReference"
-      Friends:
-        type: array
-        items:
-          $ref: "#/definitions/FriendReference"
+      - properties:
+          Venue:
+            $ref: "#/definitions/VenueReference"
+          TalkDrafts:
+            type: array
+            items:
+              $ref: "#/definitions/TalkReference"
+          Friends:
+            type: array
+            items:
+              $ref: "#/definitions/FriendReference"
             
   # Description for talk
   CreateTalkDraftParameters:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier" 
-      - $ref: "#/definitions/UpdateTalkDraftParameters"
-            
+      - required:
+          - Title
+        properties:
+          Title:
+            type: "string"
+          Description:
+            type: "string"
+
   UpdateTalkDraftParameters:
     required:
       - Title
@@ -603,30 +608,30 @@ definitions:
   TalkReference:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"            
-    required:
-      - Title
-    properties:
-      Title:
-        type: "string"    
+      - required:
+          - Title
+        properties:
+          Title:
+            type: "string"    
       
   TalkDraft:
     allOf:
-      - $ref: "#/definitions/UniqueIdentifier"
-      - required:
+    - $ref: "#/definitions/UniqueIdentifier"
+    - required:
         - Title
-    properties:
-      Description:
-        type: "string"
-      TalkRehearsals:
-        type: "array"
-        items:
-          $ref: "#/definitions/TalkRehearsalReference"        
-      MeetupDraft:
-        $ref: "#/definitions/MeetupReference"          
-      Speakers:
-        type: "array"
-        items:
-          $ref: "#/definitions/SpeakerReference"
+      properties:
+        Description:
+          type: "string"
+        TalkRehearsals:
+          type: "array"
+          items:
+            $ref: "#/definitions/TalkRehearsalReference"        
+        MeetupDraft:
+          $ref: "#/definitions/MeetupReference"          
+        Speakers:
+          type: "array"
+          items:
+            $ref: "#/definitions/SpeakerReference"
 
     x-restlet:
       section: "DraftModels"        
@@ -655,27 +660,27 @@ definitions:
   TalkRehearsalReference:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"            
-    required:
-      - Time
-    properties:
-      Time:
-        type: "string"    
+      - required:
+          - Time
+        properties:
+          Time:
+            type: "string"    
       
   TalkRehearsal:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
-    required:
-      - Time
-    properties:
-      Time:
-        type: "string"
-        format: "date-time"
-      SlidesUrl:
-        type: "string"
-      VideoUrl:
-        type: "string"
-      Comment:
-        type: "string"
+      - required:
+          - Time
+        properties:
+          Time:
+            type: "string"
+            format: "date-time"
+          SlidesUrl:
+            type: "string"
+          VideoUrl:
+            type: "string"
+          Comment:
+            type: "string"
 
     x-restlet:
       section: "DraftModels"        
@@ -712,18 +717,18 @@ definitions:
     allOf:
     - $ref: "#/definitions/UniqueIdentifier"
     - $ref:  "#/definitions/NameProperty"
-    properties:
-      Name:
-        type: "string"
-        maxLength: 256
-      Url:
-        type: "string"
-      Description:
-        type: "string"
-      MeetupDrafts:
-        type: "array"
-        items:
-          $ref: "#/definitions/MeetupReference"
+    - properties:
+        Name:
+          type: "string"
+          maxLength: 256
+        Url:
+          type: "string"
+        Description:
+          type: "string"
+        MeetupDrafts:
+          type: "array"
+          items:
+            $ref: "#/definitions/MeetupReference"
     x-restlet:
       section: "DraftModels"      
     
@@ -759,16 +764,16 @@ definitions:
     allOf:
       - $ref: "#/definitions/UniqueIdentifier"
       - $ref:  "#/definitions/NameProperty"
-    properties:
-      Address:
-        type: "string"
-      MapUrl:
-        type: "string"
-        maxLength: 2000
-      MeetupDrafts:
-        type: "array"
-        items:
-          $ref: "#/definitions/MeetupReference"
+      - properties:
+          Address:
+            type: "string"
+          MapUrl:
+            type: "string"
+            maxLength: 2000
+          MeetupDrafts:
+            type: "array"
+            items:
+              $ref: "#/definitions/MeetupReference"
     x-restlet:
       section: "DraftModels"         
      
@@ -809,47 +814,25 @@ definitions:
       
   SpeakerReference:
     allOf:
-      - $ref: "#/definitions/UniqueIdentifier"
-    required:
-      - FirstName
-      - LastName
-    properties:
-      FirstName:
-        type: "string"
-      LastName:
-        type: "string"
+      - $ref: "#/definitions/UniqueIdentifier"   
+      - required:
+          - FirstName
+          - LastName
+        properties:
+          FirstName:
+            type: "string"
+          LastName:
+            type: "string"
               
   SpeakerDraft:
     allOf:
-    - $ref: "#/definitions/UniqueIdentifier"
-    required:
-      - FirstName
-      - LastName
-    properties:
-      FirstName:
-        type: "string"
-      LastName:
-        type: "string"
-      CompanyName:
-        type: "string"
-      CompanyUrl:
-        type: "string"
-      Description:
-        type: "string"
-      BlogsUrl:
-        type: "string"
-      ContactsUrl:
-        type: "string"
-      TwitterUrl:
-        type: "string"
-      HabrUrl:
-        type: "string"
-      GitHubUrl:
-        type: "string"
-      TalkDrafts:
-        type: "array"
-        items:
-          $ref: "#/definitions/TalkReference"
+      - $ref: "#/definitions/UniqueIdentifier"
+      - $ref: "#/definitions/UpdateSpeakerDraftParameters"
+      - properties:
+          TalkDrafts:
+            type: "array"
+            items:
+              $ref: "#/definitions/TalkReference"
     x-restlet:
       section: "DraftModels"      
 

@@ -1,1 +1,1 @@
-java -jar ../../tools/swagger/swagger-codegen-cli-2.3.1.jar generate -i ../../../Contract/MeetupManagementService.yaml -c config.json -t ../template/aspnetcore -l aspnetcore -o ../../..
+java -jar ../../tools/swagger/swagger-codegen-cli-2.4.1.jar generate -i ../../../Contract/MeetupManagementService.yaml -c config.json -t ../template/aspnetcore -l aspnetcore -o ../../..

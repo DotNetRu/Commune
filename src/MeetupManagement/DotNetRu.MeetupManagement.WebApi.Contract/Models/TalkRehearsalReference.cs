@@ -43,6 +43,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets Time
+        /// </summary>
+        [Required]
+        [DataMember(Name="Time")]
+        public string Time { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -51,6 +58,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             var sb = new StringBuilder();
             sb.Append("class TalkRehearsalReference {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Time: ").Append(Time).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -104,6 +112,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Id, other.Id) ||
                     (Id != null && Id.Equals(other.Id))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Time, other.Time) ||
+                    (Time != null && Time.Equals(other.Time))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -131,6 +144,13 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Id.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Time != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Time.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;

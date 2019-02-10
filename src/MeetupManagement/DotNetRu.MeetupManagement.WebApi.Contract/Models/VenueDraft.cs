@@ -50,6 +50,24 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets Address
+        /// </summary>
+        [DataMember(Name="Address")]
+        public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets MapUrl
+        /// </summary>
+        [DataMember(Name="MapUrl")]
+        public string MapUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets MeetupDrafts
+        /// </summary>
+        [DataMember(Name="MeetupDrafts")]
+        public Collection<MeetupReference> MeetupDrafts { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -59,6 +77,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
             sb.Append("class VenueDraft {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Address: ").Append(Address).Append("\n");
+            sb.Append("  MapUrl: ").Append(MapUrl).Append("\n");
+            sb.Append("  MeetupDrafts: ").Append(MeetupDrafts).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -117,6 +138,20 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     // ReSharper disable once RedundantNameQualifier
                     string.Equals(Name, other.Name) ||
                     (Name != null && Name.Equals(other.Name))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(Address, other.Address) ||
+                    (Address != null && Address.Equals(other.Address))
+                ) &&
+                (
+                    // ReSharper disable once RedundantNameQualifier
+                    string.Equals(MapUrl, other.MapUrl) ||
+                    (MapUrl != null && MapUrl.Equals(other.MapUrl))
+                ) &&
+                (
+                    MeetupDrafts == other.MeetupDrafts ||
+                    (MeetupDrafts != null && MeetupDrafts.SequenceEqual(other.MeetupDrafts))
                 );
 #pragma warning restore SA1119 // Statement must not use unnecessary parenthesis
 #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
@@ -151,6 +186,27 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Models
                     {
                     // ReSharper disable once NonReadonlyMemberInGetHashCode
                     hashCode = (hashCode * 59) + Name.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (Address != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + Address.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (MapUrl != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + MapUrl.GetHashCode();
+                    }
+
+                // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    if (MeetupDrafts != null)
+                    {
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    hashCode = (hashCode * 59) + MeetupDrafts.GetHashCode();
                     }
 #pragma warning restore CA1307 // Specify StringComparison
                 return hashCode;
