@@ -43,6 +43,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateFriendDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(FriendDraft), description: "Draft was successfully created")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 409, description: "Draft is already exists")]
         public abstract ActionResult<FriendDraft> CreateFriendDraft([FromBody]CreateFriendDraftParameters body);
         
         /// <summary>
@@ -50,13 +53,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="friendId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
         [HttpDelete]
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteFriendDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Speaker not found")]
         public abstract EmptyResult DeleteFriendDraft([FromRoute][Required]string friendId);
         
         /// <summary>
@@ -72,6 +78,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetFriendDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(FriendDraft), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Friend not found")]
         public abstract ActionResult<FriendDraft> GetFriendDraft([FromRoute][Required]string friendId);
         
         /// <summary>
@@ -80,7 +88,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="friendId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Friend not found</response>
@@ -88,6 +96,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/friends/{friendId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateFriendDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Friend not found")]
         public abstract EmptyResult UpdateFriendDraft([FromRoute][Required]string friendId, [FromBody]UpdateFriendDraftParameters body);
         
         /// <summary>

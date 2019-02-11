@@ -28,8 +28,8 @@ namespace {{packageName}}.Controllers
         [{{httpMethod}}]
         [Route("{{{basePathWithoutHost}}}{{{path}}}")]
         [ValidateModelState]
-        [SwaggerOperation("{{operationId}}")]{{#responses}}{{#dataType}}
-        [SwaggerResponse(statusCode: {{code}}, type: typeof({{&dataType}}), description: "{{message}}")]{{/dataType}}{{^dataType}}{{/dataType}}{{/responses}}
+        [SwaggerOperation("{{operationId}}")]{{#responses}}
+        [SwaggerResponse(statusCode: {{code}},{{#dataType}} type: typeof({{&dataType}}),{{/dataType}} description: "{{message}}")]{{/responses}}
         public abstract {{#returnType}}ActionResult<{{&returnType}}>{{/returnType}}{{^returnType}}EmptyResult{{/returnType}} {{operationId}}({{#allParams}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}{{#operation}}
         /// <summary>

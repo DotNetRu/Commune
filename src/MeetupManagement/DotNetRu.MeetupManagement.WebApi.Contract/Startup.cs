@@ -17,6 +17,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.Extensions.DependencyInjection;
 using DotNetRu.MeetupManagement.WebApi.Contract.Filters;
 
 namespace DotNetRu.MeetupManagement.WebApi.Contract
@@ -66,7 +67,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract
             {
                 Version = "0.1.0",
                 Title = "Meetup Management Service API",
-                Description = "Meetup Management Service API (ASP.NET Core 2.0)",
+                Description = "Meetup Management Service API (ASP.NET Core 2.2)",
                 Contact = new Contact()
                 {
                     Name = "DotNetRu Server Contributors",

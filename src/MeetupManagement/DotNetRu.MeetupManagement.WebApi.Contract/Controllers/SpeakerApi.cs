@@ -43,6 +43,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateSpeakerDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(SpeakerDraft), description: "Draft was successfully created")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 409, description: "Draft is already exists")]
         public abstract ActionResult<SpeakerDraft> CreateSpeakerDraft([FromBody]CreateSpeakerDraftParameters speakerDraft);
         
         /// <summary>
@@ -50,13 +53,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="speakerId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
         [HttpDelete]
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteSpeakerDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Speaker not found")]
         public abstract EmptyResult DeleteSpeakerDraft([FromRoute][Required]string speakerId);
         
         /// <summary>
@@ -72,6 +78,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetSpeakerDrafts")]
         [SwaggerResponse(statusCode: 200, type: typeof(SpeakerDraft), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Speaker not found")]
         public abstract ActionResult<SpeakerDraft> GetSpeakerDrafts([FromRoute][Required]string speakerId);
         
         /// <summary>
@@ -80,7 +88,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="speakerId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Speaker not found</response>
@@ -88,6 +96,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/speakers/{speakerId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateSpeakerDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Speaker not found")]
         public abstract EmptyResult UpdateSpeakerDraft([FromRoute][Required]string speakerId, [FromBody]UpdateSpeakerDraftParameters body);
         
         /// <summary>
