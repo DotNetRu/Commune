@@ -44,6 +44,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateTalkDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(TalkDraft), description: "Draft was successfully created")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 409, description: "Draft is already exists")]
         public abstract ActionResult<TalkDraft> CreateTalkDraft([FromRoute][Required]string communityId, [FromBody]CreateTalkDraftParameters talkDraft);
         
         /// <summary>
@@ -52,13 +55,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="communityId"></param>
         /// <param name="talkId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
         [HttpDelete]
         [Route("/communities/{communityId}/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteTalkDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk not found")]
         public abstract EmptyResult DeleteTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId);
         
         /// <summary>
@@ -68,13 +74,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="talkRehearsalId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk or rehearsal not found</response>
         [HttpDelete]
         [Route("/communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
         [ValidateModelState]
         [SwaggerOperation("DeleteTalkRehearsal")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk or rehearsal not found")]
         public abstract EmptyResult DeleteTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
         
         /// <summary>
@@ -91,6 +100,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetTalkDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(TalkDraft), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk not found")]
         public abstract ActionResult<TalkDraft> GetTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId);
         
         /// <summary>
@@ -108,6 +119,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetTalkRehearsal")]
         [SwaggerResponse(statusCode: 200, type: typeof(TalkRehearsal), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk or rehearsal not found")]
         public abstract ActionResult<TalkRehearsal> GetTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId);
         
         /// <summary>
@@ -117,7 +130,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="communityId"></param>
         /// <param name="talkId"></param>
         /// <param name="body"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk not found</response>
@@ -125,6 +138,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/talks/{talkId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk not found")]
         public abstract EmptyResult UpdateTalkDraft([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromBody]UpdateTalkDraftParameters body);
         
         /// <summary>
@@ -135,7 +152,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="talkId"></param>
         /// <param name="talkRehearsalId"></param>
         /// <param name="parameters"></param>
-        /// <response code="204">Rehearsal was successfuly updated</response>
+        /// <response code="204">Rehearsal was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Talk or rehearsal not found</response>
@@ -143,6 +160,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/talks/{talkId}/draft/{talkRehearsalId}/rehearsal")]
         [ValidateModelState]
         [SwaggerOperation("UpdateTalkRehearsal")]
+        [SwaggerResponse(statusCode: 204, description: "Rehearsal was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Talk or rehearsal not found")]
         public abstract EmptyResult UpdateTalkRehearsal([FromRoute][Required]string communityId, [FromRoute][Required]string talkId, [FromRoute][Required]string talkRehearsalId, [FromBody]UpdateTalkRehearsalParameters parameters);
         
         /// <summary>

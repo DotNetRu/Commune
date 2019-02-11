@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.Extensions.DependencyInjection;
 using {{packageName}}.Filters;
 
 namespace {{packageName}}
@@ -55,7 +56,7 @@ namespace {{packageName}}
             {
                 Version = "{{#version}}{{{version}}}{{/version}}{{^version}}v1{{/version}}",
                 Title = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}}",
-                Description = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}} (ASP.NET Core 2.0)",
+                Description = "{{#appName}}{{{appName}}}{{/appName}}{{^appName}}{{packageName}}{{/appName}} (ASP.NET Core 2.2)",
                 Contact = new Contact()
                 {
                     Name = "{{#infoName}}{{{infoName}}}{{/infoName}}{{^infoName}}Swagger Codegen Contributors{{/infoName}}",

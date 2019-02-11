@@ -16,12 +16,11 @@ namespace DotNetRu.MeetupManagement.WebApi.Filters
 
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            // _filter.Apply(operation, context);
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor actionDescriptor)
             {
                 var prev = actionDescriptor.MethodInfo;
                 actionDescriptor.MethodInfo = actionDescriptor.MethodInfo.GetBaseDefinition();
-                _filter.Apply(operation, context);
+                _filter.Apply(operation, new OperationFilterContext(context.ApiDescription, context.SchemaRegistry, actionDescriptor.MethodInfo));
                 actionDescriptor.MethodInfo = prev;
             }
         }

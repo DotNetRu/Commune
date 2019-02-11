@@ -3,7 +3,7 @@
   <Import Project="$(SolutionDir)\Common.props" />
   <Import Project="$(SolutionDir)\CodeAnalysis.props" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>DotNetRu.ServiceHost</AssemblyName>
     <RootNamespace>DotNetRu.ServiceHost</RootNamespace>
     <OutputPath>..\bin\$(Configuration)</OutputPath>

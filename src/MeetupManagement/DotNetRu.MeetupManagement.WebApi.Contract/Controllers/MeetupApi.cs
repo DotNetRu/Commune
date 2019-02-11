@@ -45,6 +45,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateMeetupDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(MeetupDraft), description: "Draft was successfully created")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Community not found")]
+        [SwaggerResponse(statusCode: 409, description: "Draft is already exists")]
         public abstract ActionResult<MeetupDraft> CreateMeetupDraft([FromRoute][Required]string communityId, [FromBody]CreateMeetupDraftParameters meetupDraft);
         
         /// <summary>
@@ -53,13 +57,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
         [HttpDelete]
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteMeetupDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Community or meetup not found")]
         public abstract EmptyResult DeleteMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
         
         /// <summary>
@@ -76,6 +83,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetMeetupDraft")]
         [SwaggerResponse(statusCode: 200, type: typeof(MeetupDraft), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Community or meetup not found")]
         public abstract ActionResult<MeetupDraft> GetMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId);
         
         /// <summary>
@@ -85,7 +94,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// <param name="communityId"></param>
         /// <param name="meetupId"></param>
         /// <param name="updateMeetupDraftProperties"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Community or meetup not found</response>
@@ -94,6 +103,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/communities/{communityId}/meetups/{meetupId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateMeetupDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Community or meetup not found")]
         [SwaggerResponse(statusCode: 422, type: typeof(string), description: "Parameters cannot be processed")]
         public abstract EmptyResult UpdateMeetupDraft([FromRoute][Required]string communityId, [FromRoute][Required]string meetupId, [FromBody]UpdateMeetupDraftParameters updateMeetupDraftProperties);
         

@@ -43,6 +43,9 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("CreateVenueDraft")]
         [SwaggerResponse(statusCode: 201, type: typeof(VenueDraft), description: "Draft was successfully created")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 409, description: "Draft is already exists")]
         public abstract ActionResult<VenueDraft> CreateVenueDraft([FromBody]CreateVenueDraftParameters venueDraft);
         
         /// <summary>
@@ -50,13 +53,16 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         /// </summary>
         
         /// <param name="venueId"></param>
-        /// <response code="204">Draft was successfuly deleted</response>
+        /// <response code="204">Draft was successfully deleted</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>
         [HttpDelete]
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("DeleteVenueDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully deleted")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Venue not found")]
         public abstract EmptyResult DeleteVenueDraft([FromRoute][Required]string venueId);
         
         /// <summary>
@@ -72,6 +78,8 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetVenueDrafts")]
         [SwaggerResponse(statusCode: 200, type: typeof(VenueDraft), description: "OK")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Venue not found")]
         public abstract ActionResult<VenueDraft> GetVenueDrafts([FromRoute][Required]string venueId);
         
         /// <summary>
@@ -80,7 +88,7 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         
         /// <param name="venueId"></param>
         /// <param name="properties"></param>
-        /// <response code="204">Draft was successfuly updated</response>
+        /// <response code="204">Draft was successfully updated</response>
         /// <response code="400">Invalid request parameters</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Venue not found</response>
@@ -88,6 +96,10 @@ namespace DotNetRu.MeetupManagement.WebApi.Contract.Controllers
         [Route("/venues/{venueId}/draft")]
         [ValidateModelState]
         [SwaggerOperation("UpdateVenueDraft")]
+        [SwaggerResponse(statusCode: 204, description: "Draft was successfully updated")]
+        [SwaggerResponse(statusCode: 400, description: "Invalid request parameters")]
+        [SwaggerResponse(statusCode: 401, description: "Unauthorized")]
+        [SwaggerResponse(statusCode: 404, description: "Venue not found")]
         public abstract EmptyResult UpdateVenueDraft([FromRoute][Required]string venueId, [FromBody]UpdateVenueDraftParameters properties);
         
         /// <summary>

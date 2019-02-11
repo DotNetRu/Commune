@@ -87,7 +87,7 @@ paths:
             $ref: "#/definitions/UpdateMeetupDraftParameters"          
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -106,7 +106,7 @@ paths:
       operationId: "DeleteMeetupDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -168,7 +168,7 @@ paths:
             $ref: "#/definitions/UpdateSpeakerDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -182,7 +182,7 @@ paths:
       operationId: "DeleteSpeakerDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -244,7 +244,7 @@ paths:
             $ref: "#/definitions/UpdateVenueDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -258,7 +258,7 @@ paths:
       operationId: "DeleteVenueDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -325,7 +325,7 @@ paths:
           $ref: "#/definitions/UpdateTalkDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -339,7 +339,7 @@ paths:
       operationId: "DeleteTalkDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -383,7 +383,7 @@ paths:
             $ref: "#/definitions/UpdateTalkRehearsalParameters"
       responses:
         204:
-          description: "Rehearsal was successfuly updated"
+          description: "Rehearsal was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -397,7 +397,7 @@ paths:
       operationId: "DeleteTalkRehearsal"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
@@ -460,7 +460,7 @@ paths:
             $ref: "#/definitions/UpdateFriendDraftParameters"
       responses:
         204:
-          description: "Draft was successfuly updated"
+          description: "Draft was successfully updated"
         400:
           $ref: "#/responses/BadRequest"
         401:
@@ -474,7 +474,7 @@ paths:
       operationId: "DeleteFriendDraft"
       responses:
         204:
-          description: "Draft was successfuly deleted"
+          description: "Draft was successfully deleted"
         401:
           $ref: "#/responses/Unauthorized"          
         404:
