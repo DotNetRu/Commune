@@ -10,16 +10,6 @@ namespace DevActivator.Meetups.Tests.ProviderTests
     public class MeetupProviderTests
     {
         [Fact]
-        public async Task MeetupDateDeserializationSucceed()
-        {
-            // prepare
-            var meetup = await GetTestMeetupAsync();
-
-            // test
-            Assert.NotEmpty(meetup.Date);
-        }
-
-        [Fact]
         public async Task MeetupFriendIdsDeserializationSucceed()
         {
             // prepare
@@ -37,16 +27,6 @@ namespace DevActivator.Meetups.Tests.ProviderTests
 
             // test
             Assert.Equal(2, talk.Sessions.Count);
-        }
-
-        [Fact]
-        public async Task MeetupTalkIdsDeserializationSucceed()
-        {
-            // prepare
-            var talk = await GetTestMeetupAsync();
-
-            // test
-            Assert.Equal(2, talk.TalkIds.Count);
         }
 
         private Task<Meetup> GetTestMeetupAsync(string testMeetupId = "SpbDotNet-30")

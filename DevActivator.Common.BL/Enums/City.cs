@@ -1,4 +1,4 @@
-namespace DevActivator.Meetups.BL.Enums
+namespace DevActivator.Common.BL.Enums
 {
     public enum City
     {

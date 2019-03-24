@@ -32,7 +32,7 @@ namespace DevActivator.Meetups.BL.Services
         public async Task<MeetupVm> GetMeetupAsync(string meetupId)
         {
             var meetup = await _meetupProvider.GetMeetupOrDefaultAsync(meetupId).ConfigureAwait(false);
-            return meetup.ToVm();
+            return meetup?.ToVm();
         }
 
         public async Task<MeetupVm> AddMeetupAsync(MeetupVm meetup)

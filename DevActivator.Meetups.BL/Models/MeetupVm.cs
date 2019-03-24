@@ -16,6 +16,6 @@ namespace DevActivator.Meetups.BL.Models
 
         public string VenueId { get; set; }
 
-        public List<Session> Sessions { get; set; }
+        public List<SessionVm> Sessions { get; set; }
     }
 }

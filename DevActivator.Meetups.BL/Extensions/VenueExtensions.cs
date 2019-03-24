@@ -1,6 +1,6 @@
 using System;
+using DevActivator.Common.BL.Extensions;
 using DevActivator.Meetups.BL.Entities;
-using DevActivator.Meetups.BL.Enums;
 using DevActivator.Meetups.BL.Models;
 
 namespace DevActivator.Meetups.BL.Extensions
@@ -47,8 +47,5 @@ namespace DevActivator.Meetups.BL.Extensions
                 Address = venue.Address,
                 MapUrl = venue.MapUrl
             };
-
-        private static City GetCity(this string id)
-            => (City) Enum.Parse(typeof(City), id.Substring(0, 3), true);
     }
 }
