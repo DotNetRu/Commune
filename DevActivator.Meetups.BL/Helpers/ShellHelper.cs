@@ -29,7 +29,7 @@ namespace DevActivator.Meetups.BL.Helpers
                 result = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 result = "bash error";
             }

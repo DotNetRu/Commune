@@ -1,5 +1,8 @@
 using System;
+using System.Globalization;
 using System.Linq;
+using DevActivator.Common.BL.Config;
+using DevActivator.Common.BL.Extensions;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Enums;
 using DevActivator.Meetups.BL.Models;
@@ -44,11 +47,12 @@ namespace DevActivator.Meetups.BL.Extensions
                 CommunityId = meetup.CommunityId.GetCommunity(),
                 FriendIds = meetup.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList(),
                 VenueId = meetup.VenueId,
-                Sessions = meetup.Sessions.Select(x => new Session
+                Sessions = meetup.Sessions.Select(x => new SessionVm
                 {
                     TalkId = x.TalkId,
-                    StartTime = x.StartTime,
-                    EndTime = x.EndTime
+                    // todo: extract as helper method
+                    StartTime = x.StartTime.Add(meetup.VenueId.GetCity().GetTimeZone()).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    EndTime = x.EndTime.Add(meetup.VenueId.GetCity().GetTimeZone()).ToString("yyyy-MM-ddTHH:mm:ss")
                 }).ToList(),
             };
 
@@ -63,13 +67,23 @@ namespace DevActivator.Meetups.BL.Extensions
                 Sessions = meetup.Sessions.Select(x => new Session
                 {
                     TalkId = x.TalkId,
-                    StartTime = x.StartTime,
-                    EndTime = x.EndTime
+                    // todo: extract as helper method
+                    StartTime = DateTime.ParseExact(
+                            $"{x.StartTime}Z",
+                            "yyyy-MM-ddTHH:mm:ssZ",
+                            CultureInfo.InvariantCulture,
+                            DateTimeStyles.AdjustToUniversal)
+                        .Subtract(meetup.VenueId.GetCity().GetTimeZone()),
+                    EndTime = DateTime.ParseExact(
+                            $"{x.EndTime}Z",
+                            "yyyy-MM-ddTHH:mm:ssZ",
+                            CultureInfo.InvariantCulture,
+                            DateTimeStyles.AdjustToUniversal)
+                        .Subtract(meetup.VenueId.GetCity().GetTimeZone())
                 }).ToList(),
-                TalkIds = meetup.Sessions.Select(x => x.TalkId).ToList(),
             };
 
-        private static Community GetCommunity(this string id)
+        public static Community GetCommunity(this string id)
             => (Community) Enum.Parse(typeof(Community), id, true);
     }
 }
