@@ -48,12 +48,10 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <Content Update="electron.manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DevActivator.Meetups.BL\DevActivator.Meetups.BL.csproj" />
     <ProjectReference Include="..\DevActivator.Meetups.DAL\DevActivator.Meetups.DAL.csproj" />
   </ItemGroup>
+    <ItemGroup>
+        <Folder Include="wwwroot"/>
+    </ItemGroup>
 </Project>
