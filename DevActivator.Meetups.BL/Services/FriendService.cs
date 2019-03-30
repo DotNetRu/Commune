@@ -22,7 +22,7 @@ namespace DevActivator.Meetups.BL.Services
         {
             var friends = await _friendProvider.GetAllFriendsAsync().ConfigureAwait(false);
             return friends
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Name})
                 .ToList();
         }
 
@@ -36,7 +36,7 @@ namespace DevActivator.Meetups.BL.Services
         {
             friend.EnsureIsValid();
 
-            var original = await _friendProvider.GetFriendOrDefaultAsync(friend.Id).ConfigureAwait(false);
+            var original = await _friendProvider.GetFriendOrDefaultAsync(friend.ExportId).ConfigureAwait(false);
             if (original != null)
             {
                 throw new FormatException($"Данный {nameof(friend.Id)} \"{friend.Id}\" уже занят");
@@ -50,7 +50,7 @@ namespace DevActivator.Meetups.BL.Services
         public async Task<Friend> UpdateFriendAsync(Friend friend)
         {
             friend.EnsureIsValid();
-            var original = await _friendProvider.GetFriendOrDefaultAsync(friend.Id).ConfigureAwait(false);
+            var original = await _friendProvider.GetFriendOrDefaultAsync(friend.ExportId).ConfigureAwait(false);
             var res = await _friendProvider.SaveFriendAsync(original.Extend(friend)).ConfigureAwait(false);
             return res;
         }

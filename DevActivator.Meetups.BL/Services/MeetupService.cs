@@ -25,7 +25,7 @@ namespace DevActivator.Meetups.BL.Services
         {
             var meetups = await _meetupProvider.GetAllMeetupsAsync().ConfigureAwait(false);
             return meetups
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Name})
                 .ToList();
         }
 
@@ -45,7 +45,7 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(meetup.Id)} \"{meetup.Id}\" уже занят");
             }
 
-            var entity = new Meetup {Id = meetup.Id}.Extend(meetup);
+            var entity = new Meetup {ExportId = meetup.Id}.Extend(meetup);
             var res = await _meetupProvider.SaveMeetupAsync(entity).ConfigureAwait(false);
             return res.ToVm();
         }

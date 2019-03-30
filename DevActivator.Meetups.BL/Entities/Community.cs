@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DevActivator.Meetups.BL.NewModels
+namespace DevActivator.Meetups.BL.Entities
 {
     public class Community
     {

@@ -22,7 +22,7 @@ namespace DevActivator.Meetups.BL.Services
         {
             var talks = await _talkProvider.GetAllTalksAsync().ConfigureAwait(false);
             return talks
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Title})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Title})
                 .ToList();
         }
 
@@ -41,7 +41,7 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(talk.Id)} \"{talk.Id}\" уже занят");
             }
 
-            var entity = new Talk {Id = talk.Id}.Extend(talk);
+            var entity = new Talk {ExportId = talk.Id}.Extend(talk);
             var res = await _talkProvider.SaveTalkAsync(entity).ConfigureAwait(false);
             return res.ToVm();
         }

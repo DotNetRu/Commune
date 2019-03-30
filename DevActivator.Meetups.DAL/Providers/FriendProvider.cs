@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Config;
@@ -9,19 +10,19 @@ using Microsoft.Extensions.Logging;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class FriendProvider : BaseProvider<Friend>, IFriendProvider
+    public class FriendProvider : IFriendProvider
     {
-        public FriendProvider(ILogger<FriendProvider> l, Settings s) : base(l, s, FriendConfig.DirectoryName)
-        {
-        }
+//        public FriendProvider(ILogger<FriendProvider> l, Settings s) : base(l, s, FriendConfig.DirectoryName)
+//        {
+//        }
 
         public Task<List<Friend>> GetAllFriendsAsync()
-            => GetAllAsync();
+            => throw new NotImplementedException(); //GetAllAsync();
 
         public Task<Friend> GetFriendOrDefaultAsync(string friendId)
-            => GetEntityByIdAsync(friendId);
+            => throw new NotImplementedException(); //GetEntityByIdAsync(friendId);
 
         public Task<Friend> SaveFriendAsync(Friend friend)
-            => SaveEntityAsync(friend);
+            =>                  throw new NotImplementedException(); //SaveEntityAsync(friend);
     }
 }

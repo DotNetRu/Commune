@@ -22,7 +22,7 @@ namespace DevActivator.Meetups.BL.Services
         {
             var venues = await _venueProvider.GetAllVenuesAsync().ConfigureAwait(false);
             return venues
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Name})
                 .ToList();
         }
 
@@ -42,7 +42,7 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(venue.Id)} \"{venue.Id}\" уже занят");
             }
 
-            var entity = new Venue {Id = venue.Id}.Extend(venue);
+            var entity = new Venue {ExportId = venue.Id}.Extend(venue);
             var res = await _venueProvider.SaveVenueAsync(entity).ConfigureAwait(false);
             return res.ToVm();
         }

@@ -12,7 +12,7 @@ namespace DevActivator.Meetups.BL.Models
 
         public Community CommunityId { get; set; }
 
-        public List<FriendReference> FriendIds { get; set; }
+        //public List<FriendReference> FriendIds { get; set; }
 
         public string VenueId { get; set; }
 

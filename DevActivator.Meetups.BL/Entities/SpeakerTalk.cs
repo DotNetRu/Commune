@@ -1,4 +1,4 @@
-namespace DevActivator.Meetups.BL.NewModels
+namespace DevActivator.Meetups.BL.Entities
 {
     public class SpeakerTalk
     {

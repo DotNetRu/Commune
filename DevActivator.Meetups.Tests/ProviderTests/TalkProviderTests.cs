@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Config;
 using DevActivator.Meetups.DAL.Providers;
@@ -11,14 +12,15 @@ namespace DevActivator.Meetups.Tests.ProviderTests
         [Fact]
         public async Task TalkSpeakerIdsDeserializationSucceed()
         {
+            throw new NotImplementedException(); //
             // prepare
-            var settings = new Settings {AuditRepoDirectory = "/Users/alex-mbp/repos/Audit"};
-            ITalkProvider talkProvider = new TalkProvider(null, settings);
-            var testTalkId = "Round-table-Talk-about-Performance";
-            
-            // test
-            var talk = await talkProvider.GetTalkOrDefaultAsync(testTalkId);
-            Assert.Equal(6, talk.SpeakerIds.Count);
+//            var settings = new Settings {AuditRepoDirectory = "/Users/alex-mbp/repos/Audit"};
+//            ITalkProvider talkProvider = new TalkProvider(null, settings);
+//            var testTalkId = "Round-table-Talk-about-Performance";
+//            
+//            // test
+//            var talk = await talkProvider.GetTalkOrDefaultAsync(testTalkId);
+//            Assert.Equal(6, talk.SpeakerIds.Count);
         }
     }
 }

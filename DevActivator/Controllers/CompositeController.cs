@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,61 +56,62 @@ namespace DevActivator.Controllers
                 talks.Add(talkId, talk);
             }
 
+            throw new NotImplementedException(); // need to be fixed
             // speakers
-            descriptor.SpeakerIds.AddRange(
-                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds.Select(s => s.SpeakerId))
-            );
-            var speakers = new Dictionary<string, SpeakerVm>();
-            foreach (var speakerId in descriptor.SpeakerIds.Distinct())
-            {
-                var speaker = await _speakerService.GetSpeakerAsync(speakerId).ConfigureAwait(true);
-                speakers.Add(speakerId, speaker);
-            }
-
-            // friends
-            if (meetup != null && descriptor.FriendIds.Count == 0)
-            {
-                descriptor.FriendIds.AddRange(meetup.FriendIds.Select(x => x.FriendId));
-            }
-
-            var friends = new List<Friend>();
-            foreach (var friendId in descriptor.FriendIds.Distinct())
-            {
-                var friend = await _friendService.GetFriendAsync(friendId).ConfigureAwait(true);
-                friends.Add(friend);
-            }
-
-            // name
-            if (string.IsNullOrWhiteSpace(descriptor.Name))
-            {
-                descriptor.Name = meetup?.Name;
-            }
-
-            // venue
-            descriptor.VenueId = descriptor.VenueId ?? meetup?.VenueId;
-            VenueVm venue = null;
-            if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
-            {
-                venue = await _venueService.GetVenueAsync(descriptor.VenueId).ConfigureAwait(true);
-            }
-
-            // community
-            if (string.IsNullOrWhiteSpace(descriptor.CommunityId))
-            {
-                descriptor.CommunityId = meetup?.CommunityId.ToString();
-            }
-
-            return new CompositeModel
-            {
-                Id = meetup?.Id,
-                Name = descriptor.Name,
-                CommunityId = descriptor.CommunityId.GetCommunity(),
-                Venue = venue,
-                Sessions = descriptor.Sessions,
-                Talks = talks,
-                Speakers = speakers,
-                Friends = friends
-            };
+//            descriptor.SpeakerIds.AddRange(
+//                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds.Select(s => s.SpeakerId))
+//            );
+//            var speakers = new Dictionary<string, SpeakerVm>();
+//            foreach (var speakerId in descriptor.SpeakerIds.Distinct())
+//            {
+//                var speaker = await _speakerService.GetSpeakerAsync(speakerId).ConfigureAwait(true);
+//                speakers.Add(speakerId, speaker);
+//            }
+//
+//            // friends
+//            if (meetup != null && descriptor.FriendIds.Count == 0)
+//            {
+//                descriptor.FriendIds.AddRange(meetup.FriendIds.Select(x => x.FriendId));
+//            }
+//
+//            var friends = new List<Friend>();
+//            foreach (var friendId in descriptor.FriendIds.Distinct())
+//            {
+//                var friend = await _friendService.GetFriendAsync(friendId).ConfigureAwait(true);
+//                friends.Add(friend);
+//            }
+//
+//            // name
+//            if (string.IsNullOrWhiteSpace(descriptor.Name))
+//            {
+//                descriptor.Name = meetup?.Name;
+//            }
+//
+//            // venue
+//            descriptor.VenueId = descriptor.VenueId ?? meetup?.VenueId;
+//            VenueVm venue = null;
+//            if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
+//            {
+//                venue = await _venueService.GetVenueAsync(descriptor.VenueId).ConfigureAwait(true);
+//            }
+//
+//            // community
+//            if (string.IsNullOrWhiteSpace(descriptor.CommunityId))
+//            {
+//                descriptor.CommunityId = meetup?.CommunityId.ToString();
+//            }
+//
+//            return new CompositeModel
+//            {
+//                Id = meetup?.Id,
+//                Name = descriptor.Name,
+//                CommunityId = descriptor.CommunityId.GetCommunity(),
+//                Venue = venue,
+//                Sessions = descriptor.Sessions,
+//                Talks = talks,
+//                Speakers = speakers,
+//                Friends = friends
+//            };
         }
 
         [HttpPost("[action]/{meetupId?}")]
@@ -148,21 +150,22 @@ namespace DevActivator.Controllers
                 {
                     meetup.CommunityId = descriptor.CommunityId.GetCommunity();
                 }
+                throw new NotImplementedException(); //
 
-                if (descriptor.FriendIds != null && descriptor.FriendIds.Count != 0)
-                {
-                    meetup.FriendIds = descriptor.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList();
-                }
-
-                if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
-                {
-                    meetup.VenueId = descriptor.VenueId;
-                }
-
-                if (descriptor.Sessions != null && descriptor.Sessions.Count != 0)
-                {
-                    meetup.Sessions = descriptor.Sessions;
-                }
+//                if (descriptor.FriendIds != null && descriptor.FriendIds.Count != 0)
+//                {
+//                    meetup.FriendIds = descriptor.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList();
+//                }
+//
+//                if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
+//                {
+//                    meetup.VenueId = descriptor.VenueId;
+//                }
+//
+//                if (descriptor.Sessions != null && descriptor.Sessions.Count != 0)
+//                {
+//                    meetup.Sessions = descriptor.Sessions;
+//                }
             }
         }
     }

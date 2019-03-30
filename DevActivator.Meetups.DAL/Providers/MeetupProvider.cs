@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Config;
@@ -9,19 +10,19 @@ using Microsoft.Extensions.Logging;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class MeetupProvider : BaseProvider<Meetup>, IMeetupProvider
+    public class MeetupProvider :  IMeetupProvider
     {
-        public MeetupProvider(ILogger<MeetupProvider> l, Settings s) : base(l, s, MeetupConfig.DirectoryName)
-        {
-        }
+//        public MeetupProvider(ILogger<MeetupProvider> l, Settings s) : base(l, s, MeetupConfig.DirectoryName)
+//        {
+//        }
 
         public Task<List<Meetup>> GetAllMeetupsAsync()
-            => GetAllAsync();
+            => throw new NotImplementedException(); // GetAllAsync();
 
         public Task<Meetup> GetMeetupOrDefaultAsync(string meetupId)
-            => GetEntityByIdAsync(meetupId);
+            =>throw new NotImplementedException(); // GetEntityByIdAsync(meetupId);
 
         public Task<Meetup> SaveMeetupAsync(Meetup meetup)
-            => SaveEntityAsync(meetup);
+            =>throw new NotImplementedException(); // SaveEntityAsync(meetup);
     }
 }

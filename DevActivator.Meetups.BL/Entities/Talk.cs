@@ -1,24 +1,21 @@
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using DevActivator.Common.BL.Config;
+﻿using System.Collections.Generic;
 
 namespace DevActivator.Meetups.BL.Entities
 {
-    public class Talk : IFlatEntity
+    public class Talk
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string ExportId { get; set; }
 
-        [XmlArrayItem("SpeakerId")]
-        public List<string> SpeakerIds { get; set; }
+        public List<SpeakerTalk> Speakers { get; set; }
 
         public string Title { get; set; }
-
         public string Description { get; set; }
 
+        public List<SeeAlsoTalk> SeeAlsoTalks { get; set; }
+
         public string CodeUrl { get; set; }
-
         public string SlidesUrl { get; set; }
-
         public string VideoUrl { get; set; }
     }
 }

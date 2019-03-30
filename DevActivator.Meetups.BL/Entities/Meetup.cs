@@ -1,21 +1,21 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using DevActivator.Common.BL.Config;
 
 namespace DevActivator.Meetups.BL.Entities
 {
-    public class Meetup : IFlatEntity
+    public class Meetup
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string ExportId { get; set; }
 
         public string Name { get; set; }
 
-        public string CommunityId { get; set; }
+        public int CommunityId { get; set; }
+        public Community Community { get; set; }
 
-        [XmlArrayItem("FriendId")]
-        public List<string> FriendIds { get; set; }
+        public List<FriendAtMeetup> Friends { get; set; }
 
-        public string VenueId { get; set; }
+        public int VenueId { get; set; }
+        public Venue Venue { get; set; }
 
         public List<Session> Sessions { get; set; }
     }

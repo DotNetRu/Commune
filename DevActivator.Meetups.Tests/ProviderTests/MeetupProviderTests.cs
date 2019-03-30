@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Config;
 using DevActivator.Meetups.BL.Entities;
@@ -16,7 +17,7 @@ namespace DevActivator.Meetups.Tests.ProviderTests
             var talk = await GetTestMeetupAsync();
 
             // test
-            Assert.Equal(2, talk.FriendIds.Count);
+            //Assert.Equal(2, talk.FriendIds.Count);
         }
 
         [Fact]
@@ -31,9 +32,10 @@ namespace DevActivator.Meetups.Tests.ProviderTests
 
         private Task<Meetup> GetTestMeetupAsync(string testMeetupId = "SpbDotNet-30")
         {
-            var settings = new Settings {AuditRepoDirectory = "/Users/alex-mbp/repos/Audit"};
-            IMeetupProvider talkProvider = new MeetupProvider(null, settings);
-            return talkProvider.GetMeetupOrDefaultAsync(testMeetupId);
+            throw new NotImplementedException(); //
+            //var settings = new Settings {AuditRepoDirectory = "/Users/alex-mbp/repos/Audit"};
+           // IMeetupProvider talkProvider = new MeetupProvider(null, settings);
+           // return talkProvider.GetMeetupOrDefaultAsync(testMeetupId);
         }
     }
 }

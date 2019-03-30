@@ -32,8 +32,8 @@ namespace DevActivator.Meetups.BL.Extensions
         public static VenueVm ToVm(this Venue venue)
             => new VenueVm
             {
-                Id = venue.Id,
-                City = venue.Id.GetCity(),
+                Id = venue.ExportId,
+                //City = venue.Id.GetCity(),
                 Name = venue.Name,
                 Address = venue.Address,
                 MapUrl = venue.MapUrl

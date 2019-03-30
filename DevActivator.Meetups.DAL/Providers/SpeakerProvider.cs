@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Config;
@@ -9,19 +10,19 @@ using Microsoft.Extensions.Logging;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class SpeakerProvider : BaseProvider<Speaker>, ISpeakerProvider
+    public class SpeakerProvider :  ISpeakerProvider
     {
-        public SpeakerProvider(ILogger<SpeakerProvider> l, Settings s) : base(l, s, SpeakerConfig.DirectoryName)
-        {
-        }
+//        public SpeakerProvider(ILogger<SpeakerProvider> l, Settings s) : base(l, s, SpeakerConfig.DirectoryName)
+//        {
+//        }
 
         public Task<List<Speaker>> GetAllSpeakersAsync()
-            => GetAllAsync();
+            => throw new NotImplementedException(); // GetAllAsync();
 
         public Task<Speaker> GetSpeakerOrDefaultAsync(string speakerId)
-            => GetEntityByIdAsync(speakerId);
+            => throw new NotImplementedException(); // GetEntityByIdAsync(speakerId);
 
         public Task<Speaker> SaveSpeakerAsync(Speaker speaker)
-            => SaveEntityAsync(speaker);
+            => throw new NotImplementedException(); // SaveEntityAsync(speaker);
     }
 }
