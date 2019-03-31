@@ -11,7 +11,7 @@ namespace DevActivator.Models
 
         public string Name { get; set; }
 
-        public Community CommunityId { get; set; }
+        public Community Community { get; set; }
 
         public VenueVm Venue { get; set; }
 

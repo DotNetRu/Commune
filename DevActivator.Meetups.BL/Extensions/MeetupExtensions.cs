@@ -87,8 +87,5 @@ namespace DevActivator.Meetups.BL.Extensions
 ////                        .Subtract(meetup.VenueId.GetCity().GetTimeZone())
 ////                }).ToList(),
 //            };
-
-        public static Community GetCommunity(this string id)
-            => (Community) Enum.Parse(typeof(Community), id, true);
     }
 }
