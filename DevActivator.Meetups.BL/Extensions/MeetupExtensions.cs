@@ -47,39 +47,10 @@ namespace DevActivator.Meetups.BL.Extensions
                 Sessions = meetup.Sessions.Select(x => new SessionVm
                 {
                     TalkId = x.Talk.ExportId,
-                    // todo: extract as helper method
+                    // fix timezones
                     StartTime = x.StartTime.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    EndTime = x.EndTime.Add(meetup.VenueId.GetCity().GetTimeZone()).ToString("yyyy-MM-ddTHH:mm:ss")
+                    EndTime = x.EndTime.ToString("yyyy-MM-ddTHH:mm:ss")
                 }).ToList(),
             };
-
-        public static Meetup Extend(this Meetup original, MeetupVm meetup)
-            => 
-                throw new NotImplementedException();
-//                new Meetup
-//            {
-////                Id = original.Id,
-////                Name = meetup.Name,
-////                CommunityId = meetup.CommunityId.ToString(),
-////                FriendIds = meetup.FriendIds.Select(x => x.FriendId).ToList(),
-////                VenueId = meetup.VenueId,
-////                Sessions = meetup.Sessions.Select(x => new Session
-////                {
-////                    TalkId = x.TalkId,
-////                    // todo: extract as helper method
-////                    StartTime = DateTime.ParseExact(
-////                            $"{x.StartTime}Z",
-////                            "yyyy-MM-ddTHH:mm:ssZ",
-////                            CultureInfo.InvariantCulture,
-////                            DateTimeStyles.AdjustToUniversal)
-////                        .Subtract(meetup.VenueId.GetCity().GetTimeZone()),
-////                    EndTime = DateTime.ParseExact(
-////                            $"{x.EndTime}Z",
-////                            "yyyy-MM-ddTHH:mm:ssZ",
-////                            CultureInfo.InvariantCulture,
-////                            DateTimeStyles.AdjustToUniversal)
-////                        .Subtract(meetup.VenueId.GetCity().GetTimeZone())
-////                }).ToList(),
-//            };
     }
 }

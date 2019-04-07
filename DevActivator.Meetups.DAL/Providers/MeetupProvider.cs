@@ -1,15 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.DAL;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Config;
 using DevActivator.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
@@ -27,6 +22,15 @@ namespace DevActivator.Meetups.DAL.Providers
 
         public Task<Meetup> GetMeetupOrDefaultAsync(string meetupId)
             => _context.Meetups.FirstOrDefaultAsync(x => x.ExportId == meetupId);
+        
+        
+        public Task<Meetup> GetMeetupOrDefaultExtendedAsync(string meetupId) 
+         => _context.Meetups
+             .Include(x => x.Venue)
+             .Include(x => x.Friends).ThenInclude(x => x.Friend)
+             .Include(x => x.Community)
+             .Include(x => x.Sessions).ThenInclude(x => x.Talk)
+             .FirstOrDefaultAsync(x => x.ExportId == meetupId);
 
         public async Task<Meetup> SaveMeetupAsync(Meetup meetup)
         {
