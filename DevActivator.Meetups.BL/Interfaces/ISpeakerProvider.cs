@@ -10,6 +10,8 @@ namespace DevActivator.Meetups.BL.Interfaces
 
         Task<Speaker> GetSpeakerOrDefaultAsync(string speakerId);
 
+        Task<List<Speaker>> GetSpeakersByIdsAsync(List<string> ids);
+
         Task<Speaker> SaveSpeakerAsync(Speaker speaker);
     }
 }

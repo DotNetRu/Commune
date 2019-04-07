@@ -12,10 +12,12 @@ namespace DevActivator.Meetups.BL.Services
     public class TalkService : ITalkService
     {
         private readonly ITalkProvider _talkProvider;
+        private readonly ISpeakerProvider _speakerProvider;
 
-        public TalkService(ITalkProvider talkProvider)
+        public TalkService(ITalkProvider talkProvider, ISpeakerProvider speakerProvider)
         {
             _talkProvider = talkProvider;
+            _speakerProvider = speakerProvider;
         }
 
         public async Task<List<AutocompleteRow>> GetAllTalksAsync()
@@ -28,7 +30,7 @@ namespace DevActivator.Meetups.BL.Services
 
         public async Task<TalkVm> GetTalkAsync(string talkId)
         {
-            var talk = await _talkProvider.GetTalkOrDefaultAsync(talkId).ConfigureAwait(false);
+            var talk = await _talkProvider.GetTalkOrDefaultExtendedAsync(talkId).ConfigureAwait(false);
             return talk.ToVm();
         }
 
@@ -41,7 +43,18 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(talk.Id)} \"{talk.Id}\" уже занят");
             }
 
-            var entity = new Talk {ExportId = talk.Id}.Extend(talk);
+            var speakers = await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds);
+            var entity = new Talk {ExportId = talk.Id, Speakers = new List<SpeakerTalk>()}.Extend(talk);
+            foreach (var speaker in speakers)
+            {
+                entity.Speakers.Add(new SpeakerTalk
+                {
+                    Speaker = speaker,
+                    Talk = entity
+                });
+            }
+
+
             var res = await _talkProvider.SaveTalkAsync(entity).ConfigureAwait(false);
             return res.ToVm();
         }
