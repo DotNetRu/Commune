@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DevActivator.Common.BL.Enums;
 
 namespace DevActivator.Meetups.BL.Entities
 {
@@ -9,7 +8,6 @@ namespace DevActivator.Meetups.BL.Entities
         public string ExportId { get; set; }
 
         public string Name { get; set; }
-        public City City { get; set; }
         public string Address { get; set; }
         public string MapUrl { get; set; }
 

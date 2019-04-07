@@ -66,7 +66,6 @@ namespace DevActivator.Meetups.DAL.Database
             venue.Property(x => x.Id).HasColumnName("Id");
             venue.Property(x => x.ExportId).HasColumnName("ExportId");
             venue.Property(x => x.Name).HasColumnName("Name");
-            venue.Property(x => x.City).HasColumnName("City");
             venue.Property(x => x.MapUrl).HasColumnName("MapUrl");
             venue.Property(x => x.Address).HasColumnName("Address");
         }

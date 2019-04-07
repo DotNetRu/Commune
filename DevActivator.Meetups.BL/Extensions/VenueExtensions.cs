@@ -10,43 +10,36 @@ namespace DevActivator.Meetups.BL.Extensions
         public static VenueVm EnsureIsValid(this VenueVm venue)
         {
             // todo: implement full validation
-            if (string.IsNullOrWhiteSpace(venue.Name))
-            {
-                throw new FormatException(nameof(venue.Name));
-            }
+            if (string.IsNullOrWhiteSpace(venue.Name)) throw new FormatException(nameof(venue.Name));
 
-            if (string.IsNullOrWhiteSpace(venue.Address))
-            {
-                throw new FormatException(nameof(venue.Address));
-            }
+            if (string.IsNullOrWhiteSpace(venue.Address)) throw new FormatException(nameof(venue.Address));
 
-            if (venue.City != venue.Id.GetCity())
-            {
-                throw new FormatException(nameof(venue.City));
-            }
+            if (venue.City != venue.Id.GetCity()) throw new FormatException(nameof(venue.City));
 
             return venue;
         }
 
 
         public static VenueVm ToVm(this Venue venue)
-            => new VenueVm
+        {
+            return new VenueVm
             {
                 Id = venue.ExportId,
-                City = venue.City,
                 Name = venue.Name,
                 Address = venue.Address,
                 MapUrl = venue.MapUrl
             };
+        }
 
         public static Venue Extend(this Venue original, VenueVm venue)
-            => new Venue
+        {
+            return new Venue
             {
                 Id = original.Id,
                 Name = venue.Name,
-                City = venue.City,
                 Address = venue.Address,
                 MapUrl = venue.MapUrl
             };
+        }
     }
 }

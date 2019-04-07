@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{91
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Migrations", "DevActivator.Migrations\DevActivator.Migrations.csproj", "{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer", "Importer\Importer.csproj", "{88572F7C-12FD-4374-A612-A8962EC98F39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88572F7C-12FD-4374-A612-A8962EC98F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88572F7C-12FD-4374-A612-A8962EC98F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88572F7C-12FD-4374-A612-A8962EC98F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88572F7C-12FD-4374-A612-A8962EC98F39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,5 +68,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
+		{88572F7C-12FD-4374-A612-A8962EC98F39} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
 	EndGlobalSection
 EndGlobal
