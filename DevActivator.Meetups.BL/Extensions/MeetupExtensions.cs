@@ -47,7 +47,7 @@ namespace DevActivator.Meetups.BL.Extensions
                 Sessions = meetup.Sessions.Select(x => new SessionVm
                 {
                     TalkId = x.Talk.ExportId,
-                    // fix timezones
+                    // TODO: fix timezones
                     StartTime = x.StartTime.ToString("yyyy-MM-ddTHH:mm:ss"),
                     EndTime = x.EndTime.ToString("yyyy-MM-ddTHH:mm:ss")
                 }).ToList(),
