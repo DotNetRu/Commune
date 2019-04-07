@@ -63,7 +63,7 @@ namespace DevActivator
             Configuration.Bind(nameof(Settings), settings);
 
             builder.RegisterModule(
-                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider>(
+                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider, CommunityProvider>(
                     settings));
 
             ApplicationContainer = builder.Build();
