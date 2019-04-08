@@ -36,27 +36,26 @@ namespace DevActivator.Meetups.BL.Extensions
         }
 
         public static MeetupVm ToVm(this Meetup meetup)
-            => 
+            =>
                 new MeetupVm
-            {
-                Id = meetup.ExportId,
-                Name = meetup.Name,
-                CommunityId = meetup.Community.ExportId,
-                FriendIds = meetup.Friends.Select(x => x.Friend.ExportId).ToList(),
-                VenueId = meetup.Venue.ExportId,
-                Sessions = meetup.Sessions.Select(x =>
                 {
-                    var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
-                    var startTime = TimeZoneInfo.ConvertTimeFromUtc(x.StartTime, timeZone);
-                    var endTime = TimeZoneInfo.ConvertTimeFromUtc(x.EndTime, timeZone); 
-                    
-                    return new SessionVm
+                    Id = meetup.ExportId,
+                    Name = meetup.Name,
+                    CommunityId = meetup.Community.ExportId,
+                    FriendIds = meetup.Friends.Select(x => x.Friend.ExportId).ToList(),
+                    VenueId = meetup.Venue.ExportId,
+                    Sessions = meetup.Sessions.Select(x =>
                     {
-                        TalkId = x.Talk.ExportId,
-                        StartTime = startTime.ToString("yyyy-MM-ddTHH:mm:ss"),
-                        EndTime = endTime.ToString("yyyy-MM-ddTHH:mm:ss")
-                    };
-                }).ToList(),
-            };
+                        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        return new SessionVm
+                        {
+                            TalkId = x.Talk.ExportId,
+                            StartTime = TimeZoneInfo.ConvertTimeFromUtc(x.StartTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss"),
+                            EndTime = TimeZoneInfo.ConvertTimeFromUtc(x.EndTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss")
+                        };
+                    }).ToList(),
+                };
     }
 }
