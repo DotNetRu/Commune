@@ -25,6 +25,10 @@ namespace DevActivator.Migrations
                 .AsString(100)
                 .NotNullable();
             table
+                .WithColumn("City")
+                .AsInt32()
+                .NotNullable();
+            table
                 .WithColumn("Address")
                 .AsString(350)
                 .NotNullable();

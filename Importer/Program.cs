@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using DevActivator.Common.BL.Enums;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ namespace Importer
     {
         private static async Task Main(string[] args)
         {
+            Console.WriteLine("It's time to start");
             var connectionString = args[0];
             var githubToken = args[1];
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
@@ -27,13 +30,23 @@ namespace Importer
             var tokenAuth = new Credentials(githubToken);
             github.Credentials = tokenAuth;
 
+            Console.WriteLine($"Github token - {github}");
+            Console.WriteLine($"Connection string - {connectionString}");
+
             var importer = new ImporterUtils(context, github);
+            Console.WriteLine("Start to import Communities");
             await importer.ImportCommunities();
+            Console.WriteLine("Start to import Venues");
             await importer.ImportVenues();
+            Console.WriteLine("Start to import Friends");
             await importer.ImportFriend();
+            Console.WriteLine("Start to import Speakers");
             await importer.ImportSpeakers();
+            Console.WriteLine("Start to import Talks");
             await importer.ImportTalks();
+            Console.WriteLine("Start to import Meetups");
             await importer.ImportMeetups();
+            Console.WriteLine("All data is imported");
         }
     }
 
@@ -114,6 +127,7 @@ namespace Importer
                     {
                         ExportId = exportId,
                         Name = responseXml.Element("Name")?.Value,
+                        City = (City) Enum.Parse(typeof(City), exportId.Substring(0, 3), true),
                         MapUrl = responseXml.Element("MapUrl")?.Value,
                         Address = responseXml.Element("Address")?.Value
                     });
@@ -325,11 +339,21 @@ namespace Importer
                     {
                         var talkId = sessionRaw.XPathSelectElement("TalkId")?.Value;
                         var talk = await _context.Talks.FirstAsync(x => x.ExportId == talkId);
+
+                        var startTime = DateTime.Parse(
+                            sessionRaw.XPathSelectElement("StartTime")?.Value,
+                            CultureInfo.InvariantCulture,
+                            DateTimeStyles.AdjustToUniversal);
+                        var endTime = DateTime.Parse(
+                            sessionRaw.XPathSelectElement("EndTime")?.Value,
+                            CultureInfo.InvariantCulture,
+                            DateTimeStyles.AdjustToUniversal);
+
                         sessions.Add(new Session
                         {
                             Talk = talk,
-                            StartTime = DateTime.Parse(sessionRaw.XPathSelectElement("StartTime")?.Value),
-                            EndTime = DateTime.Parse(sessionRaw.XPathSelectElement("EndTime")?.Value)
+                            StartTime = startTime,
+                            EndTime = endTime,
                         });
                     }
 

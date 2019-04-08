@@ -25,6 +25,7 @@ namespace DevActivator.Meetups.BL.Extensions
             return new VenueVm
             {
                 Id = venue.ExportId,
+                City = venue.City,
                 Name = venue.Name,
                 Address = venue.Address,
                 MapUrl = venue.MapUrl
@@ -37,6 +38,7 @@ namespace DevActivator.Meetups.BL.Extensions
             {
                 Id = original.Id,
                 Name = venue.Name,
+                City = venue.City,
                 Address = venue.Address,
                 MapUrl = venue.MapUrl
             };
