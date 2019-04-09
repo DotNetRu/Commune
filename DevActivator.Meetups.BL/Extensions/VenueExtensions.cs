@@ -37,6 +37,7 @@ namespace DevActivator.Meetups.BL.Extensions
             return new Venue
             {
                 Id = original.Id,
+                ExportId = venue.Id,
                 Name = venue.Name,
                 City = venue.City,
                 Address = venue.Address,

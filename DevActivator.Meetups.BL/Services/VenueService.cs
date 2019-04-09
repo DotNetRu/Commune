@@ -12,10 +12,12 @@ namespace DevActivator.Meetups.BL.Services
     public class VenueService : IVenueService
     {
         private readonly IVenueProvider _venueProvider;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VenueService(IVenueProvider venueProvider)
+        public VenueService(IVenueProvider venueProvider, IUnitOfWork unitOfWork)
         {
             _venueProvider = venueProvider;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<AutocompleteRow>> GetAllVenuesAsync()
@@ -50,9 +52,16 @@ namespace DevActivator.Meetups.BL.Services
         public async Task<VenueVm> UpdateVenueAsync(VenueVm venue)
         {
             venue.EnsureIsValid();
+            
             var original = await _venueProvider.GetVenueOrDefaultAsync(venue.Id).ConfigureAwait(false);
-            var res = await _venueProvider.SaveVenueAsync(original.Extend(venue)).ConfigureAwait(false);
-            return res.ToVm();
+            original. ExportId = venue.Id;
+            original.Name = venue.Name;
+            original.City = venue.City;
+            original.Address = venue.Address;
+            original.MapUrl = venue.MapUrl;
+            await _unitOfWork.SaveChangesAsync();
+            
+            return original.ToVm();
         }
     }
 }
