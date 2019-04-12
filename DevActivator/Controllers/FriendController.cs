@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
 using DevActivator.Meetups.BL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +21,15 @@ namespace DevActivator.Controllers
             => _friendService.GetAllFriendsAsync();
 
         [HttpGet("[action]/{friendId}")]
-        public Task<Friend> GetFriend(string friendId)
+        public Task<FriendVm> GetFriend(string friendId)
             => _friendService.GetFriendAsync(friendId);
 
         [HttpPost("[action]")]
-        public Task<Friend> AddFriend([FromBody] Friend friend)
+        public Task<FriendVm> AddFriend([FromBody] FriendVm friend)
             => _friendService.AddFriendAsync(friend);
 
         [HttpPost("[action]")]
-        public Task<Friend> UpdateFriend([FromBody] Friend friend)
+        public Task<FriendVm> UpdateFriend([FromBody] FriendVm friend)
             => _friendService.UpdateFriendAsync(friend);
     }
 }

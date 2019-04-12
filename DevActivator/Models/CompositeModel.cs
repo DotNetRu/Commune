@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Models;
 
 namespace DevActivator.Models
@@ -20,6 +19,6 @@ namespace DevActivator.Models
 
         public Dictionary<string, SpeakerVm> Speakers { get; set; }
 
-        public List<Friend> Friends { get; set; }
+        public List<FriendVm> Friends { get; set; }
     }
 }

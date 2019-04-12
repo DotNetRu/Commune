@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Models;
 
 namespace DevActivator.Meetups.BL.Interfaces
@@ -9,10 +8,10 @@ namespace DevActivator.Meetups.BL.Interfaces
     {
         Task<List<AutocompleteRow>> GetAllFriendsAsync();
 
-        Task<Friend> GetFriendAsync(string friendId);
+        Task<FriendVm> GetFriendAsync(string friendId);
 
-        Task<Friend> AddFriendAsync(Friend friend);
+        Task<FriendVm> AddFriendAsync(FriendVm friend);
 
-        Task<Friend> UpdateFriendAsync(Friend friend);
+        Task<FriendVm> UpdateFriendAsync(FriendVm friend);
     }
 }

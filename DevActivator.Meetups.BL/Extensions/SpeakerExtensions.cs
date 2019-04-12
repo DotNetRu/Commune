@@ -59,7 +59,7 @@ namespace DevActivator.Meetups.BL.Extensions
                     : speaker.GitHubUrl,
             };
 
-        public static SpeakerVm ToVm(this Speaker speaker, string lastUpdateDate)
+        public static SpeakerVm ToVm(this Speaker speaker, string lastUpdate)
             => new SpeakerVm
             {
                 Id = speaker.ExportId,
@@ -72,7 +72,7 @@ namespace DevActivator.Meetups.BL.Extensions
                 TwitterUrl = speaker.TwitterUrl,
                 HabrUrl = speaker.HabrUrl,
                 GitHubUrl = speaker.GitHubUrl,
-                LastUpdateDate = lastUpdateDate
+                LastUpdateDate = lastUpdate,
             };
 
         // todo: move from BL

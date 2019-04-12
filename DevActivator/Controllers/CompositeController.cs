@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
 using DevActivator.Meetups.BL.Models;
 using DevActivator.Models;
@@ -74,7 +73,7 @@ namespace DevActivator.Controllers
                 descriptor.FriendIds.AddRange(meetup.FriendIds);
             }
 
-            var friends = new List<Friend>();
+            var friends = new List<FriendVm>();
             foreach (var friendId in descriptor.FriendIds.Distinct())
             {
                 var friend = await _friendService.GetFriendAsync(friendId).ConfigureAwait(true);

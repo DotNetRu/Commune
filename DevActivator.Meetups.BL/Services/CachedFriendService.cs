@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevActivator.Common.BL.Caching;
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
 using DevActivator.Meetups.BL.Models;
 
@@ -28,10 +27,10 @@ namespace DevActivator.Meetups.BL.Services
                 }
             );
 
-        public Task<Friend> GetFriendAsync(string friendId)
+        public Task<FriendVm> GetFriendAsync(string friendId)
             => _friendService.GetFriendAsync(friendId);
 
-        public async Task<Friend> AddFriendAsync(Friend friend)
+        public async Task<FriendVm> AddFriendAsync(FriendVm friend)
         {
             var result = await _friendService.AddFriendAsync(friend).ConfigureAwait(false);
 
@@ -40,7 +39,7 @@ namespace DevActivator.Meetups.BL.Services
             return result;
         }
 
-        public async Task<Friend> UpdateFriendAsync(Friend friend)
+        public async Task<FriendVm> UpdateFriendAsync(FriendVm friend)
         {
             var result = await _friendService.UpdateFriendAsync(friend).ConfigureAwait(false);
 
