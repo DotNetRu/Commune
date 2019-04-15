@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Meetups.BL.Entities;
-using DevActivator.Meetups.BL.Extensions;
 using DevActivator.Meetups.BL.Interfaces;
 using DevActivator.Meetups.BL.Models;
 using DevActivator.Models;
@@ -18,14 +16,16 @@ namespace DevActivator.Controllers
         private readonly ISpeakerService _speakerService;
         private readonly IFriendService _friendService;
         private readonly IVenueService _venueService;
+        private readonly ICommunityService _communityService;
 
-        public CompositeController(IMeetupService ms, ITalkService ts, ISpeakerService ss, IFriendService fs, IVenueService vs)
+        public CompositeController(IMeetupService ms, ITalkService ts, ISpeakerService ss, IFriendService fs, IVenueService vs, ICommunityService cs)
         {
             _meetupService = ms;
             _talkService = ts;
             _speakerService = ss;
             _friendService = fs;
             _venueService = vs;
+            _communityService = cs;
         }
 
         [HttpPost("[action]/{meetupId?}")]
@@ -55,9 +55,10 @@ namespace DevActivator.Controllers
                 talks.Add(talkId, talk);
             }
 
+
             // speakers
             descriptor.SpeakerIds.AddRange(
-                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds.Select(s => s.SpeakerId))
+                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds)
             );
             var speakers = new Dictionary<string, SpeakerVm>();
             foreach (var speakerId in descriptor.SpeakerIds.Distinct())
@@ -69,10 +70,10 @@ namespace DevActivator.Controllers
             // friends
             if (meetup != null && descriptor.FriendIds.Count == 0)
             {
-                descriptor.FriendIds.AddRange(meetup.FriendIds.Select(x => x.FriendId));
+                descriptor.FriendIds.AddRange(meetup.FriendIds);
             }
 
-            var friends = new List<Friend>();
+            var friends = new List<FriendVm>();
             foreach (var friendId in descriptor.FriendIds.Distinct())
             {
                 var friend = await _friendService.GetFriendAsync(friendId).ConfigureAwait(true);
@@ -94,16 +95,17 @@ namespace DevActivator.Controllers
             }
 
             // community
+            CommunityVm community = null;
             if (string.IsNullOrWhiteSpace(descriptor.CommunityId))
             {
-                descriptor.CommunityId = meetup?.CommunityId.ToString();
+                community = await _communityService.GetCommunityAsync(descriptor.CommunityId);
             }
 
             return new CompositeModel
             {
                 Id = meetup?.Id,
                 Name = descriptor.Name,
-                CommunityId = descriptor.CommunityId.GetCommunity(),
+                Community = community,
                 Venue = venue,
                 Sessions = descriptor.Sessions,
                 Talks = talks,
@@ -143,15 +145,15 @@ namespace DevActivator.Controllers
                 {
                     meetup.Name = descriptor.Name;
                 }
-
                 if (!string.IsNullOrWhiteSpace(descriptor.CommunityId))
                 {
-                    meetup.CommunityId = descriptor.CommunityId.GetCommunity();
+                    meetup.CommunityId = descriptor.CommunityId;
                 }
+                
 
                 if (descriptor.FriendIds != null && descriptor.FriendIds.Count != 0)
                 {
-                    meetup.FriendIds = descriptor.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList();
+                    meetup.FriendIds = descriptor.FriendIds;
                 }
 
                 if (!string.IsNullOrWhiteSpace(descriptor.VenueId))

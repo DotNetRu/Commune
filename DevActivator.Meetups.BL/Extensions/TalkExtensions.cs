@@ -21,7 +21,7 @@ namespace DevActivator.Meetups.BL.Extensions
             }
 
             if (talk.SpeakerIds == null || talk.SpeakerIds.Count == 0 ||
-                talk.SpeakerIds.Any(x => string.IsNullOrWhiteSpace(x.SpeakerId)))
+                talk.SpeakerIds.Any(string.IsNullOrWhiteSpace))
             {
                 throw new FormatException(nameof(talk.SpeakerIds));
             }
@@ -29,11 +29,11 @@ namespace DevActivator.Meetups.BL.Extensions
             return talk;
         }
 
-        public static TalkVm ToVm(this Talk talk)
+        public static TalkVm ToVm(this Talk talk)          
             => new TalkVm
             {
-                Id = talk.Id,
-                SpeakerIds = talk.SpeakerIds.Select(x => new SpeakerReference {SpeakerId = x}).ToList(),
+                Id = talk.ExportId,
+                SpeakerIds = talk.Speakers.Select(x => x.Speaker.ExportId).ToList(),
                 Title = talk.Title,
                 Description = talk.Description,
                 CodeUrl = talk.CodeUrl,
@@ -45,12 +45,14 @@ namespace DevActivator.Meetups.BL.Extensions
             => new Talk
             {
                 Id = original.Id,
-                SpeakerIds = talk.SpeakerIds.Select(x => x.SpeakerId).ToList(),
+                ExportId = talk.Id,
                 Title = talk.Title,
                 Description = talk.Description,
                 CodeUrl = talk.CodeUrl,
                 SlidesUrl = talk.SlidesUrl,
-                VideoUrl = talk.VideoUrl
+                VideoUrl = talk.VideoUrl,
+                Speakers = original.Speakers,
+                SeeAlsoTalks = original.SeeAlsoTalks
             };
     }
 }

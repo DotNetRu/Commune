@@ -1,27 +1,36 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.DAL;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Config;
-using Microsoft.Extensions.Logging;
+using DevActivator.Meetups.DAL.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class SpeakerProvider : BaseProvider<Speaker>, ISpeakerProvider
+    public class SpeakerProvider :  ISpeakerProvider
     {
-        public SpeakerProvider(ILogger<SpeakerProvider> l, Settings s) : base(l, s, SpeakerConfig.DirectoryName)
+        private readonly DotNetRuServerContext _context;
+
+        public SpeakerProvider(DotNetRuServerContext context)
         {
+            _context = context;
         }
 
         public Task<List<Speaker>> GetAllSpeakersAsync()
-            => GetAllAsync();
+            => _context.Speakers.ToListAsync();
 
         public Task<Speaker> GetSpeakerOrDefaultAsync(string speakerId)
-            => GetEntityByIdAsync(speakerId);
+            => _context.Speakers.FirstOrDefaultAsync(x => x.ExportId == speakerId);
 
-        public Task<Speaker> SaveSpeakerAsync(Speaker speaker)
-            => SaveEntityAsync(speaker);
+        public Task<List<Speaker>> GetSpeakersByIdsAsync(List<string> ids)
+            => _context.Speakers.Where(x => ids.Contains(x.ExportId)).ToListAsync();
+
+        public async Task<Speaker> SaveSpeakerAsync(Speaker speaker)
+        {
+            await _context.Speakers.AddAsync(speaker);
+            await _context.SaveChangesAsync();
+            return speaker;
+        }
     }
 }

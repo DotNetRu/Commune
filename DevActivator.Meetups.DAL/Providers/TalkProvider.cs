@@ -1,27 +1,38 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.DAL;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Config;
-using Microsoft.Extensions.Logging;
+using DevActivator.Meetups.DAL.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class TalkProvider : BaseProvider<Talk>, ITalkProvider
+    public class TalkProvider : ITalkProvider
     {
-        public TalkProvider(ILogger<TalkProvider> l, Settings s) : base(l, s, TalkConfig.DirectoryName)
+        private readonly DotNetRuServerContext _context;
+
+        public TalkProvider(DotNetRuServerContext context)
         {
+            _context = context;
         }
 
         public Task<List<Talk>> GetAllTalksAsync()
-            => GetAllAsync();
+            => _context.Talks.ToListAsync();
 
         public Task<Talk> GetTalkOrDefaultAsync(string talkId)
-            => GetEntityByIdAsync(talkId);
+            => _context.Talks.FirstOrDefaultAsync(x => x.ExportId == talkId);
 
-        public Task<Talk> SaveTalkAsync(Talk talk)
-            => SaveEntityAsync(talk);
+        public Task<Talk> GetTalkOrDefaultExtendedAsync(string talkId)
+            => _context.Talks
+                .Include(x => x.Speakers).ThenInclude(x => x.Speaker)
+                .Include(x => x.SeeAlsoTalks)
+                .FirstOrDefaultAsync(x => x.ExportId == talkId);
+
+        public async Task<Talk> SaveTalkAsync(Talk talk)
+        {
+            await _context.Talks.AddAsync(talk);
+            await _context.SaveChangesAsync();
+            return talk;
+        }
     }
 }

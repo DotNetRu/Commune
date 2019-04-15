@@ -29,7 +29,7 @@ namespace DevActivator.Meetups.BL.Extensions
             // todo: allow empty fields (when possible)
             => new Speaker
             {
-                Id = speaker.Id,
+                ExportId = speaker.Id,
                 Name = string.IsNullOrWhiteSpace(speaker.Name)
                     ? original.Name
                     : speaker.Name,
@@ -59,10 +59,10 @@ namespace DevActivator.Meetups.BL.Extensions
                     : speaker.GitHubUrl,
             };
 
-        public static SpeakerVm ToVm(this Speaker speaker, string lastUpdateDate)
+        public static SpeakerVm ToVm(this Speaker speaker, string lastUpdate)
             => new SpeakerVm
             {
-                Id = speaker.Id,
+                Id = speaker.ExportId,
                 Name = speaker.Name,
                 CompanyName = speaker.CompanyName,
                 CompanyUrl = speaker.CompanyUrl,
@@ -72,13 +72,13 @@ namespace DevActivator.Meetups.BL.Extensions
                 TwitterUrl = speaker.TwitterUrl,
                 HabrUrl = speaker.HabrUrl,
                 GitHubUrl = speaker.GitHubUrl,
-                LastUpdateDate = lastUpdateDate
+                LastUpdateDate = lastUpdate,
             };
 
         // todo: move from BL
         public static string GetLastUpdateDate(this Speaker speaker, Settings settings)
         {
-            var fullPath = settings.GetSpeakerFilePath(speaker.Id);
+            var fullPath = settings.GetSpeakerFilePath(speaker.ExportId);
             var command = $"cd {settings.AuditRepoDirectory} && " +
                           $"git log -n 1 --pretty=tformat:%aI --date iso HEAD -- \"{fullPath}\"";
             return command.Bash();

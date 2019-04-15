@@ -12,27 +12,29 @@ namespace DevActivator.Meetups.BL.Services
     public class FriendService : IFriendService
     {
         private readonly IFriendProvider _friendProvider;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FriendService(IFriendProvider friendProvider)
+        public FriendService(IFriendProvider friendProvider, IUnitOfWork unitOfWork)
         {
             _friendProvider = friendProvider;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<AutocompleteRow>> GetAllFriendsAsync()
         {
             var friends = await _friendProvider.GetAllFriendsAsync().ConfigureAwait(false);
             return friends
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Name})
                 .ToList();
         }
 
-        public async Task<Friend> GetFriendAsync(string friendId)
+        public async Task<FriendVm> GetFriendAsync(string friendId)
         {
             var friend = await _friendProvider.GetFriendOrDefaultAsync(friendId).ConfigureAwait(false);
-            return friend;
+            return friend.ToVm();
         }
 
-        public async Task<Friend> AddFriendAsync(Friend friend)
+        public async Task<FriendVm> AddFriendAsync(FriendVm friend)
         {
             friend.EnsureIsValid();
 
@@ -42,17 +44,27 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(friend.Id)} \"{friend.Id}\" уже занят");
             }
 
-            var entity = new Friend {Id = friend.Id}.Extend(friend);
+            var entity = new Friend {ExportId = friend.Id}.Extend(friend);
             var res = await _friendProvider.SaveFriendAsync(entity).ConfigureAwait(false);
-            return res;
+            return res.ToVm();
         }
 
-        public async Task<Friend> UpdateFriendAsync(Friend friend)
+        public async Task<FriendVm> UpdateFriendAsync(FriendVm friend)
         {
             friend.EnsureIsValid();
+            
             var original = await _friendProvider.GetFriendOrDefaultAsync(friend.Id).ConfigureAwait(false);
-            var res = await _friendProvider.SaveFriendAsync(original.Extend(friend)).ConfigureAwait(false);
-            return res;
+            if (original == null)
+            {
+                throw new FormatException($"{nameof(friend.Id)} \"{friend.Id}\" нет в базе");
+            }
+            original.Name = friend.Name;
+            original.Url = friend.Url;
+            original.Description = friend.Description;
+
+            await _unitOfWork.SaveChangesAsync();
+            
+            return original.ToVm();
         }
     }
 }

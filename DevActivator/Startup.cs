@@ -5,10 +5,13 @@ using Autofac.Extensions.DependencyInjection;
 using DevActivator.Common.BL.Caching;
 using DevActivator.Common.BL.Config;
 using DevActivator.Meetups.BL;
+using DevActivator.Meetups.BL.Interfaces;
+using DevActivator.Meetups.DAL.Database;
 using DevActivator.Meetups.DAL.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -40,7 +43,11 @@ namespace DevActivator
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
+
         {
+            services.AddDbContext<DotNetRuServerContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Database")));
+
             services.AddMemoryCache();
 
             services.AddMvc();
@@ -52,13 +59,15 @@ namespace DevActivator
             builder.Populate(services);
 
             builder.RegisterType<MemCache>().As<ICache>().SingleInstance();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
 
             var settings = new Settings();
             Configuration.Bind(nameof(Settings), settings);
 
             builder.RegisterModule(
-                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider>(
+                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,
+                    CommunityProvider>(
                     settings));
 
             ApplicationContainer = builder.Build();

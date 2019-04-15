@@ -9,6 +9,7 @@ namespace DevActivator.Meetups.BL.Interfaces
         Task<List<Meetup>> GetAllMeetupsAsync();
 
         Task<Meetup> GetMeetupOrDefaultAsync(string meetupId);
+        Task<Meetup> GetMeetupOrDefaultExtendedAsync(string meetupId);
 
         Task<Meetup> SaveMeetupAsync(Meetup meetup);
     }

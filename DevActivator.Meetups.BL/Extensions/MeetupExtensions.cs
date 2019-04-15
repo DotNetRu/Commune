@@ -1,10 +1,6 @@
 using System;
-using System.Globalization;
 using System.Linq;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.BL.Extensions;
 using DevActivator.Meetups.BL.Entities;
-using DevActivator.Meetups.BL.Enums;
 using DevActivator.Meetups.BL.Models;
 
 namespace DevActivator.Meetups.BL.Extensions
@@ -20,7 +16,7 @@ namespace DevActivator.Meetups.BL.Extensions
             }
 
             if (meetup.FriendIds == null || meetup.FriendIds.Count == 0 ||
-                meetup.FriendIds.Any(x => string.IsNullOrWhiteSpace(x.FriendId)))
+                meetup.FriendIds.Any(string.IsNullOrWhiteSpace))
             {
                 throw new FormatException(nameof(meetup.FriendIds));
             }
@@ -40,50 +36,26 @@ namespace DevActivator.Meetups.BL.Extensions
         }
 
         public static MeetupVm ToVm(this Meetup meetup)
-            => new MeetupVm
-            {
-                Id = meetup.Id,
-                Name = meetup.Name,
-                CommunityId = meetup.CommunityId.GetCommunity(),
-                FriendIds = meetup.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList(),
-                VenueId = meetup.VenueId,
-                Sessions = meetup.Sessions.Select(x => new SessionVm
+            =>
+                new MeetupVm
                 {
-                    TalkId = x.TalkId,
-                    // todo: extract as helper method
-                    StartTime = x.StartTime.Add(meetup.VenueId.GetCity().GetTimeZone()).ToString("yyyy-MM-ddTHH:mm:ss"),
-                    EndTime = x.EndTime.Add(meetup.VenueId.GetCity().GetTimeZone()).ToString("yyyy-MM-ddTHH:mm:ss")
-                }).ToList(),
-            };
-
-        public static Meetup Extend(this Meetup original, MeetupVm meetup)
-            => new Meetup
-            {
-                Id = original.Id,
-                Name = meetup.Name,
-                CommunityId = meetup.CommunityId.ToString(),
-                FriendIds = meetup.FriendIds.Select(x => x.FriendId).ToList(),
-                VenueId = meetup.VenueId,
-                Sessions = meetup.Sessions.Select(x => new Session
-                {
-                    TalkId = x.TalkId,
-                    // todo: extract as helper method
-                    StartTime = DateTime.ParseExact(
-                            $"{x.StartTime}Z",
-                            "yyyy-MM-ddTHH:mm:ssZ",
-                            CultureInfo.InvariantCulture,
-                            DateTimeStyles.AdjustToUniversal)
-                        .Subtract(meetup.VenueId.GetCity().GetTimeZone()),
-                    EndTime = DateTime.ParseExact(
-                            $"{x.EndTime}Z",
-                            "yyyy-MM-ddTHH:mm:ssZ",
-                            CultureInfo.InvariantCulture,
-                            DateTimeStyles.AdjustToUniversal)
-                        .Subtract(meetup.VenueId.GetCity().GetTimeZone())
-                }).ToList(),
-            };
-
-        public static Community GetCommunity(this string id)
-            => (Community) Enum.Parse(typeof(Community), id, true);
+                    Id = meetup.ExportId,
+                    Name = meetup.Name,
+                    CommunityId = meetup.Community.ExportId,
+                    FriendIds = meetup.Friends.Select(x => x.Friend.ExportId).ToList(),
+                    VenueId = meetup.Venue.ExportId,
+                    Sessions = meetup.Sessions.Select(x =>
+                    {
+                        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        return new SessionVm
+                        {
+                            TalkId = x.Talk.ExportId,
+                            StartTime = TimeZoneInfo.ConvertTimeFromUtc(x.StartTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss"),
+                            EndTime = TimeZoneInfo.ConvertTimeFromUtc(x.EndTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss")
+                        };
+                    }).ToList(),
+                };
     }
 }

@@ -7,7 +7,7 @@ namespace DevActivator.Meetups.BL.Models
     {
         public string Id { get; set; }
 
-        public List<SpeakerReference> SpeakerIds { get; set; }
+        public List<string> SpeakerIds { get; set; }
 
         public string Title { get; set; }
 
