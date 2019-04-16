@@ -1,27 +1,42 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.DAL;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Config;
-using Microsoft.Extensions.Logging;
+using DevActivator.Meetups.DAL.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevActivator.Meetups.DAL.Providers
 {
-    public class MeetupProvider : BaseProvider<Meetup>, IMeetupProvider
+    public class MeetupProvider :  IMeetupProvider
     {
-        public MeetupProvider(ILogger<MeetupProvider> l, Settings s) : base(l, s, MeetupConfig.DirectoryName)
+        private readonly DotNetRuServerContext _context;
+
+        public MeetupProvider(DotNetRuServerContext context)
         {
+            _context = context;
         }
 
         public Task<List<Meetup>> GetAllMeetupsAsync()
-            => GetAllAsync();
+            => _context.Meetups.OrderBy(x => x.Id).ToListAsync();
 
         public Task<Meetup> GetMeetupOrDefaultAsync(string meetupId)
-            => GetEntityByIdAsync(meetupId);
+            => _context.Meetups.FirstOrDefaultAsync(x => x.ExportId == meetupId);
+        
+        
+        public Task<Meetup> GetMeetupOrDefaultExtendedAsync(string meetupId) 
+         => _context.Meetups
+             .Include(x => x.Venue)
+             .Include(x => x.Friends).ThenInclude(x => x.Friend)
+             .Include(x => x.Community)
+             .Include(x => x.Sessions).ThenInclude(x => x.Talk)
+             .FirstOrDefaultAsync(x => x.ExportId == meetupId);
 
-        public Task<Meetup> SaveMeetupAsync(Meetup meetup)
-            => SaveEntityAsync(meetup);
+        public async Task<Meetup> SaveMeetupAsync(Meetup meetup)
+        {
+            await _context.Meetups.AddAsync(meetup);
+            await _context.SaveChangesAsync();
+            return meetup;
+        }
     }
 }

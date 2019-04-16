@@ -1,39 +1,33 @@
 using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DevActivator.Common.BL.Caching;
 using DevActivator.Common.BL.Config;
 using DevActivator.Meetups.BL;
+using DevActivator.Meetups.BL.Interfaces;
+using DevActivator.Meetups.DAL.Database;
 using DevActivator.Meetups.DAL.Providers;
-using ElectronNET.API;
-using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DevActivator
 {
     public class Startup
     {
-        private static BrowserWindow _browserWindow;
-
-        private static PhysicalFileProvider _fileProvider;
-        private static Timer _ticker;
+        private string _staticVirtualFolderPath;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             StaticVirtualFolderPath = Configuration[$"{nameof(Settings)}:{nameof(Settings.AuditRepoDirectory)}"];
         }
-
-        private string _staticVirtualFolderPath;
 
         private string StaticVirtualFolderPath
         {
@@ -49,21 +43,32 @@ namespace DevActivator
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
+
         {
+            services.AddDbContext<DotNetRuServerContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Database")));
+
             services.AddMemoryCache();
 
             services.AddMvc();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             builder.RegisterType<MemCache>().As<ICache>().SingleInstance();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
 
             var settings = new Settings();
             Configuration.Bind(nameof(Settings), settings);
 
-            builder.RegisterModule(new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider>(settings));
+            builder.RegisterModule(
+                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,
+                    CommunityProvider>(
+                    settings));
 
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);
@@ -72,27 +77,15 @@ namespace DevActivator
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-                if (HybridSupport.IsElectronActive)
-                {
-                    //the below is a hacky way to get hot module loading working for the ElectronNet app.
-                    _fileProvider = new PhysicalFileProvider(env.WebRootPath);
-                    _ticker = new Timer(TimerMethod, null, 1000, 1000);
-                }
-                else
-                {
-                    app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                    {
-                        HotModuleReplacement = true
-                    });
-                }
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNetRuAPI V1");
+                c.RoutePrefix = string.Empty;
+            });
+
+
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseFileServer(new FileServerOptions
             {
@@ -108,40 +101,7 @@ namespace DevActivator
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    "spa-fallback",
-                    new {controller = "Home", action = "Index"});
             });
-
-            if (HybridSupport.IsElectronActive)
-                ElectronBootstrap();
-        }
-
-
-        private async void ElectronBootstrap()
-        {
-            _browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
-            {
-                Show = false
-            }).ConfigureAwait(false);
-
-            _browserWindow.OnReadyToShow += () => _browserWindow.Show();
-        }
-
-        private static void TimerMethod(object state)
-        {
-            MainAsync().GetAwaiter().GetResult();
-        }
-
-        private static async Task MainAsync()
-        {
-            var token = _fileProvider.Watch("**/*");
-            var source = new TaskCompletionSource<object>();
-            token.RegisterChangeCallback(state =>
-                ((TaskCompletionSource<object>) state).TrySetResult(null), source);
-            await source.Task.ConfigureAwait(false);
-            _browserWindow.Reload();
         }
     }
 }

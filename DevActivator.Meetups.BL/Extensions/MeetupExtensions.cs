@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using DevActivator.Meetups.BL.Entities;
-using DevActivator.Meetups.BL.Enums;
 using DevActivator.Meetups.BL.Models;
 
 namespace DevActivator.Meetups.BL.Extensions
@@ -17,7 +16,7 @@ namespace DevActivator.Meetups.BL.Extensions
             }
 
             if (meetup.FriendIds == null || meetup.FriendIds.Count == 0 ||
-                meetup.FriendIds.Any(x => string.IsNullOrWhiteSpace(x.FriendId)))
+                meetup.FriendIds.Any(string.IsNullOrWhiteSpace))
             {
                 throw new FormatException(nameof(meetup.FriendIds));
             }
@@ -37,39 +36,26 @@ namespace DevActivator.Meetups.BL.Extensions
         }
 
         public static MeetupVm ToVm(this Meetup meetup)
-            => new MeetupVm
-            {
-                Id = meetup.Id,
-                Name = meetup.Name,
-                CommunityId = meetup.CommunityId.GetCommunity(),
-                FriendIds = meetup.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList(),
-                VenueId = meetup.VenueId,
-                Sessions = meetup.Sessions.Select(x => new Session
+            =>
+                new MeetupVm
                 {
-                    TalkId = x.TalkId,
-                    StartTime = x.StartTime,
-                    EndTime = x.EndTime
-                }).ToList(),
-            };
-
-        public static Meetup Extend(this Meetup original, MeetupVm meetup)
-            => new Meetup
-            {
-                Id = original.Id,
-                Name = meetup.Name,
-                CommunityId = meetup.CommunityId.ToString(),
-                FriendIds = meetup.FriendIds.Select(x => x.FriendId).ToList(),
-                VenueId = meetup.VenueId,
-                Sessions = meetup.Sessions.Select(x => new Session
-                {
-                    TalkId = x.TalkId,
-                    StartTime = x.StartTime,
-                    EndTime = x.EndTime
-                }).ToList(),
-                TalkIds = meetup.Sessions.Select(x => x.TalkId).ToList(),
-            };
-
-        private static Community GetCommunity(this string id)
-            => (Community) Enum.Parse(typeof(Community), id, true);
+                    Id = meetup.ExportId,
+                    Name = meetup.Name,
+                    CommunityId = meetup.Community.ExportId,
+                    FriendIds = meetup.Friends.Select(x => x.Friend.ExportId).ToList(),
+                    VenueId = meetup.Venue.ExportId,
+                    Sessions = meetup.Sessions.Select(x =>
+                    {
+                        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        return new SessionVm
+                        {
+                            TalkId = x.Talk.ExportId,
+                            StartTime = TimeZoneInfo.ConvertTimeFromUtc(x.StartTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss"),
+                            EndTime = TimeZoneInfo.ConvertTimeFromUtc(x.EndTime, timeZone)
+                                .ToString("yyyy-MM-ddTHH:mm:ss")
+                        };
+                    }).ToList(),
+                };
     }
 }

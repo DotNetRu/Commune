@@ -9,6 +9,7 @@ namespace DevActivator.Meetups.BL.Interfaces
         Task<List<Talk>> GetAllTalksAsync();
 
         Task<Talk> GetTalkOrDefaultAsync(string talkId);
+        Task<Talk> GetTalkOrDefaultExtendedAsync(string talkId);
 
         Task<Talk> SaveTalkAsync(Talk talk);
     }

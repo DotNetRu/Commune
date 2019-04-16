@@ -1,6 +1,6 @@
 namespace DevActivator.Meetups.BL.Enums
 {
-    public enum Community
+    public enum CommunityLegacy
     {
         SpbDotNet = 1,
         MskDotNet = 2,

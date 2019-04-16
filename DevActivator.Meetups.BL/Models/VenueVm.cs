@@ -1,4 +1,4 @@
-using DevActivator.Meetups.BL.Enums;
+using DevActivator.Common.BL.Enums;
 
 namespace DevActivator.Meetups.BL.Models
 {

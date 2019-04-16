@@ -14,18 +14,20 @@ namespace DevActivator.Meetups.BL.Services
     {
         private readonly Settings _settings;
         private readonly ISpeakerProvider _speakerProvider;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SpeakerService(Settings settings, ISpeakerProvider speakerProvider)
+        public SpeakerService(Settings settings, ISpeakerProvider speakerProvider, IUnitOfWork unitOfWork)
         {
             _settings = settings;
             _speakerProvider = speakerProvider;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<AutocompleteRow>> GetAllSpeakersAsync()
         {
             var speakers = await _speakerProvider.GetAllSpeakersAsync().ConfigureAwait(false);
             return speakers
-                .Select(x => new AutocompleteRow {Id = x.Id, Name = x.Name})
+                .Select(x => new AutocompleteRow {Id = x.ExportId, Name = x.Name})
                 .ToList();
         }
 
@@ -45,17 +47,28 @@ namespace DevActivator.Meetups.BL.Services
                 throw new FormatException($"Данный {nameof(speaker.Id)} \"{speaker.Id}\" уже занят");
             }
 
-            var entity = new Speaker {Id = speaker.Id}.Extend(speaker);
+            var entity = new Speaker {ExportId = speaker.Id}.Extend(speaker);
             var res = await _speakerProvider.SaveSpeakerAsync(entity).ConfigureAwait(false);
-            return res.ToVm(res.GetLastUpdateDate(_settings));
+            return res.ToVm(entity.GetLastUpdateDate(_settings));
         }
 
         public async Task<SpeakerVm> UpdateSpeakerAsync(SpeakerVm speaker)
         {
             speaker.EnsureIsValid();
             var original = await _speakerProvider.GetSpeakerOrDefaultAsync(speaker.Id).ConfigureAwait(false);
-            var res = await _speakerProvider.SaveSpeakerAsync(original.Extend(speaker)).ConfigureAwait(false);
-            return res.ToVm(res.GetLastUpdateDate(_settings));
+            original.ExportId = speaker.Id;
+            original.Name = speaker.Name;
+            original.CompanyName = speaker.CompanyName;
+            original.CompanyUrl = speaker.CompanyUrl;
+            original.Description = speaker.Description;
+            original.BlogUrl = speaker.BlogUrl;
+            original.ContactsUrl = speaker.ContactsUrl;
+            original.HabrUrl = speaker.HabrUrl;
+            original.TwitterUrl = speaker.TwitterUrl;
+            original.GitHubUrl = speaker.GitHubUrl;
+            await _unitOfWork.SaveChangesAsync();
+
+            return original.ToVm(original.GetLastUpdateDate(_settings));
         }
     }
 }
