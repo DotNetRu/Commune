@@ -1,13 +1,13 @@
 using FluentMigrator;
 
-namespace DevActivator.Migrations
+namespace DotNetRuServer.Migrations
 {
-    [Migration(7)]
-    public class AddFriend : Migration
+    [Migration(6)]
+    public class AddCommunity : Migration
     {
         public override void Up()
         {
-            var table = Create.Table("Friends");
+            var table = Create.Table("Communities");
             table
                 .WithColumn("Id")
                 .AsInt32()
@@ -25,26 +25,16 @@ namespace DevActivator.Migrations
                 .AsString(100)
                 .NotNullable();
             table
-                .WithColumn("Url")
-                .AsString(100);
+                .WithColumn("City")
+                .AsString(50);
             table
-                .WithColumn("Description")
-                .AsString(2000);
-            
-            table
-                .WithColumn("LogoUrl")
-                .AsString(500)
-                .NotNullable();
-
-            table
-                .WithColumn("SmallLogoUrl")
-                .AsString(500)
-                .NotNullable();
+                .WithColumn("TimeZone")
+                .AsString(50);
         }
 
         public override void Down()
         {
-            Delete.Table("Friends");
+            Delete.Table("Communities");
         }
     }
 }

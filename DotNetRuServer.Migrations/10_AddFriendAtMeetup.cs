@@ -1,6 +1,6 @@
 using FluentMigrator;
 
-namespace DevActivator.Migrations
+namespace DotNetRuServer.Migrations
 {
     [Migration(10)]
     public class AddFriendAtMeetup : Migration

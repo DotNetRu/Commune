@@ -1,6 +1,6 @@
 using FluentMigrator;
 
-namespace DevActivator.Migrations
+namespace DotNetRuServer.Migrations
 {
     [Migration(4)]
     public class AddSeeAlsoTalkTable : Migration
