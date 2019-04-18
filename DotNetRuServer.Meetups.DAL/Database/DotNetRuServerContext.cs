@@ -1,7 +1,8 @@
 using DevActivator.Meetups.BL.Entities;
+using DevActivator.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevActivator.Meetups.DAL.Database
+namespace DotNetRuServer.Meetups.DAL.Database
 {
     public class DotNetRuServerContext : DbContext
     {

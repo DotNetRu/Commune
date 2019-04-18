@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.DAL;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Config;
-using DevActivator.Meetups.DAL.Database;
+using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
-namespace DevActivator.Meetups.DAL.Providers
+namespace DotNetRuServer.Meetups.DAL.Providers
 {
     public class FriendProvider : IFriendProvider
     {

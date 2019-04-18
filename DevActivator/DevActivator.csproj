@@ -16,6 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DevActivator.Meetups.BL\DevActivator.Meetups.BL.csproj" />
-    <ProjectReference Include="..\DevActivator.Meetups.DAL\DevActivator.Meetups.DAL.csproj" />
+    <ProjectReference Include="..\DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj" />
   </ItemGroup>
 </Project>

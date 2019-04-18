@@ -10,7 +10,7 @@
       <ProjectReference Include="..\DevActivator.Common.BL\DevActivator.Common.BL.csproj" />
       <ProjectReference Include="..\DevActivator.Common.DAL\DevActivator.Common.DAL.csproj" />
       <ProjectReference Include="..\DevActivator.Meetups.BL\DevActivator.Meetups.BL.csproj" />
-      <ProjectReference Include="..\DevActivator.Meetups.DAL\DevActivator.Meetups.DAL.csproj" />
+      <ProjectReference Include="..\DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj" />
     </ItemGroup>
 
     <ItemGroup>

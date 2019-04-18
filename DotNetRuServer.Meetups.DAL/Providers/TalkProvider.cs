@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.BL.Interfaces;
-using DevActivator.Meetups.DAL.Database;
+using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevActivator.Meetups.DAL.Providers
+namespace DotNetRuServer.Meetups.DAL.Providers
 {
     public class TalkProvider : ITalkProvider
     {

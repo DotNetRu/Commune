@@ -1,4 +1,4 @@
-namespace DevActivator.Meetups.DAL.Config
+namespace DotNetRuServer.Meetups.DAL.Config
 {
     public static class SpeakerConfig
     {
