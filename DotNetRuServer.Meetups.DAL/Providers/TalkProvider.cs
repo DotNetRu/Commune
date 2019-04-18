@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DotNetRuSerber.Meetups.BL.Entities;
-using DotNetRuSerber.Meetups.BL.Interfaces;
+using DotNetRuServer.Meetups.BL.Entities;
+using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 

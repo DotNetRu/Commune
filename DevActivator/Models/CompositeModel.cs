@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DotNetRuSerber.Meetups.BL.Models;
+using DotNetRuServer.Meetups.BL.Models;
 
 namespace DevActivator.Models
 {

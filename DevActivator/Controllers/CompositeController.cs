@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevActivator.Models;
-using DotNetRuSerber.Meetups.BL.Interfaces;
-using DotNetRuSerber.Meetups.BL.Models;
+using DotNetRuServer.Meetups.BL.Interfaces;
+using DotNetRuServer.Meetups.BL.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevActivator.Controllers

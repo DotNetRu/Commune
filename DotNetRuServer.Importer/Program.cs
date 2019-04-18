@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using DevActivator.Common.BL.Enums;
-using DotNetRuSerber.Meetups.BL.Entities;
+using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
