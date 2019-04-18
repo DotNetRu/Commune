@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{91
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Migrations", "DotNetRuServer.Migrations\DotNetRuServer.Migrations.csproj", "{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer", "Importer\Importer.csproj", "{88572F7C-12FD-4374-A612-A8962EC98F39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Importer", "DotNetRuServer.Importer\DotNetRuServer.Importer.csproj", "{88572F7C-12FD-4374-A612-A8962EC98F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,7 +13,7 @@ using DevActivator.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
 
-namespace Importer
+namespace DotNetRuServer.Importer
 {
     internal class Program
     {
