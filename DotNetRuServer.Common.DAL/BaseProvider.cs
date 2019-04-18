@@ -10,7 +10,7 @@ using DevActivator.Common.BL.Config;
 using DevActivator.Common.BL.Extensions;
 using Microsoft.Extensions.Logging;
 
-namespace DevActivator.Common.DAL
+namespace DotNetRuServer.Common.DAL
 {
     public abstract class BaseProvider<T> where T : class, IEntity
     {

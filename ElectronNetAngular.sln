@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.DAL"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Common.BL", "DevActivator.Common.BL\DevActivator.Common.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Common.DAL", "DevActivator.Common.DAL\DevActivator.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Common.DAL", "DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator", "DevActivator\DevActivator.csproj", "{D2A5B9DC-EE7C-4BED-9677-A351B91A0FF4}"
 EndProject

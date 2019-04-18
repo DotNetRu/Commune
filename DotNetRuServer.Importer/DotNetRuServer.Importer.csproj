@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DevActivator.Common.BL\DevActivator.Common.BL.csproj" />
-      <ProjectReference Include="..\DevActivator.Common.DAL\DevActivator.Common.DAL.csproj" />
+      <ProjectReference Include="..\DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj" />
       <ProjectReference Include="..\DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj" />
       <ProjectReference Include="..\DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj" />
     </ItemGroup>
