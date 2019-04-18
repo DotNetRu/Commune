@@ -1,5 +1,5 @@
-using DevActivator.Meetups.BL.Entities;
 using DevActivator.Meetups.DAL.Database;
+using DotNetRuSerber.Meetups.BL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetRuServer.Meetups.DAL.Database

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using DevActivator.Meetups.BL.Interfaces;
+using DotNetRuSerber.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
 
 namespace DotNetRuServer.Meetups.DAL.Providers

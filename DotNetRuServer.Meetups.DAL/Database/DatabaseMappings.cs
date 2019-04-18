@@ -1,4 +1,4 @@
-using DevActivator.Meetups.BL.Entities;
+using DotNetRuSerber.Meetups.BL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

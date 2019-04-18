@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Meetups.BL", "DevActivator.Meetups.BL\DevActivator.Meetups.BL.csproj", "{D4F85861-ED59-4B29-930D-D63435EA9538}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuSerber.Meetups.BL", "DotNetRuSerber.Meetups.BL\DotNetRuSerber.Meetups.BL.csproj", "{D4F85861-ED59-4B29-930D-D63435EA9538}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.DAL", "DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj", "{15BF5BBA-7862-486B-9C72-D332DC3D56EC}"
 EndProject
