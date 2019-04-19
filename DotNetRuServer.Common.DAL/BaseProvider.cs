@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.BL.Extensions;
+using DotNetRuServer.Comon.BL.Config;
+using DotNetRuServer.Comon.BL.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace DotNetRuServer.Common.DAL

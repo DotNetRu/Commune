@@ -1,4 +1,4 @@
-namespace DevActivator.Common.BL.Enums
+namespace DotNetRuServer.Comon.BL.Enums
 {
     public enum City
     {

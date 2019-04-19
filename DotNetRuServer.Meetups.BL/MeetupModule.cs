@@ -1,6 +1,6 @@
 using Autofac;
-using DevActivator.Common.BL.Caching;
-using DevActivator.Common.BL.Config;
+using DotNetRuServer.Comon.BL.Caching;
+using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Services;
 

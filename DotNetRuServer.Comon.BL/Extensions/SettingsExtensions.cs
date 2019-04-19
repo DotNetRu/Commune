@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using DevActivator.Common.BL.Config;
+using DotNetRuServer.Comon.BL.Config;
 
-namespace DevActivator.Common.BL.Extensions
+namespace DotNetRuServer.Comon.BL.Extensions
 {
     // todo: move from BL
     public static class SettingsExtensions

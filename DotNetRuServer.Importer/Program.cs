@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using DevActivator.Common.BL.Enums;
+using DotNetRuServer.Comon.BL.Enums;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;

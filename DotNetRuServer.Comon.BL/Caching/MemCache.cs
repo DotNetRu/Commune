@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace DevActivator.Common.BL.Caching
+namespace DotNetRuServer.Comon.BL.Caching
 {
     public class MemCache : ICache
     {

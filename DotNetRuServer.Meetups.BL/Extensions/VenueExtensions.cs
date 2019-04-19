@@ -1,5 +1,5 @@
 using System;
-using DevActivator.Common.BL.Extensions;
+using DotNetRuServer.Comon.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Models;
 

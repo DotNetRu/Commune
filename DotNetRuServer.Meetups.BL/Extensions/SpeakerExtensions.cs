@@ -1,6 +1,6 @@
 using System;
-using DevActivator.Common.BL.Config;
-using DevActivator.Common.BL.Extensions;
+using DotNetRuServer.Comon.BL.Config;
+using DotNetRuServer.Comon.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Helpers;
 using DotNetRuServer.Meetups.BL.Models;

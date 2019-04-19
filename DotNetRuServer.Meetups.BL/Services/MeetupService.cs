@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Config;
+using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Interfaces;

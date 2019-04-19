@@ -1,7 +1,7 @@
 using System;
-using DevActivator.Common.BL.Enums;
+using DotNetRuServer.Comon.BL.Enums;
 
-namespace DevActivator.Common.BL.Extensions
+namespace DotNetRuServer.Comon.BL.Extensions
 {
     public static class StringExtension
     {

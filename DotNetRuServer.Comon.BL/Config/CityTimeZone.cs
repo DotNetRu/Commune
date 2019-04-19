@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using DevActivator.Common.BL.Enums;
+using DotNetRuServer.Comon.BL.Enums;
 
-namespace DevActivator.Common.BL.Config
+namespace DotNetRuServer.Comon.BL.Config
 {
     public static class CityTimeZone
     {

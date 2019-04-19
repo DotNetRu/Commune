@@ -1,4 +1,4 @@
-namespace DevActivator.Common.BL.Config
+namespace DotNetRuServer.Comon.BL.Config
 {
     public interface IFlatEntity : IEntity
     {

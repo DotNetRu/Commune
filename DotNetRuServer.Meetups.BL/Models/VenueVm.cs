@@ -1,4 +1,4 @@
-using DevActivator.Common.BL.Enums;
+using DotNetRuServer.Comon.BL.Enums;
 
 namespace DotNetRuServer.Meetups.BL.Models
 {

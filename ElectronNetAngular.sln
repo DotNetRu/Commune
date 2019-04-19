@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.BL",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.DAL", "DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj", "{15BF5BBA-7862-486B-9C72-D332DC3D56EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator.Common.BL", "DevActivator.Common.BL\DevActivator.Common.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Comon.BL", "DotNetRuServer.Comon.BL\DotNetRuServer.Comon.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Common.DAL", "DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevActivator", "DevActivator\DevActivator.csproj", "{D2A5B9DC-EE7C-4BED-9677-A351B91A0FF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer", "DotNetRuServer\DotNetRuServer.csproj", "{D2A5B9DC-EE7C-4BED-9677-A351B91A0FF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}"
 EndProject

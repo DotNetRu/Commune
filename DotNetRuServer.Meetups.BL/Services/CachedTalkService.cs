@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DevActivator.Common.BL.Caching;
+using DotNetRuServer.Comon.BL.Caching;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Models;
 
