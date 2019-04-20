@@ -52,8 +52,6 @@ for:
       - ps: .\build\build-docker.ps1
     after_test:
       - dotnet publish ./DotNetRuServer/DotNetRuServer.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
-    deploy_script:
-      - ps: .\build\deploy-docker.ps1
 
 build:
   project: DotNetRuServer.sln
