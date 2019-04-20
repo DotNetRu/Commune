@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj" />
+        <ProjectReference Include="..\DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.3" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+
+</Project>
