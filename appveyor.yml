@@ -48,8 +48,6 @@ for:
         - image: Ubuntu
     before_build:
       - dotnet restore DotNetRuServer.sln
-    build_script:
-      - ps: .\build\build-docker.ps1
     after_test:
       - dotnet publish ./DotNetRuServer/DotNetRuServer.csproj --configuration Release --no-restore --output ./../../artifacts /p:SolutionDir=$APPVEYOR_BUILD_FOLDER /p:SolutionName=DotNetRu.Server
 
