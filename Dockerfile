@@ -6,14 +6,14 @@ WORKDIR /build
 COPY . .
 
 # Restore dependencies
-RUN dotnet restore DevActivator/DevActivator.csproj
+RUN dotnet restore DotNetRuServer/DotNetRuServer.csproj
 
 # Publish stage
-RUN dotnet publish DevActivator/DevActivator.csproj -o /publish /p:SolutionDir=/build
+RUN dotnet publish DotNetRuServer/DotNetRuServer.csproj -o /publish /p:SolutionDir=/build
 
 ## Runtime stage
 FROM microsoft/dotnet:2.2-aspnetcore-runtime
 COPY --from=build-env /publish /app
 
 WORKDIR /app
-ENTRYPOINT ["dotnet", "DevActivator.dll"]
+ENTRYPOINT ["dotnet", "DotNetRuServer.dll"]
