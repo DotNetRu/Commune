@@ -20,8 +20,13 @@ namespace DotNetRuServer.Importer
         private static async Task Main(string[] args)
         {
             Console.WriteLine("It's time to start");
+
             var connectionString = args[0];
             var githubToken = args[1];
+
+            Console.WriteLine($"Github token - {githubToken}");
+            Console.WriteLine($"Connection string - {connectionString}");
+
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
             optionsBuilder.UseSqlServer(connectionString);
             var context = new DotNetRuServerContext(optionsBuilder.Options);
@@ -29,9 +34,6 @@ namespace DotNetRuServer.Importer
             var github = new GitHubClient(new ProductHeaderValue("DotNetRuServer"));
             var tokenAuth = new Credentials(githubToken);
             github.Credentials = tokenAuth;
-
-            Console.WriteLine($"Github token - {github}");
-            Console.WriteLine($"Connection string - {connectionString}");
 
             var importer = new ImporterUtils(context, github);
             Console.WriteLine("Start to import Communities");
