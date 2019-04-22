@@ -6,7 +6,10 @@
 # Как подготовить БД к разработке
 
 # Если у вас MacOS, Linux
-Запустить скрипт `buildtools/local/initdb.sh`
+
+1) Установить [docker](https://www.docker.com/products/docker-desktop)
+2) Перейдите по [ссылке](https://github.com/settings/tokens) и выпустите токен, кнопка "Generate new token"
+3) Запустить скрипт `sudo ./buildtools/local/initdb.sh "GITHUB_TOKEN"`
 
 # Если у вас Windows
 ## База данных
