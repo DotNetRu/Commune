@@ -30,7 +30,7 @@ namespace DotNetRuServer.Importer
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
             optionsBuilder.UseSqlServer(connectionString);
             var context = new DotNetRuServerContext(optionsBuilder.Options);
-
+             
             var github = new GitHubClient(new ProductHeaderValue("DotNetRuServer"));
             var tokenAuth = new Credentials(githubToken);
             github.Credentials = tokenAuth;
@@ -223,7 +223,8 @@ namespace DotNetRuServer.Importer
                         TwitterUrl = responseXml.Element("TwitterUrl")?.Value,
                         CompanyName = responseXml.Element("CompanyName")?.Value,
                         ContactsUrl = responseXml.Element("ContactsUrl")?.Value,
-                        GitHubUrl = responseXml.Element("GitHubUrl")?.Value
+                        GitHubUrl = responseXml.Element("GitHubUrl")?.Value,
+                        LastUpdateDate = DateTime.UtcNow
                     });
                     _context.SaveChanges();
                 }
