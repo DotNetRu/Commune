@@ -34,7 +34,7 @@ namespace DotNetRuServer.Meetups.BL.Services
         public async Task<SpeakerVm> GetSpeakerAsync(string speakerId)
         {
             var speaker = await _speakerProvider.GetSpeakerOrDefaultAsync(speakerId).ConfigureAwait(false);
-            return speaker.ToVm(speaker.GetLastUpdateDate(_settings));
+            return speaker.ToVm();
         }
 
         public async Task<SpeakerVm> AddSpeakerAsync(SpeakerVm speaker)
@@ -48,8 +48,10 @@ namespace DotNetRuServer.Meetups.BL.Services
             }
 
             var entity = new Speaker {ExportId = speaker.Id}.Extend(speaker);
+            entity.LastUpdateDate = DateTime.UtcNow;
+
             var res = await _speakerProvider.SaveSpeakerAsync(entity).ConfigureAwait(false);
-            return res.ToVm(entity.GetLastUpdateDate(_settings));
+            return res.ToVm();
         }
 
         public async Task<SpeakerVm> UpdateSpeakerAsync(SpeakerVm speaker)
@@ -66,9 +68,11 @@ namespace DotNetRuServer.Meetups.BL.Services
             original.HabrUrl = speaker.HabrUrl;
             original.TwitterUrl = speaker.TwitterUrl;
             original.GitHubUrl = speaker.GitHubUrl;
+            original.LastUpdateDate = DateTime.UtcNow;
+
             await _unitOfWork.SaveChangesAsync();
 
-            return original.ToVm(original.GetLastUpdateDate(_settings));
+            return original.ToVm();
         }
     }
 }

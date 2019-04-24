@@ -63,6 +63,10 @@ namespace DotNetRuServer.Migrations
                 .WithColumn("AvatarSmallUrl")
                 .AsString(300)
                 .Nullable();
+            table
+                .WithColumn("LastUpdateDate")
+                .AsDateTime()
+                .Nullable();
         }
 
         public override void Down()

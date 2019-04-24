@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace DotNetRuServer.Meetups.BL.Entities
@@ -20,6 +21,7 @@ namespace DotNetRuServer.Meetups.BL.Entities
 
         public string AvatarUrl { get; set; }
         public string AvatarSmallUrl { get; set; }
+        public DateTime LastUpdateDate { get; set; }
 
         public List<SpeakerTalk> Talks { get; set; }
     }
