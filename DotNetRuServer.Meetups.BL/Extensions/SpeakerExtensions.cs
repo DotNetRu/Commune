@@ -72,7 +72,7 @@ namespace DotNetRuServer.Meetups.BL.Extensions
                 TwitterUrl = speaker.TwitterUrl,
                 HabrUrl = speaker.HabrUrl,
                 GitHubUrl = speaker.GitHubUrl,
-                LastUpdateDate = speaker.LastUpdateDate.ToString()
+                LastUpdateDate = speaker.LastUpdateDate.ToString("yyyy-MM-ddTHH:mm:ss")
             };
     }
 }
