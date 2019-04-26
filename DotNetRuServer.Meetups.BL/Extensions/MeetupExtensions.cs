@@ -46,7 +46,10 @@ namespace DotNetRuServer.Meetups.BL.Extensions
                     VenueId = meetup.Venue.ExportId,
                     Sessions = meetup.Sessions.Select(x =>
                     {
-                        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        //var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        var timeZone = TimeZoneInfo.GetSystemTimeZones()
+                            .Where(t => t.DisplayName.Contains(meetup.Community.TimeZone.Split('/')[1])).FirstOrDefault();
+                            
                         return new SessionVm
                         {
                             TalkId = x.Talk.ExportId,
