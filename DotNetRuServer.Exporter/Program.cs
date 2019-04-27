@@ -18,13 +18,16 @@ namespace DotNetRuServer.Exporter
             var connectionString = args[0];
             var rootDirectoryPath = args[1];
 
+
+            var t = TimeZoneInfo.GetSystemTimeZones();
+
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
 
             optionsBuilder.UseSqlServer(connectionString);
             var context = new DotNetRuServerContext(optionsBuilder.Options);
 
             var directoryInfo = new DirectoryInfo(rootDirectoryPath);
-            var dbDirectory = directoryInfo.CreateSubdirectory(@"Audit\db");
+            var dbDirectory = directoryInfo.CreateSubdirectory(Path.Combine("Audit","db"));
 
             var export = new ExporterUtils(context, dbDirectory);
 

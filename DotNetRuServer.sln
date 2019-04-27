@@ -1,23 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.BL", "DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj", "{D4F85861-ED59-4B29-930D-D63435EA9538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Meetups.BL", "DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj", "{D4F85861-ED59-4B29-930D-D63435EA9538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Meetups.DAL", "DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj", "{15BF5BBA-7862-486B-9C72-D332DC3D56EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Meetups.DAL", "DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj", "{15BF5BBA-7862-486B-9C72-D332DC3D56EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Comon.BL", "DotNetRuServer.Comon.BL\DotNetRuServer.Comon.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Comon.BL", "DotNetRuServer.Comon.BL\DotNetRuServer.Comon.BL.csproj", "{7EE58BA7-D274-460B-9444-847FD2E6CD45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Common.DAL", "DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Common.DAL", "DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj", "{9E7F3F96-440D-471C-953F-DF3E5227BE89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer", "DotNetRuServer\DotNetRuServer.csproj", "{D2A5B9DC-EE7C-4BED-9677-A351B91A0FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer", "DotNetRuServer\DotNetRuServer.csproj", "{D2A5B9DC-EE7C-4BED-9677-A351B91A0FF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Migrations", "DotNetRuServer.Migrations\DotNetRuServer.Migrations.csproj", "{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Migrations", "DotNetRuServer.Migrations\DotNetRuServer.Migrations.csproj", "{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Importer", "DotNetRuServer.Importer\DotNetRuServer.Importer.csproj", "{88572F7C-12FD-4374-A612-A8962EC98F39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Importer", "DotNetRuServer.Importer\DotNetRuServer.Importer.csproj", "{88572F7C-12FD-4374-A612-A8962EC98F39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Exporter", "DotNetRuServer.Exporter\DotNetRuServer.Exporter.csproj", "{AB0FEDAB-67EB-4876-9B04-443CF603EDF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpoerterText", "ExpoerterText\ExpoerterText.csproj", "{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,15 +57,25 @@ Global
 		{88572F7C-12FD-4374-A612-A8962EC98F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88572F7C-12FD-4374-A612-A8962EC98F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88572F7C-12FD-4374-A612-A8962EC98F39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0FEDAB-67EB-4876-9B04-443CF603EDF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0FEDAB-67EB-4876-9B04-443CF603EDF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0FEDAB-67EB-4876-9B04-443CF603EDF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0FEDAB-67EB-4876-9B04-443CF603EDF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E6E27B0B-660E-4659-9A90-AB8C395BDB0A}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0FF6C9FB-BC4E-4D5A-AEF1-4E6ADE93990B} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
 		{88572F7C-12FD-4374-A612-A8962EC98F39} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
+		{AB0FEDAB-67EB-4876-9B04-443CF603EDF4} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
+		{2E6AC3F4-F2ED-4349-AFCB-A1FB324CB853} = {914AA934-D2CE-4E5E-87E9-AF9F8F6B9B06}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6E27B0B-660E-4659-9A90-AB8C395BDB0A}
 	EndGlobalSection
 EndGlobal
