@@ -195,8 +195,8 @@ namespace DotNetRuServer.Importer
                         "master"
                     );
                 var index = content.First(x => x.Name == "index.xml");
-                var avatar = content.First(x => x.Name == "avatar.jpg");
-                var avatarSmall = content.First(x => x.Name == "avatar.small.jpg");
+//                var avatar = content.First(x => x.Name == "avatar.jpg");
+//                var avatarSmall = content.First(x => x.Name == "avatar.small.jpg");
 
                 var responseData = await _httpClient.GetByteArrayAsync(index.DownloadUrl);
                 using (var ms = new MemoryStream(responseData))
@@ -217,8 +217,8 @@ namespace DotNetRuServer.Importer
                         Description = responseXml.Element("Description")?.Value,
                         BlogUrl = responseXml.Element("BlogUrl")?.Value,
                         HabrUrl = responseXml.Element("HabrUrl")?.Value,
-                        AvatarUrl = avatar.DownloadUrl,
-                        AvatarSmallUrl = avatarSmall.DownloadUrl,
+//                        AvatarUrl = avatar.DownloadUrl,
+//                        AvatarSmallUrl = avatarSmall.DownloadUrl,
                         CompanyUrl = responseXml.Element("CompanyUrl")?.Value,
                         TwitterUrl = responseXml.Element("TwitterUrl")?.Value,
                         CompanyName = responseXml.Element("CompanyName")?.Value,
