@@ -18,7 +18,6 @@ namespace DotNetRuServer.Exporter
             var connectionString = args[0];
             var rootDirectoryPath = args[1];
 
-
             var t = TimeZoneInfo.GetSystemTimeZones();
 
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
@@ -105,10 +104,8 @@ namespace DotNetRuServer.Exporter
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, entity, _emptyNamespaces);
-
                 }
             }
-
         }
         public async Task ExportMeetups()
         {
@@ -132,10 +129,8 @@ namespace DotNetRuServer.Exporter
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, entity, _emptyNamespaces);
-
                 }
             }
-
         }
         public async Task ExportSpeekers()
         {
@@ -155,10 +150,8 @@ namespace DotNetRuServer.Exporter
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, entity, _emptyNamespaces);
-
                 }
             }
-
         }
         public async Task ExportTalks()
         {
@@ -179,10 +172,8 @@ namespace DotNetRuServer.Exporter
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, entity, _emptyNamespaces);
-
                 }
             }
-
         }
         public async Task ExportVenues()
         {
@@ -199,10 +190,8 @@ namespace DotNetRuServer.Exporter
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, entity, _emptyNamespaces);
-
                 }
             }
-
         }
     }
 }
