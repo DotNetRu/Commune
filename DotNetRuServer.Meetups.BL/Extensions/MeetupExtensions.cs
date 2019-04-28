@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Models;
+using TimeZoneConverter;
 
 namespace DotNetRuServer.Meetups.BL.Extensions
 {
@@ -46,7 +47,7 @@ namespace DotNetRuServer.Meetups.BL.Extensions
                     VenueId = meetup.Venue.ExportId,
                     Sessions = meetup.Sessions.Select(x =>
                     {
-                        var timeZone = TimeZoneInfo.FindSystemTimeZoneById(meetup.Community.TimeZone);
+                        TimeZoneInfo timeZone = TZConvert.GetTimeZoneInfo(meetup.Community.TimeZone);
                         return new SessionVm
                         {
                             TalkId = x.Talk.ExportId,

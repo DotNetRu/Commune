@@ -1,5 +1,8 @@
+using System.Xml.Serialization;
+
 namespace DotNetRuServer.Meetups.BL.Models
 {
+    [XmlRoot(elementName:"Speaker")]
     public class SpeakerVm
     {
         public string Id { get; set; }
@@ -21,7 +24,7 @@ namespace DotNetRuServer.Meetups.BL.Models
         public string HabrUrl { get; set; }
 
         public string GitHubUrl { get; set; }
-
+        [XmlIgnore]
         public string LastUpdateDate { get; set; }
     }
 }

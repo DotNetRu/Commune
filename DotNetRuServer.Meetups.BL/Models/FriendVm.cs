@@ -1,5 +1,8 @@
+using System.Xml.Serialization;
+
 namespace DotNetRuServer.Meetups.BL.Models
 {
+    [XmlRoot(ElementName = "Friend")]
     public class FriendVm
     {
         public string Id { get; set; }
