@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -12,6 +13,7 @@ using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
+using SixLabors.ImageSharp;
 
 namespace DotNetRuServer.Importer
 {
@@ -155,6 +157,9 @@ namespace DotNetRuServer.Importer
                 var logo = content.First(x => x.Name == "logo.png");
                 var smallLogo = content.First(x => x.Name == "logo.small.png");
 
+                await ImportImage(logo.DownloadUrl, isSmall: false);
+                await ImportImage(smallLogo.DownloadUrl, isSmall: true);
+
                 var responseData = await _httpClient.GetByteArrayAsync(index.DownloadUrl);
                 using (var ms = new MemoryStream(responseData))
                 {
@@ -195,8 +200,8 @@ namespace DotNetRuServer.Importer
                         "master"
                     );
                 var index = content.First(x => x.Name == "index.xml");
-//                var avatar = content.First(x => x.Name == "avatar.jpg");
-//                var avatarSmall = content.First(x => x.Name == "avatar.small.jpg");
+                var avatar = content.First(x => x.Name == "avatar.jpg");
+                var avatarSmall = content.FirstOrDefault(x => x.Name == "avatar.small.jpg");
 
                 var responseData = await _httpClient.GetByteArrayAsync(index.DownloadUrl);
                 using (var ms = new MemoryStream(responseData))
@@ -205,6 +210,12 @@ namespace DotNetRuServer.Importer
                     var exportId = responseXml?.Element("Id")?.Value;
                     if (string.IsNullOrEmpty(exportId))
                         continue;
+
+                    await ImportImage(avatar.DownloadUrl, isSmall: false);
+                    if (avatarSmall != null)
+                    {
+                        await ImportImage(avatarSmall.DownloadUrl, isSmall: true);
+                    }
 
                     var existing = await _context.Speakers.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
                     if (existing != null)
@@ -217,8 +228,8 @@ namespace DotNetRuServer.Importer
                         Description = responseXml.Element("Description")?.Value,
                         BlogUrl = responseXml.Element("BlogUrl")?.Value,
                         HabrUrl = responseXml.Element("HabrUrl")?.Value,
-//                        AvatarUrl = avatar.DownloadUrl,
-//                        AvatarSmallUrl = avatarSmall.DownloadUrl,
+                        AvatarUrl = avatar.DownloadUrl,
+                        AvatarSmallUrl = avatarSmall?.DownloadUrl ?? avatar.DownloadUrl,
                         CompanyUrl = responseXml.Element("CompanyUrl")?.Value,
                         TwitterUrl = responseXml.Element("TwitterUrl")?.Value,
                         CompanyName = responseXml.Element("CompanyName")?.Value,
@@ -227,8 +238,39 @@ namespace DotNetRuServer.Importer
                         LastUpdateDate = DateTime.UtcNow
                     });
                     _context.SaveChanges();
+
+
                 }
             }
+        }
+
+        public async Task ImportImage(string downloadUrl, bool isSmall)
+        {
+            if (await _context.Images.AnyAsync(x => x.ExternalUrl == downloadUrl))
+            {
+                return;
+            }
+
+            var bytes = await _httpClient.GetByteArrayAsync(downloadUrl);
+            var image = Image.Load(bytes);
+
+            var mimeType = MediaTypeNames.Image.Jpeg;
+            if (downloadUrl.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+            {
+                mimeType = "image/png";
+            }
+
+            _context.Images.Add(new ImageData
+            {
+                Data = bytes,
+                IsSmall = isSmall,
+                ExternalUrl = downloadUrl,
+                Height = image.Height,
+                Width = image.Width,
+                MimeType = mimeType
+            });
+
+            _context.SaveChanges();
         }
 
         public async Task ImportTalks()

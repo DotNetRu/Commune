@@ -137,5 +137,18 @@ namespace DevActivator.Meetups.DAL.Database
             friendAtMeetup.HasOne(x => x.Friend);
             friendAtMeetup.HasOne(x => x.Meetup).WithMany(x => x.Friends);
         }
+
+        public static void BindImageData(this EntityTypeBuilder<ImageData> imageData)
+        {
+            imageData.ToTable("Images");
+
+            imageData.Property(x => x.Id).HasColumnName("Id");
+            imageData.Property(x => x.ExternalUrl).HasColumnName("ExternalUrl");
+            imageData.Property(x => x.MimeType).HasColumnName("MimeType");
+            imageData.Property(x => x.IsSmall).HasColumnName("IsSmall");
+            imageData.Property(x => x.Width).HasColumnName("Width");
+            imageData.Property(x => x.Height).HasColumnName("Height");
+            imageData.Property(x => x.Data).HasColumnName("Data");
+        }
     }
 }
