@@ -9,7 +9,7 @@
 
 1) Установить [docker](https://www.docker.com/products/docker-desktop)
 2) Перейдите по [ссылке](https://github.com/settings/tokens) и выпустите токен, кнопка "Generate new token"
-3) Запустить скрипт `sudo bash ./buildtools/local/initdb.sh "GITHUB_TOKEN"`
+3) Запустить скрипт `bash ./buildtools/local/initdb.sh "GITHUB_TOKEN"`
 
 # Если у вас Windows
 ## База данных
