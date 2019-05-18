@@ -26,16 +26,15 @@ namespace DotNetRuServer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            StaticVirtualFolderPath = Configuration[$"{nameof(Settings)}:{nameof(Settings.AuditRepoDirectory)}"];
         }
 
-        private string StaticVirtualFolderPath
-        {
-            get => _staticVirtualFolderPath;
-            set => _staticVirtualFolderPath = Directory.Exists(value)
-                ? value
-                : throw new DirectoryNotFoundException(value);
-        }
+//        private string StaticVirtualFolderPath
+//        {
+//            get => _staticVirtualFolderPath;
+//            set => _staticVirtualFolderPath = Directory.Exists(value)
+//                ? value
+//                : throw new DirectoryNotFoundException(value);
+//        }
 
         public IContainer ApplicationContainer { get; private set; }
 
@@ -87,12 +86,12 @@ namespace DotNetRuServer
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseFileServer(new FileServerOptions
-            {
-                FileProvider = new PhysicalFileProvider(StaticVirtualFolderPath),
-                RequestPath = new PathString("/static"),
-                EnableDirectoryBrowsing = false
-            });
+//            app.UseFileServer(new FileServerOptions
+//            {
+//                FileProvider = new PhysicalFileProvider(StaticVirtualFolderPath),
+//                RequestPath = new PathString("/static"),
+//                EnableDirectoryBrowsing = false
+//            });
 
             app.UseStaticFiles();
 
