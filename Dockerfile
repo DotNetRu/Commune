@@ -13,6 +13,10 @@ RUN dotnet publish DotNetRuServer/DotNetRuServer.csproj -o /publish /p:SolutionD
 
 ## Runtime stage
 FROM microsoft/dotnet:2.2-aspnetcore-runtime
+
+# Environment Variables
+ENV ASPNETCORE_ENVIRONMENT Development
+
 COPY --from=build-env /publish /app
 
 WORKDIR /app
