@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DotNetRuServer.Common.DAL\DotNetRuServer.Common.DAL.csproj" />
         <ProjectReference Include="..\DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj" />
     </ItemGroup>
 
