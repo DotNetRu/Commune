@@ -14,6 +14,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetRuServer.Importer\DotNetRuServer.Importer.csproj" />
     <ProjectReference Include="..\DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj" />
     <ProjectReference Include="..\DotNetRuServer.Meetups.DAL\DotNetRuServer.Meetups.DAL.csproj" />
   </ItemGroup>
