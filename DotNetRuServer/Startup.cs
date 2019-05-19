@@ -8,6 +8,7 @@ using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
 using DotNetRuServer.Meetups.DAL.Providers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +48,18 @@ namespace DotNetRuServer
 
             services.AddMvc();
 
+
+            //CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Everyone",
+                    new CorsPolicyBuilder()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin().Build());
+            });
+
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
 
@@ -72,6 +85,8 @@ namespace DotNetRuServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("Everyone");
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
