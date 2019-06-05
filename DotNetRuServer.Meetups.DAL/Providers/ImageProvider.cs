@@ -30,13 +30,10 @@ namespace DotNetRuServer.Meetups.DAL.Providers
                 .OrderBy(x=>x.Id)
                 .ToListAsync();
 
-        public Task<ImageData> GetImageOrDefault(string externalUrl)
-            => _context.Images.FirstOrDefaultAsync(item => item.ExternalUrl == externalUrl);
-
-        public Task<ImageData> GetImageOrDefault(int id)
+        public Task<ImageData> GetImageOrDefaultAsync(int id)
             => _context.Images.FirstOrDefaultAsync(item => item.Id == id);
 
-        public async Task<ImageData> SaveImage(ImageData image)
+        public async Task<ImageData> SaveImageAsync(ImageData image)
         {
             await _context.Images.AddAsync(image);
             await _context.SaveChangesAsync();

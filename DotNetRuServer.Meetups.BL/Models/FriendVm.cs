@@ -11,7 +11,7 @@ namespace DotNetRuServer.Meetups.BL.Models
         public string Url { get; set; }
         public string Description { get; set; }
 
-        public string LogoUrl { get; set; }
-        public string SmallLogoUrl { get; set; }
+        public string LogoId { get; set; }
+        public string SmallLogoId { get; set; }
     }
 }

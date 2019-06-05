@@ -157,8 +157,8 @@ namespace DotNetRuServer.Importer
                 var logo = content.First(x => x.Name == "logo.png");
                 var smallLogo = content.First(x => x.Name == "logo.small.png");
 
-                await ImportImage(logo.DownloadUrl, isSmall: false);
-                await ImportImage(smallLogo.DownloadUrl, isSmall: true);
+                var logoId = await ImportImage(logo.DownloadUrl, isSmall: false);
+                var smallLogoId = await ImportImage(smallLogo.DownloadUrl, isSmall: true);
 
                 var responseData = await _httpClient.GetByteArrayAsync(index.DownloadUrl);
                 using (var ms = new MemoryStream(responseData))
@@ -178,8 +178,8 @@ namespace DotNetRuServer.Importer
                         Name = responseXml.Element("Name")?.Value,
                         Url = responseXml.Element("Url")?.Value,
                         Description = responseXml.Element("Description")?.Value,
-                        LogoUrl = logo.DownloadUrl,
-                        SmallLogoUrl = smallLogo.DownloadUrl
+                        LogoId = logoId,
+                        SmallLogoId = smallLogoId
                     });
                     _context.SaveChanges();
                 }
@@ -211,11 +211,8 @@ namespace DotNetRuServer.Importer
                     if (string.IsNullOrEmpty(exportId))
                         continue;
 
-                    await ImportImage(avatar.DownloadUrl, isSmall: false);
-                    if (avatarSmall != null)
-                    {
-                        await ImportImage(avatarSmall.DownloadUrl, isSmall: true);
-                    }
+                    var avatarId = await ImportImage(avatar.DownloadUrl, isSmall: false);
+                    var smallAvatarId = await ImportImage(avatarSmall?.DownloadUrl ?? avatar.DownloadUrl, isSmall: true);
 
                     var existing = await _context.Speakers.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
                     if (existing != null)
@@ -228,8 +225,8 @@ namespace DotNetRuServer.Importer
                         Description = responseXml.Element("Description")?.Value,
                         BlogUrl = responseXml.Element("BlogUrl")?.Value,
                         HabrUrl = responseXml.Element("HabrUrl")?.Value,
-                        AvatarUrl = avatar.DownloadUrl,
-                        AvatarSmallUrl = avatarSmall?.DownloadUrl ?? avatar.DownloadUrl,
+                        AvatarId = avatarId,
+                        AvatarSmallId = smallAvatarId,
                         CompanyUrl = responseXml.Element("CompanyUrl")?.Value,
                         TwitterUrl = responseXml.Element("TwitterUrl")?.Value,
                         CompanyName = responseXml.Element("CompanyName")?.Value,
@@ -244,11 +241,12 @@ namespace DotNetRuServer.Importer
             }
         }
 
-        public async Task ImportImage(string downloadUrl, bool isSmall)
+        public async Task<int> ImportImage(string downloadUrl, bool isSmall)
         {
-            if (await _context.Images.AnyAsync(x => x.ExternalUrl == downloadUrl))
+            var existingImage = await _context.Images.FirstOrDefaultAsync(x => x.ExternalUrl == downloadUrl);
+            if (existingImage != null)
             {
-                return;
+                return existingImage.Id;
             }
 
             var bytes = await _httpClient.GetByteArrayAsync(downloadUrl);
@@ -260,7 +258,7 @@ namespace DotNetRuServer.Importer
                 mimeType = "image/png";
             }
 
-            _context.Images.Add(new ImageData
+            var entry = await _context.Images.AddAsync(new ImageData
             {
                 Data = bytes,
                 IsSmall = isSmall,
@@ -270,7 +268,9 @@ namespace DotNetRuServer.Importer
                 MimeType = mimeType
             });
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            return entry.Entity.Id;
         }
 
         public async Task ImportTalks()
@@ -367,13 +367,17 @@ namespace DotNetRuServer.Importer
 
                     var friendsAtMeetupIds =
                         responseXml.Element("FriendIds")?.Descendants().Select(x => x.Value).ToList();
-                    var friends = await _context.Friends.Where(x => friendsAtMeetupIds.Contains(x.ExportId)).Select(x =>
-                        new FriendAtMeetup
-                        {
-                            FriendId = x.Id,
-                            Friend = x
-                        }).ToListAsync();
 
+                    var friends = new List<FriendAtMeetup>();
+                    if(friendsAtMeetupIds != null)
+                    {
+                        friends = await _context.Friends.Where(x => friendsAtMeetupIds.Contains(x.ExportId)).Select(x =>
+                            new FriendAtMeetup
+                            {
+                                FriendId = x.Id,
+                                Friend = x
+                            }).ToListAsync();
+                    }
 
                     var communityId = responseXml?.Element("CommunityId")?.Value;
                     var community = await _context.Communities.FirstAsync(x => x.ExportId == communityId.Trim());
