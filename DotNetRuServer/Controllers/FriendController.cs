@@ -10,10 +10,12 @@ namespace DotNetRuServer.Controllers
     public class FriendController : Controller
     {
         private readonly IFriendService _friendService;
+        private readonly IImageService _imageService;
 
-        public FriendController(IFriendService friendService)
+        public FriendController(IFriendService friendService, IImageService imageService)
         {
             _friendService = friendService;
+            _imageService = imageService;
         }
 
         [HttpGet("[action]")]
@@ -31,5 +33,24 @@ namespace DotNetRuServer.Controllers
         [HttpPost("[action]")]
         public Task<FriendVm> UpdateFriend([FromBody] FriendVm friend)
             => _friendService.UpdateFriendAsync(friend);
+
+        [HttpGet("[action]/{friendId}/fullLogo")]
+        public Task<ActionResult> GetFriendFullLogo(string friendId)
+            => GetFriendLogoAsync(friendId, ImageSize.Full);
+
+        [HttpGet("[action]/{friendId}/smallLogo")]
+        public Task<ActionResult> GetFriendSmallLogo(string friendId)
+            => GetFriendLogoAsync(friendId, ImageSize.Small);
+
+        private async Task<ActionResult> GetFriendLogoAsync(string friendId, ImageSize imageSize)
+        {
+            var image = await _imageService.GetFriendLogoOrDefaultAsync(friendId, imageSize);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            return new FileContentResult(image.Data, image.MimeType);
+        }
     }
 }

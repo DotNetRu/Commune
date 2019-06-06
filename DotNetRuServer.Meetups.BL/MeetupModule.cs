@@ -6,13 +6,14 @@ using DotNetRuServer.Meetups.BL.Services;
 
 namespace DotNetRuServer.Meetups.BL
 {
-    public class MeetupModule<TSpeakerProvider, TTalkProvider, TVenueProvider, TFriendProvider, TMeetupProvider, TCommunityProvider> : Module
+    public class MeetupModule<TSpeakerProvider, TTalkProvider, TVenueProvider, TFriendProvider, TMeetupProvider, TCommunityProvider, TImageProvider> : Module
         where TSpeakerProvider : ISpeakerProvider
         where TTalkProvider : ITalkProvider
         where TVenueProvider : IVenueProvider
         where TFriendProvider : IFriendProvider
         where TMeetupProvider : IMeetupProvider
         where TCommunityProvider : ICommunityProvider
+        where TImageProvider : IImageProvider
     {
         private const string PureImplementation = nameof(PureImplementation);
 
@@ -50,6 +51,9 @@ namespace DotNetRuServer.Meetups.BL
             builder.RegisterDecorator<IFriendService>(
                     (c, inner) => new CachedFriendService(c.Resolve<ICache>(), inner), PureImplementation)
                 .SingleInstance();
+
+            builder.RegisterType<TImageProvider>().As<IImageProvider>().SingleInstance();
+            builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
 
             builder.RegisterType<TMeetupProvider>().As<IMeetupProvider>().SingleInstance();
             builder.RegisterType<MeetupService>().Named<IMeetupService>(PureImplementation);

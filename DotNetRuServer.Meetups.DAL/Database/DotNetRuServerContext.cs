@@ -25,6 +25,8 @@ namespace DotNetRuServer.Meetups.DAL.Database
             modelBuilder.Entity<Meetup>().BindMeetup();
             modelBuilder.Entity<FriendAtMeetup>().BindFriendAtMeetup();
             modelBuilder.Entity<Session>().BindSession();
+
+            modelBuilder.Entity<ImageData>().BindImageData();
         }
 
         public DbSet<Speaker> Speakers { get; set; }
@@ -40,5 +42,7 @@ namespace DotNetRuServer.Meetups.DAL.Database
         public DbSet<FriendAtMeetup> FriendAtMeetups { get; set; }
         
         public DbSet<Session> Sessions { get; set; }
+
+        public DbSet<ImageData> Images { get; set; }
     }
 }
