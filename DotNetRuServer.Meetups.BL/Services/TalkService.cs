@@ -74,11 +74,12 @@ namespace DotNetRuServer.Meetups.BL.Services
             original.VideoUrl = talk.VideoUrl;
             
             var speakers = await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds);
+            foreach (var oldSpeaker in original.Speakers)
+            {
+                _talkProvider.RemoveSpeaker(original, oldSpeaker.SpeakerId);
+            }
             foreach (var speaker in speakers)
             {
-                if (original.Speakers.Any(x => x.SpeakerId == speaker.Id))
-                    continue;
-                    
                 original.Speakers.Add(new SpeakerTalk
                 {
                     Speaker = speaker,
