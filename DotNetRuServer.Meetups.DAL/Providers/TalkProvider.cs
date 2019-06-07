@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Interfaces;
@@ -33,6 +34,12 @@ namespace DotNetRuServer.Meetups.DAL.Providers
             await _context.Talks.AddAsync(talk);
             await _context.SaveChangesAsync();
             return talk;
+        }
+
+        public void RemoveSpeaker(Talk talk, int speakerId)
+        {
+            var speaker = talk.Speakers.First(x => x.SpeakerId == speakerId);
+            _context.SpeakerTalks.Remove(speaker);
         }
     }
 }
