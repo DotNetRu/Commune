@@ -9,7 +9,7 @@ namespace DotNetRuServer.Meetups.BL.Entities
         public string Url { get; set; }
         public string Description { get; set; }
 
-        public string LogoUrl { get; set; }
-        public string SmallLogoUrl { get; set; }
+        public int LogoId { get; set; }
+        public int SmallLogoId { get; set; }
     }
 }

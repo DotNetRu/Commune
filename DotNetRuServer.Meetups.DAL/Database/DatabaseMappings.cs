@@ -20,6 +20,8 @@ namespace DevActivator.Meetups.DAL.Database
             speaker.Property(x => x.TwitterUrl).HasColumnName("TwitterUrl");
             speaker.Property(x => x.HabrUrl).HasColumnName("HabrUrl");
             speaker.Property(x => x.GitHubUrl).HasColumnName("GitHubUrl");
+            speaker.Property(x => x.AvatarId).HasColumnName("AvatarId");
+            speaker.Property(x => x.AvatarSmallId).HasColumnName("AvatarSmallId");
         }
 
         public static void BindTalk(this EntityTypeBuilder<Talk> talk)
@@ -90,8 +92,8 @@ namespace DevActivator.Meetups.DAL.Database
             friend.Property(x => x.Name).HasColumnName("Name");
             friend.Property(x => x.Description).HasColumnName("Description");
             friend.Property(x => x.Url).HasColumnName("Url");
-            friend.Property(x => x.LogoUrl).HasColumnName("LogoUrl");
-            friend.Property(x => x.SmallLogoUrl).HasColumnName("SmallLogoUrl");
+            friend.Property(x => x.LogoId).HasColumnName("LogoId");
+            friend.Property(x => x.SmallLogoId).HasColumnName("SmallLogoId");
         }
 
         public static void BindMeetup(this EntityTypeBuilder<Meetup> meetup)
@@ -136,6 +138,19 @@ namespace DevActivator.Meetups.DAL.Database
 
             friendAtMeetup.HasOne(x => x.Friend);
             friendAtMeetup.HasOne(x => x.Meetup).WithMany(x => x.Friends);
+        }
+
+        public static void BindImageData(this EntityTypeBuilder<ImageData> imageData)
+        {
+            imageData.ToTable("Images");
+
+            imageData.Property(x => x.Id).HasColumnName("Id");
+            imageData.Property(x => x.ExternalUrl).HasColumnName("ExternalUrl");
+            imageData.Property(x => x.MimeType).HasColumnName("MimeType");
+            imageData.Property(x => x.IsSmall).HasColumnName("IsSmall");
+            imageData.Property(x => x.Width).HasColumnName("Width");
+            imageData.Property(x => x.Height).HasColumnName("Height");
+            imageData.Property(x => x.Data).HasColumnName("Data");
         }
     }
 }

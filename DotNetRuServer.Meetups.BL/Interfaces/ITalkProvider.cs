@@ -12,5 +12,6 @@ namespace DotNetRuServer.Meetups.BL.Interfaces
         Task<Talk> GetTalkOrDefaultExtendedAsync(string talkId);
 
         Task<Talk> SaveTalkAsync(Talk talk);
+        void RemoveSpeaker(Talk talk, int speakerId);
     }
 }

@@ -19,8 +19,8 @@ namespace DotNetRuServer.Meetups.BL.Entities
         public string HabrUrl { get; set; }
         public string GitHubUrl { get; set; }
 
-        public string AvatarUrl { get; set; }
-        public string AvatarSmallUrl { get; set; }
+        public int AvatarId { get; set; }
+        public int AvatarSmallId { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
         public List<SpeakerTalk> Talks { get; set; }

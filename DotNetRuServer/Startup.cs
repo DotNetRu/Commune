@@ -81,7 +81,7 @@ namespace DotNetRuServer
 
             builder.RegisterModule(
                 new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,
-                    CommunityProvider>(
+                    CommunityProvider, ImageProvider>(
                     settings));
 
             ApplicationContainer = builder.Build();
