@@ -59,7 +59,7 @@ namespace DotNetRuServer.Controllers
 
             // speakers
             descriptor.SpeakerIds.AddRange(
-                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds)
+                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds.Select(y => y.SpeakerId))
             );
             var speakers = new Dictionary<string, SpeakerVm>();
             foreach (var speakerId in descriptor.SpeakerIds.Distinct())
@@ -69,7 +69,8 @@ namespace DotNetRuServer.Controllers
             }
 
             // friends
-            if (meetup != null && descriptor.FriendIds.Count == 0) descriptor.FriendIds.AddRange(meetup.FriendIds);
+            if (meetup != null && descriptor.FriendIds.Count == 0)
+                descriptor.FriendIds.AddRange(meetup.FriendIds.Select(x => x.FriendId));
 
             var friends = new List<FriendVm>();
             foreach (var friendId in descriptor.FriendIds.Distinct())
@@ -139,7 +140,7 @@ namespace DotNetRuServer.Controllers
 
 
                 if (descriptor.FriendIds != null && descriptor.FriendIds.Count != 0)
-                    meetup.FriendIds = descriptor.FriendIds;
+                    meetup.FriendIds = descriptor.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList();
 
                 if (!string.IsNullOrWhiteSpace(descriptor.VenueId)) meetup.VenueId = descriptor.VenueId;
 
