@@ -11,8 +11,8 @@ namespace DotNetRuServer.Meetups.BL.Services
 {
     public class TalkService : ITalkService
     {
-        private readonly ITalkProvider _talkProvider;
         private readonly ISpeakerProvider _speakerProvider;
+        private readonly ITalkProvider _talkProvider;
         private readonly IUnitOfWork _unitOfWork;
 
         public TalkService(ITalkProvider talkProvider, ISpeakerProvider speakerProvider, IUnitOfWork unitOfWork)
@@ -40,21 +40,17 @@ namespace DotNetRuServer.Meetups.BL.Services
         {
             talk.EnsureIsValid();
             var original = await _talkProvider.GetTalkOrDefaultAsync(talk.Id).ConfigureAwait(false);
-            if (original != null)
-            {
-                throw new FormatException($"Данный {nameof(talk.Id)} \"{talk.Id}\" уже занят");
-            }
+            if (original != null) throw new FormatException($"Данный {nameof(talk.Id)} \"{talk.Id}\" уже занят");
 
-            var speakers = await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds);
+            var speakers =
+                await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds.Select(x => x.SpeakerId).ToList());
             var entity = new Talk {ExportId = talk.Id, Speakers = new List<SpeakerTalk>()}.Extend(talk);
             foreach (var speaker in speakers)
-            {
                 entity.Speakers.Add(new SpeakerTalk
                 {
                     Speaker = speaker,
                     Talk = entity
                 });
-            }
 
 
             var res = await _talkProvider.SaveTalkAsync(entity).ConfigureAwait(false);
@@ -64,7 +60,7 @@ namespace DotNetRuServer.Meetups.BL.Services
         public async Task<TalkVm> UpdateTalkAsync(TalkVm talk)
         {
             talk.EnsureIsValid();
-            
+
             var original = await _talkProvider.GetTalkOrDefaultExtendedAsync(talk.Id).ConfigureAwait(false);
             original.ExportId = talk.Id;
             original.Title = talk.Title;
@@ -72,20 +68,16 @@ namespace DotNetRuServer.Meetups.BL.Services
             original.CodeUrl = talk.CodeUrl;
             original.SlidesUrl = talk.SlidesUrl;
             original.VideoUrl = talk.VideoUrl;
-            
-            var speakers = await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds);
-            foreach (var oldSpeaker in original.Speakers)
-            {
-                _talkProvider.RemoveSpeaker(original, oldSpeaker.SpeakerId);
-            }
+
+            var speakers =
+                await _speakerProvider.GetSpeakersByIdsAsync(talk.SpeakerIds.Select(x => x.SpeakerId).ToList());
+            foreach (var oldSpeaker in original.Speakers) _talkProvider.RemoveSpeaker(original, oldSpeaker.SpeakerId);
             foreach (var speaker in speakers)
-            {
                 original.Speakers.Add(new SpeakerTalk
                 {
                     Speaker = speaker,
                     Talk = original
                 });
-            }
 
             await _unitOfWork.SaveChangesAsync();
             return original.ToVm();

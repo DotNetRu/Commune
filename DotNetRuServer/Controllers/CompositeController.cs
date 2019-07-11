@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,14 +12,15 @@ namespace DotNetRuServer.Controllers
     [Route("api/[controller]")]
     public class CompositeController : Controller
     {
-        private readonly IMeetupService _meetupService;
-        private readonly ITalkService _talkService;
-        private readonly ISpeakerService _speakerService;
-        private readonly IFriendService _friendService;
-        private readonly IVenueService _venueService;
         private readonly ICommunityService _communityService;
+        private readonly IFriendService _friendService;
+        private readonly IMeetupService _meetupService;
+        private readonly ISpeakerService _speakerService;
+        private readonly ITalkService _talkService;
+        private readonly IVenueService _venueService;
 
-        public CompositeController(IMeetupService ms, ITalkService ts, ISpeakerService ss, IFriendService fs, IVenueService vs, ICommunityService cs)
+        public CompositeController(IMeetupService ms, ITalkService ts, ISpeakerService ss, IFriendService fs,
+            IVenueService vs, ICommunityService cs)
         {
             _meetupService = ms;
             _talkService = ts;
@@ -29,7 +31,8 @@ namespace DotNetRuServer.Controllers
         }
 
         [HttpPost("[action]/{meetupId?}")]
-        public async Task<CompositeModel> GetMeetup([FromRoute] string meetupId, [FromBody] RandomConcatModel descriptor = null)
+        public async Task<CompositeModel> GetMeetup([FromRoute] string meetupId,
+            [FromBody] RandomConcatModel descriptor = null)
         {
             var meetup = await _meetupService.GetMeetupAsync(meetupId).ConfigureAwait(true);
 
@@ -40,12 +43,10 @@ namespace DotNetRuServer.Controllers
             descriptor.SpeakerIds = descriptor.SpeakerIds ?? new List<string>();
             descriptor.FriendIds = descriptor.FriendIds ?? new List<string>();
 
-            if (meetup != null && descriptor.Sessions.Count == 0)
-            {
-                descriptor.Sessions = meetup.Sessions;
-            }
+            if (meetup != null && descriptor.Sessions.Count == 0) descriptor.Sessions = meetup.Sessions;
 
-            descriptor.TalkIds.AddRange(descriptor.Sessions.Select(x => x.TalkId).Where(x => !string.IsNullOrWhiteSpace(x)));
+            descriptor.TalkIds.AddRange(descriptor.Sessions.Select(x => x.TalkId)
+                .Where(x => !string.IsNullOrWhiteSpace(x)));
 
             // talks
             var talks = new Dictionary<string, TalkVm>();
@@ -58,7 +59,7 @@ namespace DotNetRuServer.Controllers
 
             // speakers
             descriptor.SpeakerIds.AddRange(
-                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds)
+                talks.Select(x => x.Value).SelectMany(x => x.SpeakerIds.Select(y => y.SpeakerId))
             );
             var speakers = new Dictionary<string, SpeakerVm>();
             foreach (var speakerId in descriptor.SpeakerIds.Distinct())
@@ -69,9 +70,7 @@ namespace DotNetRuServer.Controllers
 
             // friends
             if (meetup != null && descriptor.FriendIds.Count == 0)
-            {
-                descriptor.FriendIds.AddRange(meetup.FriendIds);
-            }
+                descriptor.FriendIds.AddRange(meetup.FriendIds.Select(x => x.FriendId));
 
             var friends = new List<FriendVm>();
             foreach (var friendId in descriptor.FriendIds.Distinct())
@@ -81,25 +80,18 @@ namespace DotNetRuServer.Controllers
             }
 
             // name
-            if (string.IsNullOrWhiteSpace(descriptor.Name))
-            {
-                descriptor.Name = meetup?.Name;
-            }
+            if (string.IsNullOrWhiteSpace(descriptor.Name)) descriptor.Name = meetup?.Name;
 
             // venue
             descriptor.VenueId = descriptor.VenueId ?? meetup?.VenueId;
             VenueVm venue = null;
             if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
-            {
                 venue = await _venueService.GetVenueAsync(descriptor.VenueId).ConfigureAwait(true);
-            }
 
             // community
             CommunityVm community = null;
             if (string.IsNullOrWhiteSpace(descriptor.CommunityId))
-            {
                 community = await _communityService.GetCommunityAsync(descriptor.CommunityId);
-            }
 
             return new CompositeModel
             {
@@ -115,7 +107,8 @@ namespace DotNetRuServer.Controllers
         }
 
         [HttpPost("[action]/{meetupId?}")]
-        public async Task<CompositeModel> SaveMeetup([FromRoute] string meetupId, [FromBody] RandomConcatModel descriptor = null)
+        public async Task<CompositeModel> SaveMeetup([FromRoute] string meetupId,
+            [FromBody] RandomConcatModel descriptor = null)
         {
             var oldMeetup = await _meetupService.GetMeetupAsync(meetupId).ConfigureAwait(true);
 
@@ -141,30 +134,18 @@ namespace DotNetRuServer.Controllers
         {
             if (descriptor != null)
             {
-                if (!string.IsNullOrWhiteSpace(descriptor.Name))
-                {
-                    meetup.Name = descriptor.Name;
-                }
+                if (!string.IsNullOrWhiteSpace(descriptor.Name)) meetup.Name = descriptor.Name;
                 if (!string.IsNullOrWhiteSpace(descriptor.CommunityId))
-                {
-                    meetup.CommunityId = descriptor.CommunityId;
-                }
-                
+                    meetup.CommunityId = (Communities) Enum.Parse(typeof(Communities), descriptor.CommunityId, true);
+
 
                 if (descriptor.FriendIds != null && descriptor.FriendIds.Count != 0)
-                {
-                    meetup.FriendIds = descriptor.FriendIds;
-                }
+                    meetup.FriendIds = descriptor.FriendIds.Select(x => new FriendReference {FriendId = x}).ToList();
 
-                if (!string.IsNullOrWhiteSpace(descriptor.VenueId))
-                {
-                    meetup.VenueId = descriptor.VenueId;
-                }
+                if (!string.IsNullOrWhiteSpace(descriptor.VenueId)) meetup.VenueId = descriptor.VenueId;
 
                 if (descriptor.Sessions != null && descriptor.Sessions.Count != 0)
-                {
                     meetup.Sessions = descriptor.Sessions;
-                }
             }
         }
     }
