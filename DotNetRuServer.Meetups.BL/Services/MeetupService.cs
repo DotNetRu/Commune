@@ -13,13 +13,13 @@ namespace DotNetRuServer.Meetups.BL.Services
 {
     public class MeetupService : IMeetupService
     {
-        private readonly Settings _settings;
-        private readonly IMeetupProvider _meetupProvider;
-        private readonly IVenueProvider _venueProvider;
-        private readonly IFriendProvider _friendProvider;
         private readonly ICommunityProvider _communityProvider;
+        private readonly IFriendProvider _friendProvider;
+        private readonly IMeetupProvider _meetupProvider;
+        private readonly Settings _settings;
         private readonly ITalkProvider _talkProvider;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IVenueProvider _venueProvider;
 
         public MeetupService(Settings settings, IMeetupProvider meetupProvider, IVenueProvider venueProvider,
             IFriendProvider friendProvider, ICommunityProvider communityProvider, ITalkProvider talkProvider,
@@ -53,13 +53,13 @@ namespace DotNetRuServer.Meetups.BL.Services
             meetup.EnsureIsValid();
 
             var original = await _meetupProvider.GetMeetupOrDefaultExtendedAsync(meetup.Id).ConfigureAwait(false);
-            if (original != null)
-            {
-                throw new FormatException($"Данный {nameof(meetup.Id)} \"{meetup.Id}\" уже занят");
-            }
+            if (original != null) throw new FormatException($"Данный {nameof(meetup.Id)} \"{meetup.Id}\" уже занят");
 
             var venue = await _venueProvider.GetVenueOrDefaultAsync(meetup.VenueId);
-            var community = await _communityProvider.GetCommunityOrDefaultAsync(meetup.CommunityId);
+            var community =
+                await _communityProvider.GetCommunityOrDefaultAsync(
+                    Enum.GetName(typeof(Communities), meetup.CommunityId)
+                );
 
             var entity = new Meetup
             {
@@ -72,8 +72,8 @@ namespace DotNetRuServer.Meetups.BL.Services
             };
             foreach (var meetupFriendId in meetup.FriendIds)
             {
-                var friend = await _friendProvider.GetFriendOrDefaultAsync(meetupFriendId);
-                entity.Friends.Add(new FriendAtMeetup()
+                var friend = await _friendProvider.GetFriendOrDefaultAsync(meetupFriendId.FriendId);
+                entity.Friends.Add(new FriendAtMeetup
                 {
                     Friend = friend,
                     Meetup = entity
@@ -83,7 +83,7 @@ namespace DotNetRuServer.Meetups.BL.Services
             foreach (var meetupSession in meetup.Sessions)
             {
                 var talk = await _talkProvider.GetTalkOrDefaultAsync(meetupSession.TalkId);
-                entity.Sessions.Add(new Session()
+                entity.Sessions.Add(new Session
                 {
                     Talk = talk,
                     Meetup = entity,
@@ -108,7 +108,9 @@ namespace DotNetRuServer.Meetups.BL.Services
             meetup.EnsureIsValid();
             var original = await _meetupProvider.GetMeetupOrDefaultExtendedAsync(meetup.Id).ConfigureAwait(false);
             var venue = await _venueProvider.GetVenueOrDefaultAsync(meetup.VenueId);
-            var community = await _communityProvider.GetCommunityOrDefaultAsync(meetup.CommunityId);
+            var community = await _communityProvider.GetCommunityOrDefaultAsync(
+                Enum.GetName(typeof(Communities), meetup.CommunityId)
+            );
 
             original.Venue = venue;
             original.Community = community;
@@ -117,8 +119,8 @@ namespace DotNetRuServer.Meetups.BL.Services
             original.Sessions = new List<Session>();
             foreach (var meetupFriendId in meetup.FriendIds)
             {
-                var friend = await _friendProvider.GetFriendOrDefaultAsync(meetupFriendId);
-                original.Friends.Add(new FriendAtMeetup()
+                var friend = await _friendProvider.GetFriendOrDefaultAsync(meetupFriendId.FriendId);
+                original.Friends.Add(new FriendAtMeetup
                 {
                     Friend = friend,
                     Meetup = original
@@ -128,7 +130,7 @@ namespace DotNetRuServer.Meetups.BL.Services
             foreach (var meetupSession in meetup.Sessions)
             {
                 var talk = await _talkProvider.GetTalkOrDefaultAsync(meetupSession.TalkId);
-                original.Sessions.Add(new Session()
+                original.Sessions.Add(new Session
                 {
                     Talk = talk,
                     Meetup = original,
@@ -142,8 +144,8 @@ namespace DotNetRuServer.Meetups.BL.Services
                         DateTimeStyles.AdjustToUniversal)
                 });
             }
-            
-            
+
+
             return original.ToVm();
         }
     }

@@ -3,13 +3,13 @@ using System.Xml.Serialization;
 
 namespace DotNetRuServer.Meetups.BL.Models
 {
-    [XmlRoot(elementName:"Talk")]
+    [XmlRoot("Talk")]
     public class TalkVm
     {
         public string Id { get; set; }
 
         [XmlArrayItem(ElementName = "SpeakerId")]
-        public List<string> SpeakerIds { get; set; }
+        public List<SpeakerReference> SpeakerIds { get; set; }
 
         public string Title { get; set; }
 
@@ -20,5 +20,10 @@ namespace DotNetRuServer.Meetups.BL.Models
         public string SlidesUrl { get; set; }
 
         public string VideoUrl { get; set; }
+    }
+
+    public class SpeakerReference
+    {
+        public string SpeakerId { get; set; }
     }
 }
