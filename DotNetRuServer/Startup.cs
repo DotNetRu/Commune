@@ -118,7 +118,7 @@ namespace DotNetRuServer
                 var importer = serviceProvider.GetService<Application.Importer>();
                 var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
                 if (string.IsNullOrEmpty(token))
-                    throw new Exception("Github token should be provided");
+                    return;
 
                 Task.Run(async () =>
                     {
