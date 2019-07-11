@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DotNetRuServer.Comon.BL.Caching;
@@ -37,11 +38,16 @@ namespace DotNetRuServer
 
         {
             if (_currentEnvironment.IsDevelopment())
+            {
                 services.AddDbContext<DotNetRuServerContext>(options =>
                     options.UseInMemoryDatabase("DotNetRu"));
+                services.AddTransient<Application.Importer>();
+            }
             else
+            {
                 services.AddDbContext<DotNetRuServerContext>(options =>
                     options.UseSqlServer(_configuration.GetConnectionString("Database")));
+            }
 
 
             services.AddMemoryCache();
@@ -105,6 +111,29 @@ namespace DotNetRuServer
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
             });
+
+            if (_currentEnvironment.IsDevelopment())
+            {
+                var serviceProvider = app.ApplicationServices;
+                var importer = serviceProvider.GetService<Application.Importer>();
+                var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+                if (string.IsNullOrEmpty(token))
+                    return;
+
+                Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await importer.Import(token);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+                    }
+                );
+            }
         }
     }
 }
