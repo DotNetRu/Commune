@@ -19,8 +19,14 @@ namespace DotNetRuServer.Comon.BL.Enums
 
         /// <summary> Новосибирск </summary>
         Nsk = 6,
-        
+
+        /// <summary> Нижний Новгород </summary>
+        Nnv = 7,
+
+        /// <summary> Уфа </summary>
+        Ufa = 8,
+
         /// <summary> Омск </summary>
-        Oms = 7
+        Oms = 9
     }
 }
