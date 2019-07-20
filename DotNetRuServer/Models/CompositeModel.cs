@@ -9,7 +9,7 @@ namespace DotNetRuServer.Models
 
         public string Name { get; set; }
 
-        public CommunityVm Community { get; set; }
+        public Communities? CommunityId { get; set; }
 
         public VenueVm Venue { get; set; }
 

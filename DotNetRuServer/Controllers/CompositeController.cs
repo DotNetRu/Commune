@@ -89,15 +89,17 @@ namespace DotNetRuServer.Controllers
                 venue = await _venueService.GetVenueAsync(descriptor.VenueId).ConfigureAwait(true);
 
             // community
-            CommunityVm community = null;
-            if (string.IsNullOrWhiteSpace(descriptor.CommunityId))
-                community = await _communityService.GetCommunityAsync(descriptor.CommunityId);
+//            CommunityVm community = null;
+//            if (!string.IsNullOrWhiteSpace(descriptor.CommunityId))
+//                community = await _communityService.GetCommunityAsync(descriptor.CommunityId);
 
             return new CompositeModel
             {
                 Id = meetup?.Id,
                 Name = descriptor.Name,
-                Community = community,
+                CommunityId = string.IsNullOrWhiteSpace(descriptor.CommunityId)
+                    ? (Communities?) null
+                    : (Communities) Enum.Parse(typeof(Communities), descriptor.CommunityId, true),
                 Venue = venue,
                 Sessions = descriptor.Sessions,
                 Talks = talks,

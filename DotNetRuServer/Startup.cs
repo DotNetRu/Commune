@@ -6,6 +6,7 @@ using DotNetRuServer.Comon.BL.Caching;
 using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
+using DotNetRuServer.Meetups.BL.Services;
 using DotNetRuServer.Meetups.DAL.Database;
 using DotNetRuServer.Meetups.DAL.Providers;
 using Microsoft.AspNetCore.Builder;
@@ -74,6 +75,7 @@ namespace DotNetRuServer
 
             builder.RegisterType<MemCache>().As<ICache>().SingleInstance();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<CommunityService>().As<ICommunityService>().InstancePerLifetimeScope();
 
 
             var settings = new Settings();
