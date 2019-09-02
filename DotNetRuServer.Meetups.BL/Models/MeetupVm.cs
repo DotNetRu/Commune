@@ -35,6 +35,9 @@ namespace DotNetRuServer.Meetups.BL.Models
         KznDotNet = 5,
         NskDotNet = 6,
         NnvDotNet = 7,
-        UfaDotNet = 8
+        UfaDotNet = 8,
+        OmsDotNet = 9,
+        SamDotNet = 10,
+        PnzDotNet = 11
     }
 }

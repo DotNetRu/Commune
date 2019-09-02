@@ -27,6 +27,12 @@ namespace DotNetRuServer.Comon.BL.Enums
         Ufa = 8,
 
         /// <summary> Омск </summary>
-        Oms = 9
+        Oms = 9,
+        
+        /// <summary> Омск </summary>
+        Sam = 10,
+        
+        /// <summary> Пенза </summary>
+        Pnz = 11
     }
 }
