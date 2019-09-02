@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetRuServer.Meetups.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Models;
 
@@ -23,19 +25,20 @@ namespace DotNetRuServer.Meetups.BL.Services
                 .ToList();
         }
 
-        public Task<CommunityVm> GetCommunityAsync(string communityId)
+        public async Task<CommunityVm> GetCommunityAsync(string communityId)
         {
-            throw new System.NotImplementedException();
+            var community = await _provider.GetCommunityOrDefaultAsync(communityId);
+            return community.ToVm();
         }
 
         public Task<CommunityVm> AddCommunityAsync(CommunityVm community)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<CommunityVm> UpdateCommunityAsync(CommunityVm community)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
