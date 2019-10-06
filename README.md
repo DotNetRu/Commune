@@ -2,6 +2,45 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/k48inxyw1s45avka?svg=true)](https://ci.appveyor.com/project/AnatolyKulakov/server)
 
+DotNetRu Server - продукт семейства DotNetRu, обеспечивающий универсальный API доступа к [Аудиту](https://github.com/DotNetRu/Audit). В связке с [UI](https://github.com/DotNetRu/DevActivator) предполагается предоставление удобного метода добавления и редактирования митапов.
+
+Кроме того, DotNetRu Server является единым API доступа к данным о митапах для всех клиентов (например, [DotNetRu App](https://github.com/DotNetRu/App)).
+
+# Цели
+
+[Аудит](https://github.com/DotNetRu/Audit) является централизованным хранилищем всей информации о прошедших митапах всех сообществ DotNetRu. Данные в Аудите сохранены в формате связанных XML файлов. Их ручное редактирование чревато ошибками и нарушениями формата.
+
+Цель проекта DotNetRu Server - обеспечить REST-like API для редактирования Аудита без необходимости обращаться к GitHub-репозиторию [Аудита](https://github.com/DotNetRu/Audit). В процессе редактирования должна поддерживаться целостность данных и соответствие [форматам хранения](https://github.com/DotNetRu/Audit/tree/master/schemas).
+
+DotNetRu Server должен быть развернут на [общедоступном веб-сервере](https://server-dotnetru.azurewebsites.net).
+
+# Связанные проекты
+
+## Аудит
+
+Единое хранилище информации о митапах, площадках, спикерах и докладах. Реализовано как набор XML файлов в [GitHub репозитории](https://github.com/DotNetRu/Audit).
+
+## WebUI
+
+[Веб-интерфейс](https://github.com/DotNetRu/DevActivator) для удобной работы с DotNetRu Server. 
+
+# Текущее состояние и планы
+
+В настоящее время DotNetRu Server имеет разработанный API, но не до конца проведена интеграция с вспомогательными системами. Также отсутствует связь с хранилищем - GitHub-репозиторием Аудита.
+
+В связи с этим план на ближайший этап состоит в следующем:
+ - развернуть UI на production сервере и указать URL в этом файле
+ - протестировать совместную работу UI и Server по упрощённой схеме без хранилища
+ 
+Желаемый срок окончания ближайшего этапа - 05 ноября 2019 года.
+
+Упрощённая схема взаимодействия заключается в следующем:
+- DotNetRu Server работает на in-memory базе данных
+- пользователь импортирует базу митапов на сервер через [DotNetRu.Importer](https://github.com/DotNetRu/Server/tree/master/DotNetRuServer.Importer)
+- пользователь добавляет/изменяет информацию о новом митапе с помощью UI развернутого на production сервере
+- пользователь экспортирует набор XML обратно на компьютер с помощью [DotNetRu.Exporter](https://github.com/DotNetRu/Server/tree/master/DotNetRuServer.Exporter)
+- пользователь вручную создаёт pull request в [репозиторий Аудита](https://github.com/DotNetRu/Audit)
+
 
 # Как подготовить БД к разработке
 
