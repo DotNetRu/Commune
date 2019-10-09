@@ -8,6 +8,17 @@
       <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
       <PackageReference Include="NSwag.MSBuild" Version="13.1.2" />
+      <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DotNetRuServer.Meetups.BL\DotNetRuServer.Meetups.BL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="TimePad\EventTemplate.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <Target Name="NSwag" BeforeTargets="PrepareForBuild" Condition="'$(GenerateCode)'=='True'">
