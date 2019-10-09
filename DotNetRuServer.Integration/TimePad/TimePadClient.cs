@@ -17,13 +17,11 @@ namespace DotNetRuServer.Integration.TimePad
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.2.0 (NJsonSchema v10.0.24.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class TimePadClient 
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
-        public TimePadClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public TimePadClient(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl; 
             _httpClient = httpClient; 
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => 
             {
@@ -31,12 +29,6 @@ namespace DotNetRuServer.Integration.TimePad
                 UpdateJsonSerializerSettings(settings);
                 return settings;
             });
-        }
-    
-        public string BaseUrl 
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
     
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
@@ -113,7 +105,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<EventsResponse> GetEventsAsync(System.Collections.Generic.IEnumerable<string> fields, int? limit, int? skip, System.Collections.Generic.IEnumerable<string> sort, System.Collections.Generic.IEnumerable<int> category_ids, System.Collections.Generic.IEnumerable<int> category_ids_exclude, System.Collections.Generic.IEnumerable<string> cities, System.Collections.Generic.IEnumerable<string> cities_exclude, System.Collections.Generic.IEnumerable<int> organization_ids, System.Collections.Generic.IEnumerable<int> organization_ids_exclude, System.Collections.Generic.IEnumerable<int> event_ids, System.Collections.Generic.IEnumerable<int> event_ids_exclude, System.Collections.Generic.IEnumerable<string> keywords, System.Collections.Generic.IEnumerable<string> keywords_exclude, System.Collections.Generic.IEnumerable<string> access_statuses, System.Collections.Generic.IEnumerable<string> moderation_statuses, int? price_min, int? price_max, int? ad_partner_percent_min, int? ad_partner_percent_max, int? ad_partner_profit_min, int? ad_partner_profit_max, System.DateTimeOffset? starts_at_min, System.DateTimeOffset? starts_at_max, System.DateTimeOffset? created_at_min, System.DateTimeOffset? created_at_max, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events?");
+            urlBuilder_.Append("v1/events?");
             if (fields != null) 
             {
                 foreach (var item_ in fields) { urlBuilder_.Append(System.Uri.EscapeDataString("fields") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
@@ -289,7 +281,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<EventResponse> AddEventAsync(CreateEvent body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events");
+            urlBuilder_.Append("v1/events");
     
             var client_ = _httpClient;
             try
@@ -368,7 +360,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}?");
+            urlBuilder_.Append("v1/events/{event_id}?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (fields != null) 
             {
@@ -450,7 +442,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}");
+            urlBuilder_.Append("v1/events/{event_id}");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -536,7 +528,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders?");
+            urlBuilder_.Append("v1/events/{event_id}/orders?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (limit != null) 
             {
@@ -632,7 +624,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders");
+            urlBuilder_.Append("v1/events/{event_id}/orders");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -717,7 +709,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("order_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders/{order_id}?");
+            urlBuilder_.Append("v1/events/{event_id}/orders/{order_id}?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{order_id}", System.Uri.EscapeDataString(ConvertToString(order_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (fields != null) 
@@ -805,7 +797,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("order_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders/{order_id}");
+            urlBuilder_.Append("v1/events/{event_id}/orders/{order_id}");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{order_id}", System.Uri.EscapeDataString(ConvertToString(order_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -889,7 +881,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("order_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders/{order_id}/approve");
+            urlBuilder_.Append("v1/events/{event_id}/orders/{order_id}/approve");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{order_id}", System.Uri.EscapeDataString(ConvertToString(order_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -971,7 +963,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("order_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders/{order_id}/reject");
+            urlBuilder_.Append("v1/events/{event_id}/orders/{order_id}/reject");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{order_id}", System.Uri.EscapeDataString(ConvertToString(order_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1053,7 +1045,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("order_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/orders/{order_id}/delete");
+            urlBuilder_.Append("v1/events/{event_id}/orders/{order_id}/delete");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{order_id}", System.Uri.EscapeDataString(ConvertToString(order_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1127,7 +1119,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<OrganizationResponse> AddOrganizationAsync(CreateOrganization body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations");
+            urlBuilder_.Append("v1/organizations");
     
             var client_ = _httpClient;
             try
@@ -1206,7 +1198,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("organization_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations/{organization_id}/hooks?");
+            urlBuilder_.Append("v1/organizations/{organization_id}/hooks?");
             urlBuilder_.Replace("{organization_id}", System.Uri.EscapeDataString(ConvertToString(organization_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (type != null) 
             {
@@ -1288,7 +1280,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("organization_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations/{organization_id}/hooks");
+            urlBuilder_.Append("v1/organizations/{organization_id}/hooks");
             urlBuilder_.Replace("{organization_id}", System.Uri.EscapeDataString(ConvertToString(organization_id, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -1371,7 +1363,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("hook_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations/{organization_id}/hooks/{hook_id}");
+            urlBuilder_.Append("v1/organizations/{organization_id}/hooks/{hook_id}");
             urlBuilder_.Replace("{organization_id}", System.Uri.EscapeDataString(ConvertToString(organization_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{hook_id}", System.Uri.EscapeDataString(ConvertToString(hook_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1454,7 +1446,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("hook_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations/{organization_id}/hooks/{hook_id}");
+            urlBuilder_.Append("v1/organizations/{organization_id}/hooks/{hook_id}");
             urlBuilder_.Replace("{organization_id}", System.Uri.EscapeDataString(ConvertToString(organization_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{hook_id}", System.Uri.EscapeDataString(ConvertToString(hook_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1537,7 +1529,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/companies?");
+            urlBuilder_.Append("v1/events/{event_id}/companies?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (limit != null) 
             {
@@ -1626,7 +1618,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("company_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/companies/{company_id}");
+            urlBuilder_.Append("v1/events/{event_id}/companies/{company_id}");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{company_id}", System.Uri.EscapeDataString(ConvertToString(company_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1706,7 +1698,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/company_payment_requests?");
+            urlBuilder_.Append("v1/events/{event_id}/company_payment_requests?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (limit != null) 
             {
@@ -1795,7 +1787,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("company_payment_request_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/company_payment_requests/{company_payment_request_id}");
+            urlBuilder_.Append("v1/events/{event_id}/company_payment_requests/{company_payment_request_id}");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{company_payment_request_id}", System.Uri.EscapeDataString(ConvertToString(company_payment_request_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -1875,7 +1867,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("event_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/invoices?");
+            urlBuilder_.Append("v1/events/{event_id}/invoices?");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             if (limit != null) 
             {
@@ -1964,7 +1956,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("invoice_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/events/{event_id}/invoices/{invoice_id}");
+            urlBuilder_.Append("v1/events/{event_id}/invoices/{invoice_id}");
             urlBuilder_.Replace("{event_id}", System.Uri.EscapeDataString(ConvertToString(event_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{invoice_id}", System.Uri.EscapeDataString(ConvertToString(invoice_id, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -2047,7 +2039,7 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new System.ArgumentNullException("method_name");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/organizations/{organization_id}/custom_method/{method_name}");
+            urlBuilder_.Append("v1/organizations/{organization_id}/custom_method/{method_name}");
             urlBuilder_.Replace("{organization_id}", System.Uri.EscapeDataString(ConvertToString(organization_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{method_name}", System.Uri.EscapeDataString(ConvertToString(method_name, System.Globalization.CultureInfo.InvariantCulture)));
     
@@ -2121,7 +2113,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<EventsCategoriesApiResponse> GetEventsCategoriesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/dictionary/event_categories");
+            urlBuilder_.Append("v1/dictionary/event_categories");
     
             var client_ = _httpClient;
             try
@@ -2190,7 +2182,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<EventsStatusesApiResponse> GetEventsStatusesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/dictionary/event_statuses");
+            urlBuilder_.Append("v1/dictionary/event_statuses");
     
             var client_ = _httpClient;
             try
@@ -2259,7 +2251,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<TicketsStatusesApiResponse> GetTicketsStatusesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/dictionary/tickets_statuses");
+            urlBuilder_.Append("v1/dictionary/tickets_statuses");
     
             var client_ = _httpClient;
             try
@@ -2334,7 +2326,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task AuthorizeAsync(string client_id, string redirect_uri, string response_type, System.Collections.Generic.IEnumerable<string> scope, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/oauth/authorize?");
+            urlBuilder_.Append("oauth/authorize?");
             if (client_id != null) 
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("client_id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(client_id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2419,7 +2411,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<Introspect> IntrospectTokenAsync(string token, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/introspect?");
+            urlBuilder_.Append("introspect?");
             if (token != null) 
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("token") + "=").Append(System.Uri.EscapeDataString(ConvertToString(token, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -2495,7 +2487,7 @@ namespace DotNetRuServer.Integration.TimePad
         public async System.Threading.Tasks.Task<Introspect> IntrospectTokenPostAsync(string token, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/introspect");
+            urlBuilder_.Append("introspect");
     
             var client_ = _httpClient;
             try

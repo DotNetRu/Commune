@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <Target Name="NSwag" BeforeTargets="PrepareForBuild" Condition="'$(GenerateCode)'=='True'">
-        <Exec Command="$(NSwagExe_Core22) openapi2csclient /input:https://api.timepad.ru/doc/interactive/swagger.json /namespace:DotNetRuServer.Integration.TimePad /classname:TimePadClient /output:./TimePad/TimePadClient.cs" />
+        <Exec Command="$(NSwagExe_Core22) openapi2csclient /input:https://api.timepad.ru/doc/interactive/swagger.json /namespace:DotNetRuServer.Integration.TimePad /classname:TimePadClient /output:./TimePad/TimePadClient.cs /useBaseUrl:false" />
     </Target>
 
 </Project>
