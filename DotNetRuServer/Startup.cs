@@ -1,12 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using DotNetRuServer.Comon.BL.Caching;
 using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
-using DotNetRuServer.Meetups.BL.Services;
 using DotNetRuServer.Meetups.DAL.Database;
 using DotNetRuServer.Meetups.DAL.Providers;
 using Microsoft.AspNetCore.Builder;
@@ -30,13 +27,8 @@ namespace DotNetRuServer
             _currentEnvironment = currentEnvironment;
         }
 
-
-        public IContainer ApplicationContainer { get; private set; }
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-
+        public void ConfigureServices(IServiceCollection services)
         {
             if (_currentEnvironment.IsDevelopment())
             {
@@ -50,11 +42,9 @@ namespace DotNetRuServer
                     options.UseSqlServer(_configuration.GetConnectionString("Database")));
             }
 
-
             services.AddMemoryCache();
 
             services.AddMvc();
-
 
             //CORS
             services.AddCors(options =>
@@ -70,24 +60,12 @@ namespace DotNetRuServer
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
 
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-
-            builder.RegisterType<MemCache>().As<ICache>().SingleInstance();
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterType<CommunityService>().As<ICommunityService>().InstancePerLifetimeScope();
-
+            services.AddSingleton<ICache, MemCache>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var settings = new Settings();
             _configuration.Bind(nameof(Settings), settings);
-
-            builder.RegisterModule(
-                new MeetupModule<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,
-                    CommunityProvider, ImageProvider>(
-                    settings));
-
-            ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(ApplicationContainer);
+            services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(settings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
