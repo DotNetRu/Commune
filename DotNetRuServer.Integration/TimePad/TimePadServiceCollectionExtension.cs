@@ -9,12 +9,15 @@ namespace DotNetRuServer.Integration.TimePad
     {
         public static void AddTimePadIntegration(this IServiceCollection services, IConfiguration configuration)
         {
-            var accessToken = configuration.GetSection("TimePad")["AccessToken"];
-            services.AddHttpClient("TimePad", c =>
+            var section = configuration.GetSection("TimePad");
+            foreach (var child in section.GetChildren())
             {
-                c.BaseAddress = new Uri("https://api.timepad.ru/");
-                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            });
+                services.AddHttpClient($"{child.Key}-TimePad", c =>
+                {
+                    c.BaseAddress = new Uri("https://api.timepad.ru/");
+                    c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", child.Value);
+                });
+            }
             services.AddTransient<TimePadIntegrationService>();
         }
     }

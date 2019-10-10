@@ -16,8 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="TimePad\EventTemplate.cshtml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <None Update="TimePad\Templates\Spb-template.cshtml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
