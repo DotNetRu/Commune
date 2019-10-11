@@ -6,6 +6,7 @@ using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DotNetRuServer.Controllers
 {
@@ -15,9 +16,9 @@ namespace DotNetRuServer.Controllers
         private readonly Settings _settings;
         private readonly IImageService _imageService;
 
-        public FileController(Settings settings, IImageService imageService)
+        public FileController(IOptionsMonitor<Settings> settingsAccessor, IImageService imageService)
         {
-            _settings = settings;
+            _settings = settingsAccessor.CurrentValue;
             _imageService = imageService;
         }
 

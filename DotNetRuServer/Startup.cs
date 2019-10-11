@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using DotNetRuServer.Comon.BL.Caching;
-using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
@@ -62,10 +61,7 @@ namespace DotNetRuServer
 
             services.AddSingleton<ICache, MemCache>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            var settings = new Settings();
-            _configuration.Bind(nameof(Settings), settings);
-            services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(settings);
+            services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
