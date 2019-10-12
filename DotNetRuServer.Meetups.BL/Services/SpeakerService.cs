@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Interfaces;
@@ -12,13 +11,11 @@ namespace DotNetRuServer.Meetups.BL.Services
 {
     public class SpeakerService : ISpeakerService
     {
-        private readonly Settings _settings;
         private readonly ISpeakerProvider _speakerProvider;
         private readonly IUnitOfWork _unitOfWork;
 
-        public SpeakerService(Settings settings, ISpeakerProvider speakerProvider, IUnitOfWork unitOfWork)
+        public SpeakerService(ISpeakerProvider speakerProvider, IUnitOfWork unitOfWork)
         {
-            _settings = settings;
             _speakerProvider = speakerProvider;
             _unitOfWork = unitOfWork;
         }

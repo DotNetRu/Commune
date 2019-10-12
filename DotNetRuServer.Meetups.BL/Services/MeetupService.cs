@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetRuServer.Comon.BL.Config;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.BL.Extensions;
 using DotNetRuServer.Meetups.BL.Interfaces;
@@ -16,16 +15,13 @@ namespace DotNetRuServer.Meetups.BL.Services
         private readonly ICommunityProvider _communityProvider;
         private readonly IFriendProvider _friendProvider;
         private readonly IMeetupProvider _meetupProvider;
-        private readonly Settings _settings;
         private readonly ITalkProvider _talkProvider;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IVenueProvider _venueProvider;
 
-        public MeetupService(Settings settings, IMeetupProvider meetupProvider, IVenueProvider venueProvider,
-            IFriendProvider friendProvider, ICommunityProvider communityProvider, ITalkProvider talkProvider,
-            IUnitOfWork unitOfWork)
+        public MeetupService(IMeetupProvider meetupProvider, IVenueProvider venueProvider, IFriendProvider friendProvider, 
+            ICommunityProvider communityProvider, ITalkProvider talkProvider, IUnitOfWork unitOfWork)
         {
-            _settings = settings;
             _meetupProvider = meetupProvider;
             _venueProvider = venueProvider;
             _friendProvider = friendProvider;
