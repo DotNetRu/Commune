@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using DotNetRuServer.Integration.Common;
 using DotNetRuServer.Meetups.BL.Entities;
 using Microsoft.Extensions.Configuration;
 using RazorLight;
@@ -14,6 +12,8 @@ namespace DotNetRuServer.Integration.TimePad
 {
     public class TimePadIntegrationService
     {
+        private const string TimePadSection = "TimePad";
+        private const string CommunitySection = "Community";
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _configuration;
         private readonly RazorLightEngine _razorEngine;
@@ -29,21 +29,20 @@ namespace DotNetRuServer.Integration.TimePad
                 .Build();
         }
 
-        public async Task CreateDraftEventAsync(Meetup meetup, string shortDescription, int ticketsLimit,
-            CancellationToken ct)
+        public async Task CreateDraftEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var communityCity = meetup.Venue.City.ToString();
-            if (_configuration.GetSection("TimePad").GetChildren().All(c => c.Key != communityCity))
-            {
+            var communityOrganization = await GetOrganizationAsync(meetup.Community, ct);
+            if (communityOrganization is null)
                 return;
-            }
-            
-            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"{communityCity}-TimePad"));
 
-            var meetupStartsAt = meetup.Sessions.Min(s => s.StartTime);
-            var meetupEndsAt = meetup.Sessions.Max(s => s.EndTime);
+            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{meetup.Community.Id}"));
+
+            var startsAt = meetup.Sessions.Min(s => s.StartTime);
+            var endsAt = meetup.Sessions.Max(s => s.EndTime);
+            var shortDescription =
+                $"{startsAt.Day} {startsAt.Month} в гостях у компании {meetup.Friends.First().Friend.Name} состоится встреча {meetup.Community.Name}";
             var htmlDescription = await _razorEngine.CompileRenderAsync(
-                $"TimePad/Templates/{communityCity}-template.cshtml",
+                $"TimePad/Templates/Template-community-{meetup.Community.Id}.cshtml",
                 new {Name = meetup.Name});
             var questions = new List<QuestionInclude>
             {
@@ -56,32 +55,80 @@ namespace DotNetRuServer.Integration.TimePad
 
             var createEventBody = new CreateEvent
             {
-                Organization = new OrganizationInclude {Id = null, Subdomain = null}, //todo: fill
-                Starts_at = meetupStartsAt,
-                Ends_at = meetupEndsAt,
+                Organization = new OrganizationInclude
+                    {Id = communityOrganization.Id, Subdomain = communityOrganization.Subdomain},
+                Starts_at = startsAt,
+                Ends_at = endsAt,
                 Name = meetup.Name,
                 Description_short = shortDescription,
                 Description_html = htmlDescription,
-                Location = new LocationInclude {City = meetup.Venue.GetCityTitle(), Address = meetup.Venue.Address},
+                Location = new LocationInclude {City = meetup.Community.City, Address = meetup.Venue.Address},
                 Categories = new[] {new CategoryInclude {Id = 452, Name = "ИТ и интернет"}},
                 Access_status = "draft",
-                Tickets_limit = ticketsLimit,
+                Tickets_limit = 150,
                 Questions = questions
             };
 
-            try
-            {
-                await timePadClient.AddEventAsync(createEventBody, ct);
-            }
-            catch (Exception e)
-            {
-                throw new IntegrationException("Невозможно создать событие на TimePad", e);
-            }
+            await timePadClient.AddEventAsync(createEventBody, ct);
         }
 
-        public void PublishEvent()
+        public async Task PublishEventAsync(Meetup meetup, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var communityOrganization = await GetOrganizationAsync(meetup.Community, ct);
+            if (communityOrganization is null)
+                return;
+
+            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{meetup.Community.Id}"));
+
+            var events = await timePadClient.GetEventsAsync(
+                null,
+                10,
+                0,
+                new[] {"+starts_at"},
+                null,
+                null,
+                null,
+                null,
+                new[] {communityOrganization.Id},
+                null,
+                null,
+                null,
+                null,
+                null,
+                new[] {"draft"},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ct
+            );
+            var meetupEvent = events.Values.FirstOrDefault(e => e.Name == meetup.Name);
+            if (meetupEvent is null)
+                return;
+
+            var editEventBody = new EditEvent {Access_status = "public"};
+            await timePadClient.EditEventAsync(meetupEvent.Id, editEventBody, ct);
+        }
+
+        private async Task<OrganizationResponse> GetOrganizationAsync(Community community, CancellationToken ct)
+        {
+            var timePadSection = _configuration.GetSection($"{CommunitySection}-{community.Id}")
+                .GetSection(TimePadSection);
+            if (timePadSection is null)
+                return null;
+
+            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{community.Id}"));
+            var introspect = await timePadClient.IntrospectTokenAsync(timePadSection.Value, ct);
+
+            var communityOrganization = introspect.Organizations?.SingleOrDefault(o => o.Name.Contains(community.Name));
+            return communityOrganization;
         }
     }
 }
