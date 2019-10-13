@@ -24,6 +24,8 @@ DotNetRu Server - продукт семейства DotNetRu, обеспечив
 
 [Веб-интерфейс](https://github.com/DotNetRu/DevActivator) для удобной работы с DotNetRu Server. 
 
+В настоящее время существует [отдельная версия UI](https://github.com/root-server/hw), работающая в виде Electron приложения. Этот же UI поставляется в виде [docker контейнера](https://hub.docker.com/r/ovcharov/devactivator).
+
 # Текущее состояние и планы
 
 В настоящее время DotNetRu Server имеет разработанный API, но не до конца проведена интеграция со вспомогательными системами. Также отсутствует связь с хранилищем - GitHub-репозиторием Аудита.
@@ -41,6 +43,10 @@ DotNetRu Server - продукт семейства DotNetRu, обеспечив
 - пользователь экспортирует набор XML обратно на компьютер с помощью [DotNetRu.Exporter](https://github.com/DotNetRu/Server/tree/master/DotNetRuServer.Exporter)
 - пользователь вручную создаёт pull request в [репозиторий Аудита](https://github.com/DotNetRu/Audit)
 
+#ы Дальнейшие планы (обсуждаемо)
+
+- Перенести код UI в репозитории [DotNetRu](https://github.com/DotNetRu) и настроить автоматическую сборку и публикаю docker-контейнера.
+- ...
 
 # Как подготовить БД к разработке
 
