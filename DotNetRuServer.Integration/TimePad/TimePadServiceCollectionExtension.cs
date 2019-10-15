@@ -18,7 +18,7 @@ namespace DotNetRuServer.Integration.TimePad
         {
             foreach (var configurationSection in configuration.GetChildren().Where(c => CommunitySectionRegex.IsMatch(c.Key)))
             {
-                var timePadSection = configuration.GetSection(TimePadSection);
+                var timePadSection = configurationSection.GetSection(TimePadSection);
                 if (timePadSection is null)
                     continue;
                 

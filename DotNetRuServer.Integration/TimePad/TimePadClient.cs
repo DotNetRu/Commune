@@ -3304,97 +3304,97 @@ namespace DotNetRuServer.Integration.TimePad
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Name { get; set; }
-    
-        /// <summary>Короткое описание события или подзаголовок</summary>
-        [Newtonsoft.Json.JsonProperty("description_short", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description_short { get; set; }
-    
-        /// <summary>Полное описание события</summary>
-        [Newtonsoft.Json.JsonProperty("description_html", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Description_html { get; set; }
-    
-        /// <summary>Адрес события в timepad</summary>
-        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Url { get; set; }
-    
-        /// <summary>Картинка события</summary>
-        [Newtonsoft.Json.JsonProperty("poster_image", Required = Newtonsoft.Json.Required.Always)]
-        public ImageResponse Poster_image { get; set; }
-    
-        /// <summary>Процент, который получают партнёры за продажу билета на это событие</summary>
-        [Newtonsoft.Json.JsonProperty("ad_partner_percent", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Ad_partner_percent { get; set; }
-    
-        /// <summary>Язык события по умолчанию</summary>
-        [Newtonsoft.Json.JsonProperty("locale", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Locale { get; set; }
-    
-        /// <summary>Место проведения события</summary>
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public LocationResponse Location { get; set; }
-    
-        /// <summary>Организация, проводящая событие</summary>
-        [Newtonsoft.Json.JsonProperty("organization", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public OrganizationResponse Organization { get; set; }
-    
-        /// <summary>Категории события</summary>
-        [Newtonsoft.Json.JsonProperty("categories", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<CategoryResponse> Categories { get; set; } = new System.Collections.ObjectModel.Collection<CategoryResponse>();
-    
-        /// <summary>Максимальное количество человек, которые могут посетить событие</summary>
-        [Newtonsoft.Json.JsonProperty("tickets_limit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Tickets_limit { get; set; }
-    
-        /// <summary>Доступные типы билетов</summary>
-        [Newtonsoft.Json.JsonProperty("ticket_types", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<TicketTypeResponse> Ticket_types { get; set; }
-    
-        /// <summary>Персональные ссылки. Доступно только при указании токена со разрешением view_private_events</summary>
-        [Newtonsoft.Json.JsonProperty("personal_links", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Personal_links { get; set; }
-    
-        /// <summary>Вопросы, задающиеся при регистрации</summary>
-        [Newtonsoft.Json.JsonProperty("questions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<QuestionResponse> Questions { get; set; }
-    
-        /// <summary>Возрастное ограничение события</summary>
-        [Newtonsoft.Json.JsonProperty("age_limit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Age_limit { get; set; }
-    
-        /// <summary>Виджеты, доступные для события</summary>
-        [Newtonsoft.Json.JsonProperty("widgets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<WidgetResponse> Widgets { get; set; }
-    
-        /// <summary>Список особенностей события</summary>
-        [Newtonsoft.Json.JsonProperty("properties", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Properties { get; set; }
-    
-        /// <summary>Статус модерации</summary>
-        [Newtonsoft.Json.JsonProperty("moderation_status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Moderation_status { get; set; }
-    
-        /// <summary>Статус доступа к событию</summary>
-        [Newtonsoft.Json.JsonProperty("access_status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Access_status { get; set; }
-    
-        /// <summary>Обобщённые данные о билетах</summary>
-        [Newtonsoft.Json.JsonProperty("registration_data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RegistrationDataResponse Registration_data { get; set; }
-    
-        /// <summary>Отправлять билеты на бесплатные регистрации</summary>
-        [Newtonsoft.Json.JsonProperty("is_sending_free_tickets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool? Is_sending_free_tickets { get; set; }
-    
-        /// <summary>Заголовок персональной ссылки. Доступно только при указании токена со разрешением view_private_events</summary>
-        [Newtonsoft.Json.JsonProperty("personal_link_title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Personal_link_title { get; set; }
-    
-        /// <summary>Срок брони билета в часах. Нулевое значение соответствует неограниченному сроку</summary>
-        [Newtonsoft.Json.JsonProperty("reservation_period", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Reservation_period { get; set; }
+//    
+//        /// <summary>Короткое описание события или подзаголовок</summary>
+//        [Newtonsoft.Json.JsonProperty("description_short", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Description_short { get; set; }
+//    
+//        /// <summary>Полное описание события</summary>
+//        [Newtonsoft.Json.JsonProperty("description_html", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Description_html { get; set; }
+//    
+//        /// <summary>Адрес события в timepad</summary>
+//        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Always)]
+//        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+//        public string Url { get; set; }
+//    
+//        /// <summary>Картинка события</summary>
+//        [Newtonsoft.Json.JsonProperty("poster_image", Required = Newtonsoft.Json.Required.Always)]
+//        public ImageResponse Poster_image { get; set; }
+//    
+//        /// <summary>Процент, который получают партнёры за продажу билета на это событие</summary>
+//        [Newtonsoft.Json.JsonProperty("ad_partner_percent", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public int? Ad_partner_percent { get; set; }
+//    
+//        /// <summary>Язык события по умолчанию</summary>
+//        [Newtonsoft.Json.JsonProperty("locale", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Locale { get; set; }
+//    
+//        /// <summary>Место проведения события</summary>
+//        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public LocationResponse Location { get; set; }
+//    
+//        /// <summary>Организация, проводящая событие</summary>
+//        [Newtonsoft.Json.JsonProperty("organization", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public OrganizationResponse Organization { get; set; }
+//    
+//        /// <summary>Категории события</summary>
+//        [Newtonsoft.Json.JsonProperty("categories", Required = Newtonsoft.Json.Required.Always)]
+//        [System.ComponentModel.DataAnnotations.Required]
+//        public System.Collections.Generic.ICollection<CategoryResponse> Categories { get; set; } = new System.Collections.ObjectModel.Collection<CategoryResponse>();
+//    
+//        /// <summary>Максимальное количество человек, которые могут посетить событие</summary>
+//        [Newtonsoft.Json.JsonProperty("tickets_limit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public int? Tickets_limit { get; set; }
+//    
+//        /// <summary>Доступные типы билетов</summary>
+//        [Newtonsoft.Json.JsonProperty("ticket_types", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<TicketTypeResponse> Ticket_types { get; set; }
+//    
+//        /// <summary>Персональные ссылки. Доступно только при указании токена со разрешением view_private_events</summary>
+//        [Newtonsoft.Json.JsonProperty("personal_links", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<string> Personal_links { get; set; }
+//    
+//        /// <summary>Вопросы, задающиеся при регистрации</summary>
+//        [Newtonsoft.Json.JsonProperty("questions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<QuestionResponse> Questions { get; set; }
+//    
+//        /// <summary>Возрастное ограничение события</summary>
+//        [Newtonsoft.Json.JsonProperty("age_limit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Age_limit { get; set; }
+//    
+//        /// <summary>Виджеты, доступные для события</summary>
+//        [Newtonsoft.Json.JsonProperty("widgets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<WidgetResponse> Widgets { get; set; }
+//    
+//        /// <summary>Список особенностей события</summary>
+//        [Newtonsoft.Json.JsonProperty("properties", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<string> Properties { get; set; }
+//    
+//        /// <summary>Статус модерации</summary>
+//        [Newtonsoft.Json.JsonProperty("moderation_status", Required = Newtonsoft.Json.Required.Always)]
+//        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+//        public string Moderation_status { get; set; }
+//    
+//        /// <summary>Статус доступа к событию</summary>
+//        [Newtonsoft.Json.JsonProperty("access_status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Access_status { get; set; }
+//    
+//        /// <summary>Обобщённые данные о билетах</summary>
+//        [Newtonsoft.Json.JsonProperty("registration_data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public RegistrationDataResponse Registration_data { get; set; }
+//    
+//        /// <summary>Отправлять билеты на бесплатные регистрации</summary>
+//        [Newtonsoft.Json.JsonProperty("is_sending_free_tickets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public bool? Is_sending_free_tickets { get; set; }
+//    
+//        /// <summary>Заголовок персональной ссылки. Доступно только при указании токена со разрешением view_private_events</summary>
+//        [Newtonsoft.Json.JsonProperty("personal_link_title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public string Personal_link_title { get; set; }
+//    
+//        /// <summary>Срок брони билета в часах. Нулевое значение соответствует неограниченному сроку</summary>
+//        [Newtonsoft.Json.JsonProperty("reservation_period", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public int? Reservation_period { get; set; }
     
     
     }
@@ -3566,9 +3566,9 @@ namespace DotNetRuServer.Integration.TimePad
         public string Name { get; set; }
     
         /// <summary>Описание организации</summary>
-        [Newtonsoft.Json.JsonProperty("description_html", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Description_html { get; set; }
+//        [Newtonsoft.Json.JsonProperty("description_html", Required = Newtonsoft.Json.Required.Always)]
+//        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+//        public string Description_html { get; set; }
     
         /// <summary>URL организации на сайте</summary>
         [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Always)]
@@ -3576,8 +3576,8 @@ namespace DotNetRuServer.Integration.TimePad
         public string Url { get; set; }
     
         /// <summary>Логотип</summary>
-        [Newtonsoft.Json.JsonProperty("logo_image", Required = Newtonsoft.Json.Required.Always)]
-        public ImageResponse Logo_image { get; set; }
+//        [Newtonsoft.Json.JsonProperty("logo_image", Required = Newtonsoft.Json.Required.Always)]
+//        public ImageResponse Logo_image { get; set; }
     
         /// <summary>URL-идентификатор организации в Таймпаде (***.timepad.ru)</summary>
         [Newtonsoft.Json.JsonProperty("subdomain", Required = Newtonsoft.Json.Required.Always)]
@@ -3585,8 +3585,8 @@ namespace DotNetRuServer.Integration.TimePad
         public string Subdomain { get; set; }
     
         /// <summary>Настройки доступов для организаций</summary>
-        [Newtonsoft.Json.JsonProperty("permissions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Permissions { get; set; }
+//        [Newtonsoft.Json.JsonProperty("permissions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<string> Permissions { get; set; }
     
     
     }
@@ -4163,9 +4163,9 @@ namespace DotNetRuServer.Integration.TimePad
         [System.ComponentModel.DataAnnotations.Required]
         public System.Collections.Generic.ICollection<OrganizationResponse> Organizations { get; set; } = new System.Collections.ObjectModel.Collection<OrganizationResponse>();
     
-        /// <summary>Заказы, которые пользователь сделал в системе</summary>
-        [Newtonsoft.Json.JsonProperty("orders", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<RegistrationOrderResponse> Orders { get; set; }
+//        /// <summary>Заказы, которые пользователь сделал в системе</summary>
+//        [Newtonsoft.Json.JsonProperty("orders", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+//        public System.Collections.Generic.ICollection<RegistrationOrderResponse> Orders { get; set; }
     
     
     }
