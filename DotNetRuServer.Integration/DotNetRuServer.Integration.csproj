@@ -16,9 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="TimePad\Templates\Template-community-1.cshtml">
+      <Content Include="Templates\1\TimePad.cshtml">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+      </Content>
     </ItemGroup>
 
     <Target Name="NSwag" BeforeTargets="PrepareForBuild" Condition="'$(GenerateCode)'=='True'">

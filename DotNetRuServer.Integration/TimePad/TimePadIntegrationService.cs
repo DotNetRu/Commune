@@ -45,24 +45,17 @@ namespace DotNetRuServer.Integration.TimePad
             var dateDescription = startsAt.ToString("dd MMMM", CultureInfo.GetCultureInfo("ru-RU"));
             var friendsDescription = CreateFriendsDescription(meetup.Friends);
             var shortDescription = $"{dateDescription} {friendsDescription} состоится встреча {meetup.Community.Name}";
-            var htmlDescription = await _razorEngine.CompileRenderAsync($"TimePad/Templates/Template-community-{meetup.CommunityId}.cshtml",
-                new
-                {
-                    FirstStart = meetup.Sessions[0].StartTime.ToString("HH:mm"),
-                    FirstEnd = meetup.Sessions[0].EndTime.ToString("HH:mm"),
-                    FirstSpeaker = string.Join(", ", meetup.Sessions[0].Talk.Speakers.Select(s => s.Speaker.Name)),
-                    FirstTalkTitle = meetup.Sessions[0].Talk.Title,
-                    SecondStart = meetup.Sessions[1].StartTime.ToString("HH:mm"),
-                    SecondEnd = meetup.Sessions[1].EndTime.ToString("HH:mm"),
-                    SecondSpeaker = string.Join(", ", meetup.Sessions[1].Talk.Speakers.Select(s => s.Speaker.Name)),
-                    SecondTalkTitle = meetup.Sessions[1].Talk.Title,
-                });
+            
+            var templateModel = CreateTemplateModel(meetup);
+            var htmlDescription = await _razorEngine.CompileRenderAsync($"Templates/{meetup.CommunityId}/TimePad.cshtml", templateModel);
+            
             var ticketType = new TicketTypeRequest
             {
                 Name = "Входной билет",
                 Price = 0,
                 Send_personal_links = true
             };
+            
             var questions = new List<QuestionInclude>
             {
                 new QuestionInclude {Field_id = "mail", Is_mandatory = true, Name = "E-mail"},
@@ -96,8 +89,7 @@ namespace DotNetRuServer.Integration.TimePad
                 if (friends is null || friends.Count == 0)
                     return string.Empty;
 
-                var description = "в гостях у " +
-                                 (friends.Count == 1 ? "компании " : "компаний ") +
+                var description = "в гостях у " + (friends.Count == 1 ? "компании " : "компаний ") +
                                  string.Join(", ", friends.Select(f => f.Friend.Name));
                 return description;
             }
@@ -161,6 +153,31 @@ namespace DotNetRuServer.Integration.TimePad
                 throw new Exception("Can't find community TimePad organization");
                 
             return communityOrganization;
+        }
+
+        private TemplateModel CreateTemplateModel(Meetup meetup)
+        {
+            var agendaItems = meetup.Sessions.Select(s => new TemplateModel.TemplateAgendaItem
+            {
+                StartTime = $"{s.StartTime:HH:mm}",
+                EndTime = $"{s.EndTime:HH:mm}",
+                Speakers = string.Join(", ", s.Talk.Speakers.Select(sp => $"{sp.Speaker.Name} ({sp.Speaker.CompanyName})")),
+                TalkTitle = $"«{s.Talk.Title}»"
+            }).ToList();
+
+            var talks = meetup.Sessions.Select(s => new TemplateModel.TemplateTalk
+            {
+                Speakers = string.Join(", ", s.Talk.Speakers.Select(sp => sp.Speaker.Name)),
+                TalkTitle = $"«{s.Talk.Title}»",
+                TalkDescription = s.Talk.Description,
+                SpeakersDescriptions = s.Talk.Speakers.Select(sp => sp.Speaker.Description).ToList()
+            }).ToList();
+            
+            return new TemplateModel
+            {
+                Agenda = agendaItems,
+                Talks = talks
+            };
         }
     }
 }

@@ -29,7 +29,7 @@ namespace DotNetRuServer.Comon.BL.Enums
         /// <summary> Омск </summary>
         Oms = 9,
         
-        /// <summary> Самара </summary>
+        /// <summary> Омск </summary>
         Sam = 10,
         
         /// <summary> Пенза </summary>
