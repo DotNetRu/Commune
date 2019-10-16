@@ -4,28 +4,27 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNetRuServer.Meetups.BL.Entities;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using RazorLight;
 
 namespace DotNetRuServer.Integration.TimePad
 {
     public class TimePadIntegrationService
     {
-        private const string TimePadSection = "TimePad";
-        private const string CommunitySection = "Community";
         private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _configuration;
+        private readonly IOptionsSnapshot<TimePadConfiguration> _optionsAccessor;
         private readonly RazorLightEngine _razorEngine;
 
-        public TimePadIntegrationService(IHttpClientFactory factory, IConfiguration configuration)
+        public TimePadIntegrationService(IHttpClientFactory factory, IOptionsSnapshot<TimePadConfiguration> options)
         {
             _clientFactory = factory;
-            _configuration = configuration;
-            var rootDir =   Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            _optionsAccessor = options;
+            var rootDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             var appRoot = rootDir.Substring(5);
             _razorEngine = new RazorLightEngineBuilder()
                 .UseFilesystemProject(appRoot)
@@ -35,9 +34,12 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task CreateDraftEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var communityOrganization = await GetOrganizationAsync(meetup.Community, ct);
-
-            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{meetup.CommunityId}"));
+            var token = _optionsAccessor.Get(meetup.CommunityId.ToString()).Token;
+            var httpClient = _clientFactory.CreateClient("TimePad");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var timePadClient = new TimePadClient(httpClient);
+            
+            var communityOrganization = await GetOrganizationAsync(token, meetup.Community, timePadClient, ct);
 
             var startsAt = meetup.Sessions.Min(s => s.StartTime);
             var endsAt = meetup.Sessions.Max(s => s.EndTime);
@@ -97,9 +99,12 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task PublishEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var communityOrganization = await GetOrganizationAsync(meetup.Community, ct);
-
-            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{meetup.Community.Id}"));
+            var token = _optionsAccessor.Get(meetup.CommunityId.ToString()).Token;
+            var httpClient = _clientFactory.CreateClient("TimePad");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var timePadClient = new TimePadClient(httpClient);
+            
+            var communityOrganization = await GetOrganizationAsync(token, meetup.Community, timePadClient, ct);
 
             var events = await timePadClient.GetEventsAsync(
                 null,
@@ -138,15 +143,9 @@ namespace DotNetRuServer.Integration.TimePad
             await timePadClient.EditEventAsync(meetupEvent.Id, editEventBody, ct);
         }
 
-        private async Task<OrganizationResponse> GetOrganizationAsync(Community community, CancellationToken ct)
+        private async Task<OrganizationResponse> GetOrganizationAsync(string token, Community community, TimePadClient timePadClient, CancellationToken ct)
         {
-            var timePadSection = _configuration.GetSection($"{CommunitySection}-{community.Id}")
-                .GetSection(TimePadSection);
-            if (timePadSection is null)
-                throw new Exception("Can't find TimePad section for community");
-
-            var timePadClient = new TimePadClient(_clientFactory.CreateClient($"TimePad-{community.Id}"));
-            var introspect = await timePadClient.IntrospectTokenAsync(timePadSection.Value, ct);
+            var introspect = await timePadClient.IntrospectTokenAsync(token, ct);
 
             var communityOrganization = introspect.Organizations?.SingleOrDefault(o => o.Name.Contains(community.Name));
             if (communityOrganization is null)
