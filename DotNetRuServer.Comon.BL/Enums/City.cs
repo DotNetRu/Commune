@@ -33,6 +33,9 @@ namespace DotNetRuServer.Comon.BL.Enums
         Sam = 10,
         
         /// <summary> Пенза </summary>
-        Pnz = 11
+        Pnz = 11,
+        
+        /// <summary> Краснодар </summary>
+        Krd = 12
     }
 }
