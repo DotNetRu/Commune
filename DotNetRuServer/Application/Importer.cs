@@ -6,7 +6,12 @@ using Octokit;
 
 namespace DotNetRuServer.Application
 {
-    public class Importer
+    public interface IImporter
+    {
+        Task<string> Import(string githubToken);
+    }
+
+    public class Importer : IImporter
     {
         private readonly DotNetRuServerContext _context;
         private readonly ILogger<Importer> _logger;

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DotNetRuServer.Application;
 using DotNetRuServer.Comon.BL.Caching;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
@@ -33,7 +34,6 @@ namespace DotNetRuServer
             {
                 services.AddDbContext<DotNetRuServerContext>(options =>
                     options.UseInMemoryDatabase("DotNetRu"));
-                services.AddTransient<Application.Importer>();
             }
             else
             {
@@ -60,6 +60,7 @@ namespace DotNetRuServer
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
 
             services.AddSingleton<ICache, MemCache>();
+            services.AddScoped<IImporter, Application.Importer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(_configuration);
         }
@@ -90,22 +91,26 @@ namespace DotNetRuServer
 
             if (_currentEnvironment.IsDevelopment())
             {
-                var serviceProvider = app.ApplicationServices;
-                var importer = serviceProvider.GetService<Application.Importer>();
-                var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
-                if (string.IsNullOrEmpty(token))
-                    return;
-
                 Task.Run(async () =>
                     {
-                        try
+                        var serviceProvider = app.ApplicationServices;
+                        using (var scope = serviceProvider.CreateScope())
                         {
-                            await importer.Import(token);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                            throw;
+                            var importer = scope.ServiceProvider.GetService<IImporter>();
+                            var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+                            if (string.IsNullOrEmpty(token))
+                                return;
+                            
+                            try
+                            {
+                                await importer.Import(token);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                                throw;
+                            }
+                    
                         }
                     }
                 );
