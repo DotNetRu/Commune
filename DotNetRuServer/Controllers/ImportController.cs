@@ -7,7 +7,7 @@ namespace DotNetRuServer.Controllers
     [Route("api/import")]
     public class ImportController : Controller
     {
-        private readonly Application.Importer _importer;
+        private readonly Application.IImporter _importer;
 
         public ImportController(Application.Importer importer)
         {
