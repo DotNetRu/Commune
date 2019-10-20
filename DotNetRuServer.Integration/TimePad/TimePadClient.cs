@@ -3304,6 +3304,10 @@ namespace DotNetRuServer.Integration.TimePad
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Name { get; set; }
+        
+         /// <summary>Картинка события</summary>
+        [Newtonsoft.Json.JsonProperty("poster_image", Required = Newtonsoft.Json.Required.Default)]
+        public ImageResponse Poster_image { get; set; }
 //    
 //        /// <summary>Короткое описание события или подзаголовок</summary>
 //        [Newtonsoft.Json.JsonProperty("description_short", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -3317,10 +3321,6 @@ namespace DotNetRuServer.Integration.TimePad
 //        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Always)]
 //        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
 //        public string Url { get; set; }
-//    
-//        /// <summary>Картинка события</summary>
-//        [Newtonsoft.Json.JsonProperty("poster_image", Required = Newtonsoft.Json.Required.Always)]
-//        public ImageResponse Poster_image { get; set; }
 //    
 //        /// <summary>Процент, который получают партнёры за продажу билета на это событие</summary>
 //        [Newtonsoft.Json.JsonProperty("ad_partner_percent", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4140,26 +4140,26 @@ namespace DotNetRuServer.Integration.TimePad
     public partial class Introspect 
     {
         /// <summary>Действует ли этот токен</summary>
-        [Newtonsoft.Json.JsonProperty("active", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("active", Required = Newtonsoft.Json.Required.Default)]
         public bool Active { get; set; }
     
         /// <summary>Идентификатор клиента API, которым получен токен</summary>
-        [Newtonsoft.Json.JsonProperty("client_id", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("client_id", Required = Newtonsoft.Json.Required.Default)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Client_id { get; set; }
     
         /// <summary>Идентификатор пользователя, которым получен токен</summary>
-        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("user_id", Required = Newtonsoft.Json.Required.Default)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string User_id { get; set; }
     
         /// <summary>Электронная почта пользователя, которым получен токен</summary>
-        [Newtonsoft.Json.JsonProperty("user_email", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("user_email", Required = Newtonsoft.Json.Required.Default)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string User_email { get; set; }
     
         /// <summary>Организации, к которым есть доступ у пользователя</summary>
-        [Newtonsoft.Json.JsonProperty("organizations", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("organizations", Required = Newtonsoft.Json.Required.Default)]
         [System.ComponentModel.DataAnnotations.Required]
         public System.Collections.Generic.ICollection<OrganizationResponse> Organizations { get; set; } = new System.Collections.ObjectModel.Collection<OrganizationResponse>();
     

@@ -67,6 +67,13 @@ namespace DotNetRuServer.Integration.TimePad
                 new QuestionInclude {Name = "Должность"}
             };
 
+            string posterUrl = null;
+            var lastPublicEvent = await GetLastPublicEvent(communityOrganization.Id, timePadClient, ct);
+            if (!(lastPublicEvent is null))
+            {
+                posterUrl = lastPublicEvent.Poster_image.Default_url;
+            }
+
             var createEventBody = new CreateEvent
             {
                 Organization = new OrganizationInclude {Id = communityOrganization.Id, Subdomain = communityOrganization.Subdomain},
@@ -76,6 +83,7 @@ namespace DotNetRuServer.Integration.TimePad
                 Description_short = shortDescription,
                 Description_html = htmlDescription,
                 Location = new LocationInclude {City = meetup.Community.City, Address = meetup.Venue.Address},
+                Poster_image_url = posterUrl,
                 Categories = new[] {new CategoryInclude {Id = 452, Name = "ИТ и интернет"}},
                 Access_status = "private",
                 Tickets_limit = 150,
@@ -105,37 +113,8 @@ namespace DotNetRuServer.Integration.TimePad
             var timePadClient = new TimePadClient(httpClient);
             
             var communityOrganization = await GetOrganizationAsync(token, meetup.Community, timePadClient, ct);
-
-            var events = await timePadClient.GetEventsAsync(
-                null,
-                10,
-                0,
-                new[] {"+starts_at"},
-                null,
-                null,
-                null,
-                null,
-                new[] {communityOrganization.Id},
-                null,
-                null,
-                null,
-                null,
-                null,
-                new[] {"private"},
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                ct
-            );
-            var meetupEvent = events.Values.FirstOrDefault(e => e.Name == meetup.Name);
+            var events = await GetLastPrivateEvents(communityOrganization.Id, timePadClient, ct);
+            var meetupEvent = events.FirstOrDefault(e => e.Name == meetup.Name);
             if (meetupEvent is null)
                 throw new Exception("Can't find meetup event");
 
@@ -177,6 +156,76 @@ namespace DotNetRuServer.Integration.TimePad
                 Agenda = agendaItems,
                 Talks = talks
             };
+        }
+
+        private async Task<List<EventResponse>> GetLastPrivateEvents(int organizationId, TimePadClient timePadClient, CancellationToken ct)
+        {
+            var events = await timePadClient.GetEventsAsync(
+                null,
+                10,
+                0,
+                new[] {"+starts_at"},
+                null,
+                null,
+                null,
+                null,
+                new[] {organizationId},
+                null,
+                null,
+                null,
+                null,
+                null,
+                new[] {"private"},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ct
+            );
+
+            return events.Values.ToList();
+        }
+        
+        private async Task<EventResponse> GetLastPublicEvent(int organizationId, TimePadClient timePadClient, CancellationToken ct)
+        {
+            var events = await timePadClient.GetEventsAsync(
+                null,
+                1,
+                0,
+                new[] {"+starts_at"},
+                null,
+                null,
+                null,
+                null,
+                new[] {organizationId},
+                null,
+                null,
+                null,
+                null,
+                null,
+                new[] {"public"},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ct
+            );
+
+            return events.Values.FirstOrDefault();
         }
     }
 }
