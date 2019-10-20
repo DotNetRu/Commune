@@ -71,7 +71,7 @@ namespace DotNetRuServer.Integration.TimePad
             var lastPublicEvent = await GetLastPublicEvent(communityOrganization.Id, timePadClient, ct);
             if (!(lastPublicEvent is null))
             {
-                posterUrl = lastPublicEvent.Poster_image.Default_url;
+                posterUrl = $"http:{lastPublicEvent.Poster_image.Uploadcare_url}";
             }
 
             var createEventBody = new CreateEvent
