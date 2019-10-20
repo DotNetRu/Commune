@@ -6,7 +6,7 @@
     {
         var item = Model.Agenda[i];
         <text>@item.StartTime – @item.EndTime @item.Speakers @item.TalkTitle <br/></text>
-        
+
         if (i != Model.Agenda.Count - 1)
         {
             <text>@item.EndTime – @Model.Agenda[i + 1].StartTime Перерыв <br/></text>
@@ -15,41 +15,29 @@
 </p>
 <br/>
 <p>После этих вдохновляющих речей приглашаем всех желающих в бар для обсуждения накопившихся вопросов и идей!</p>
-<br/>
+
 @foreach (var talk in Model.Talks)
 {
-    <h3 class="tsubheader">
-        @talk.Speakers
-        <br/>
-        @talk.TalkTitle
-    </h3>
-    
-    <p>
-        @talk.TalkDescription
-    </p>
-    <br/><br/>   
-    <p>
-        <span style="font-size:24px;">Об авторе</span>
-    </p>
-    
-    <p>
-        @foreach (var speakerDescription in talk.SpeakersDescriptions)
-        {
-            <text>
-                @speakerDescription<br/><br/>  
-            </text>
-        }
-    </p>
-    <br/>
+    <br/><br/>
+    <h1>@talk.Speakers<br/>@talk.TalkTitle</h1>
+
+    <p>@talk.TalkDescription</p>
+    <br/><br/>
+    <p><span style="font-size:24px;">Об авторе</span></p>
+    <br/><br/>
+
+    @foreach (var speakerDescription in talk.SpeakersDescriptions)
+    {
+        <p>
+            <img alt="\" src="@speakerDescription.AvatarUrl" style="margin-left:10px;margin-right:10px;width:200px;"/>
+            <span>@speakerDescription.Description</span>
+        </p>
+    }
 }
 <br/>
-<p>
-    <strong>Участие бесплатное, количество мест ограничено!</strong>
-</p>
+<p><strong>Участие бесплатное, количество мест ограничено!</strong></p>
 <br/>
-<p>
-    Дополнительную информацию о встречах <strong>SpbDotNet Community</strong> Вы можете найти в группах сообщества:
-</p>
+<p>Дополнительную информацию о встречах <strong>SpbDotNet Community</strong> Вы можете найти в группах сообщества:</p>
 <p>
     VK: <a href="https://vk.com/spbdotnet">https://vk.com/SpbDotNet</a>
     <br/>

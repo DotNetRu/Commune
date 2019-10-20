@@ -20,7 +20,13 @@ namespace DotNetRuServer.Integration.TimePad
             public string Speakers { get; set; }
             public string TalkTitle { get; set; }
             public string TalkDescription { get; set; }
-            public List<string> SpeakersDescriptions { get; set; }
+            public List<TemplateSpeaker> SpeakersDescriptions { get; set; }
+        }
+        
+        public class TemplateSpeaker
+        {
+            public string Description { get; set; }
+            public string AvatarUrl { get; set; }
         }
     }
 }

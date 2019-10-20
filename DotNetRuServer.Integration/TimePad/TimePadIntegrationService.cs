@@ -38,7 +38,7 @@ namespace DotNetRuServer.Integration.TimePad
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
-            
+
             var communityOrganization = await GetOrganizationAsync(token, meetup.Community, timePadClient, ct);
 
             var startsAt = meetup.Sessions.Min(s => s.StartTime);
@@ -47,17 +47,17 @@ namespace DotNetRuServer.Integration.TimePad
             var dateDescription = startsAt.ToString("dd MMMM", CultureInfo.GetCultureInfo("ru-RU"));
             var friendsDescription = CreateFriendsDescription(meetup.Friends);
             var shortDescription = $"{dateDescription} {friendsDescription} состоится встреча {meetup.Community.Name}";
-            
+
             var templateModel = CreateTemplateModel(meetup);
             var htmlDescription = await _razorEngine.CompileRenderAsync($"Templates/{meetup.CommunityId}/TimePad.cshtml", templateModel);
-            
+
             var ticketType = new TicketTypeRequest
             {
                 Name = "Входной билет",
                 Price = 0,
                 Send_personal_links = true
             };
-            
+
             var questions = new List<QuestionInclude>
             {
                 new QuestionInclude {Field_id = "mail", Is_mandatory = true, Name = "E-mail"},
@@ -87,7 +87,7 @@ namespace DotNetRuServer.Integration.TimePad
                 Categories = new[] {new CategoryInclude {Id = 452, Name = "ИТ и интернет"}},
                 Access_status = "private",
                 Tickets_limit = 150,
-                Ticket_types = new [] {ticketType},
+                Ticket_types = new[] {ticketType},
                 Questions = questions,
                 Age_limit = "0"
             };
@@ -100,7 +100,7 @@ namespace DotNetRuServer.Integration.TimePad
                     return string.Empty;
 
                 var description = "в гостях у " + (friends.Count == 1 ? "компании " : "компаний ") +
-                                 string.Join(", ", friends.Select(f => f.Friend.Name));
+                                  string.Join(", ", friends.Select(f => f.Friend.Name));
                 return description;
             }
         }
@@ -111,7 +111,7 @@ namespace DotNetRuServer.Integration.TimePad
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
-            
+
             var communityOrganization = await GetOrganizationAsync(token, meetup.Community, timePadClient, ct);
             var events = await GetLastPrivateEvents(communityOrganization.Id, timePadClient, ct);
             var meetupEvent = events.FirstOrDefault(e => e.Name == meetup.Name);
@@ -122,14 +122,15 @@ namespace DotNetRuServer.Integration.TimePad
             await timePadClient.EditEventAsync(meetupEvent.Id, editEventBody, ct);
         }
 
-        private async Task<OrganizationResponse> GetOrganizationAsync(string token, Community community, TimePadClient timePadClient, CancellationToken ct)
+        private async Task<OrganizationResponse> GetOrganizationAsync(string token, Community community,
+            TimePadClient timePadClient, CancellationToken ct)
         {
             var introspect = await timePadClient.IntrospectTokenAsync(token, ct);
 
             var communityOrganization = introspect.Organizations?.SingleOrDefault(o => o.Name.Contains(community.Name));
             if (communityOrganization is null)
                 throw new Exception("Can't find community TimePad organization");
-                
+
             return communityOrganization;
         }
 
@@ -139,7 +140,7 @@ namespace DotNetRuServer.Integration.TimePad
             {
                 StartTime = $"{s.StartTime:HH:mm}",
                 EndTime = $"{s.EndTime:HH:mm}",
-                Speakers = string.Join(", ", s.Talk.Speakers.Select(sp => $"{sp.Speaker.Name} ({sp.Speaker.CompanyName})")),
+                Speakers = string.Join(", ",s.Talk.Speakers.Select(sp => $"{sp.Speaker.Name} ({sp.Speaker.CompanyName})")),
                 TalkTitle = $"«{s.Talk.Title}»"
             }).ToList();
 
@@ -148,9 +149,13 @@ namespace DotNetRuServer.Integration.TimePad
                 Speakers = string.Join(", ", s.Talk.Speakers.Select(sp => sp.Speaker.Name)),
                 TalkTitle = $"«{s.Talk.Title}»",
                 TalkDescription = s.Talk.Description,
-                SpeakersDescriptions = s.Talk.Speakers.Select(sp => sp.Speaker.Description).ToList()
+                SpeakersDescriptions = s.Talk.Speakers.Select(sp => new TemplateModel.TemplateSpeaker
+                {
+                    Description = sp.Speaker.Description,
+                    AvatarUrl = $"https://raw.githubusercontent.com/DotNetRu/Audit/master/db/speakers/{sp.Speaker.ExportId}/avatar.small.jpg"
+                }).ToList()
             }).ToList();
-            
+
             return new TemplateModel
             {
                 Agenda = agendaItems,
@@ -158,7 +163,8 @@ namespace DotNetRuServer.Integration.TimePad
             };
         }
 
-        private async Task<List<EventResponse>> GetLastPrivateEvents(int organizationId, TimePadClient timePadClient, CancellationToken ct)
+        private async Task<List<EventResponse>> GetLastPrivateEvents(int organizationId, TimePadClient timePadClient,
+            CancellationToken ct)
         {
             var events = await timePadClient.GetEventsAsync(
                 null,
@@ -192,8 +198,9 @@ namespace DotNetRuServer.Integration.TimePad
 
             return events.Values.ToList();
         }
-        
-        private async Task<EventResponse> GetLastPublicEvent(int organizationId, TimePadClient timePadClient, CancellationToken ct)
+
+        private async Task<EventResponse> GetLastPublicEvent(int organizationId, TimePadClient timePadClient,
+            CancellationToken ct)
         {
             var events = await timePadClient.GetEventsAsync(
                 null,
