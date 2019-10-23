@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNetRuServer.Meetups.BL.Entities;
@@ -24,10 +22,8 @@ namespace DotNetRuServer.Integration.TimePad
         {
             _clientFactory = factory;
             _optionsAccessor = options;
-            var rootDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-            var appRoot = rootDir.Substring(5);
             _razorEngine = new RazorLightEngineBuilder()
-                .UseFilesystemProject(appRoot)
+                .UseFilesystemProject(AppDomain.CurrentDomain.BaseDirectory)
                 .UseMemoryCachingProvider()
                 .Build();
         }
@@ -45,8 +41,7 @@ namespace DotNetRuServer.Integration.TimePad
             var endsAt = meetup.Sessions.Max(s => s.EndTime);
 
             var dateDescription = startsAt.ToString("dd MMMM", CultureInfo.GetCultureInfo("ru-RU"));
-            var friendsDescription = CreateFriendsDescription(meetup.Friends);
-            var shortDescription = $"{dateDescription} {friendsDescription} состоится встреча {meetup.Community.Name}";
+            var shortDescription = $"{dateDescription} в гостях у компании {meetup.Friends.First()} состоится встреча {meetup.Community.Name}";
 
             var templateModel = CreateTemplateModel(meetup);
             var htmlDescription = await _razorEngine.CompileRenderAsync($"Templates/{meetup.CommunityId}/TimePad.cshtml", templateModel);
@@ -93,16 +88,6 @@ namespace DotNetRuServer.Integration.TimePad
             };
 
             await timePadClient.AddEventAsync(createEventBody, ct);
-
-            string CreateFriendsDescription(List<FriendAtMeetup> friends)
-            {
-                if (friends is null || friends.Count == 0)
-                    return string.Empty;
-
-                var description = "в гостях у " + (friends.Count == 1 ? "компании " : "компаний ") +
-                                  string.Join(", ", friends.Select(f => f.Friend.Name));
-                return description;
-            }
         }
 
         public async Task PublishEventAsync(Meetup meetup, CancellationToken ct)
