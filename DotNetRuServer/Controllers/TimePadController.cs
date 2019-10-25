@@ -24,12 +24,5 @@ namespace DotNetRuServer.Controllers
             var meetup = await _meetupProvider.GetMeetupOrDefaultExtendedAsync(meetupId);
             await _timePadService.CreateDraftEventAsync(meetup, ct);
         }
-
-        [HttpGet("[action]/{meetupId}")]
-        public async Task Publish(string meetupId, CancellationToken ct)
-        {
-            var meetup = await _meetupProvider.GetMeetupOrDefaultExtendedAsync(meetupId);
-            await _timePadService.PublishEventAsync(meetup, ct);
-        }
     }
 }
