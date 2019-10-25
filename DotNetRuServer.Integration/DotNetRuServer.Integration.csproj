@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Templates\1\TimePad.cshtml">
+      <Content Include="Templates\SpbDotNet\TimePad.cshtml">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

@@ -30,7 +30,7 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task CreateDraftEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var token = _optionsAccessor.Get(meetup.CommunityId.ToString()).Token;
+            var token = _optionsAccessor.Get(meetup.Community.ExportId).Token;
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
@@ -44,7 +44,7 @@ namespace DotNetRuServer.Integration.TimePad
             var shortDescription = $"{dateDescription} в гостях у компании {meetup.Friends.First()} состоится встреча {meetup.Community.Name}";
 
             var templateModel = CreateTemplateModel(meetup);
-            var htmlDescription = await _razorEngine.CompileRenderAsync($"Templates/{meetup.CommunityId}/TimePad.cshtml", templateModel);
+            var htmlDescription = await _razorEngine.CompileRenderAsync($"Templates/{meetup.Community.ExportId}/TimePad.cshtml", templateModel);
 
             var ticketType = new TicketTypeRequest
             {
@@ -92,7 +92,7 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task PublishEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var token = _optionsAccessor.Get(meetup.CommunityId.ToString()).Token;
+            var token = _optionsAccessor.Get(meetup.Community.ExportId).Token;
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
