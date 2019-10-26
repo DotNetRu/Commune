@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetRuServer.Importer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Exporter", "DotNetRuServer.Exporter\DotNetRuServer.Exporter.csproj", "{F2285BC7-5745-4E8D-AE74-06A7F4B58B2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRuServer.Integration", "DotNetRuServer.Integration\DotNetRuServer.Integration.csproj", "{E0FBBC12-7E6D-492F-B109-C4B27A92F70B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{F2285BC7-5745-4E8D-AE74-06A7F4B58B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2285BC7-5745-4E8D-AE74-06A7F4B58B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2285BC7-5745-4E8D-AE74-06A7F4B58B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FBBC12-7E6D-492F-B109-C4B27A92F70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FBBC12-7E6D-492F-B109-C4B27A92F70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FBBC12-7E6D-492F-B109-C4B27A92F70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FBBC12-7E6D-492F-B109-C4B27A92F70B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
