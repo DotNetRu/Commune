@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using DotNetRuServer.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetRuServer.Controllers
@@ -7,9 +8,9 @@ namespace DotNetRuServer.Controllers
     [Route("api/import")]
     public class ImportController : Controller
     {
-        private readonly Application.IImporter _importer;
+        private readonly IImporter _importer;
 
-        public ImportController(Application.Importer importer)
+        public ImportController(IImporter importer)
         {
             _importer = importer;
         }
