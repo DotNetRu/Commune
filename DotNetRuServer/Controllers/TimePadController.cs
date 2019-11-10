@@ -18,7 +18,7 @@ namespace DotNetRuServer.Controllers
             _meetupProvider = meetupProvider;
         }
 
-        [HttpGet("[action]/{meetupId}")]
+        [HttpPost("[action]/{meetupId}")]
         public async Task Create(string meetupId, CancellationToken ct)
         {
             var meetup = await _meetupProvider.GetMeetupOrDefaultExtendedAsync(meetupId);
