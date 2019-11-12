@@ -42,13 +42,14 @@ namespace DotNetRuServer.Importer
             if (result.IsSuccessStatusCode)
             {
                 Console.WriteLine("Completed successfully!");
+                return 0;
             }
             else
             {
                 Console.WriteLine("Import failed.");
                 Console.WriteLine(await result.Content.ReadAsStringAsync());
+                return -1;
             }
-            return 0;
         }
 
         private static async Task<int> ImportViaDatabase(ImportViaDatabaseOptions options)
