@@ -8,6 +8,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using CommandLine;
 using DotNetRuServer.Comon.BL.Enums;
 using DotNetRuServer.Meetups.BL.Entities;
 using DotNetRuServer.Meetups.DAL.Database;
@@ -19,12 +20,44 @@ namespace DotNetRuServer.Importer
 {
     internal class Program
     {
-        private static async Task Main(string[] args)
+        private static async Task<int> Main(string[] args)
+        {
+            var options = Parser.Default.ParseArguments<ImportViaApiOptions, ImportViaDatabaseOptions>(args);
+
+            return await options.MapResult(
+                async (ImportViaApiOptions o) => await ImportViaApi(o),
+                async (ImportViaDatabaseOptions o) => await ImportViaDatabase(o),
+                _ => Task.FromResult(-1));
+        }
+
+        private static async Task<int> ImportViaApi(ImportViaApiOptions options)
+        {
+            Console.WriteLine("Importing data to Server at {0} from Github.", options.ServerUrl);
+
+            var query = $"{options.ServerUrl}api/import?githubToken={options.GithubToken}";
+
+            var client = new HttpClient();
+            var result = await client.PostAsync(query, new StringContent(string.Empty));
+
+            if (result.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Completed successfully!");
+                return 0;
+            }
+            else
+            {
+                Console.WriteLine("Import failed.");
+                Console.WriteLine(await result.Content.ReadAsStringAsync());
+                return -1;
+            }
+        }
+
+        private static async Task<int> ImportViaDatabase(ImportViaDatabaseOptions options)
         {
             Console.WriteLine("It's time to start");
 
-            var connectionString = args[0];
-            var githubToken = args[1];
+            var connectionString = options.DatabaseConnection;
+            var githubToken = options.GithubToken;
 
             Console.WriteLine($"Github token - {githubToken}");
             Console.WriteLine($"Connection string - {connectionString}");
@@ -32,7 +65,7 @@ namespace DotNetRuServer.Importer
             var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
             optionsBuilder.UseSqlServer(connectionString);
             var context = new DotNetRuServerContext(optionsBuilder.Options);
-             
+
             var github = new GitHubClient(new ProductHeaderValue("DotNetRuServer"));
             var tokenAuth = new Credentials(githubToken);
             github.Credentials = tokenAuth;
@@ -51,6 +84,7 @@ namespace DotNetRuServer.Importer
             Console.WriteLine("Start to import Meetups");
             await importer.ImportMeetups();
             Console.WriteLine("All data is imported");
+            return 0;
         }
     }
 
