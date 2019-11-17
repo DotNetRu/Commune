@@ -1,18 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetRuServer.Controllers
 {
     [Route("api/[controller]")]
-    public class SpeakerController : Controller
+    public class SpeakerController : BaseController
     {
         private readonly ISpeakerService _speakerService;
         private readonly IImageService _imageService;
 
-        public SpeakerController(ISpeakerService speakerService, IImageService imageService)
+        protected SpeakerController() { }
+
+        public SpeakerController(ISpeakerService speakerService, IImageService imageService, ILoggerFactory logger) : base(logger)
         {
             _speakerService = speakerService;
             _imageService = imageService;
@@ -20,27 +24,123 @@ namespace DotNetRuServer.Controllers
 
         [HttpGet("[action]")]
         public Task<List<AutocompleteRow>> GetSpeakers()
-            => _speakerService.GetAllSpeakersAsync();
+        {
+            try
+            {
+                LogMethodBegin();
+
+                Task<List<AutocompleteRow>> result = _speakerService.GetAllSpeakersAsync();
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpGet("[action]/{speakerId}")]
         public Task<SpeakerVm> GetSpeaker(string speakerId)
-            => _speakerService.GetSpeakerAsync(speakerId);
+        {
+            try
+            {
+                LogMethodBegin(speakerId);
+
+                Task<SpeakerVm> result = _speakerService.GetSpeakerAsync(speakerId);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpPost("[action]")]
         public Task<SpeakerVm> AddSpeaker([FromBody] SpeakerVm speaker)
-            => _speakerService.AddSpeakerAsync(speaker);
+        {
+            try
+            {
+                LogMethodBegin(speaker);
+
+                Task<SpeakerVm> result = _speakerService.AddSpeakerAsync(speaker);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpPost("[action]")]
         public Task<SpeakerVm> UpdateSpeaker([FromBody] SpeakerVm speaker)
-            => _speakerService.UpdateSpeakerAsync(speaker);
+        {
+            try
+            {
+                LogMethodBegin(speaker);
+
+                Task<SpeakerVm> result = _speakerService.UpdateSpeakerAsync(speaker);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpGet("[action]/{speakerId}/fullAvatar")]
         public Task<ActionResult> GetFriendFullLogo(string speakerId)
-            => GetAvatarAsync(speakerId, ImageSize.Full);
+        {
+            try
+            {
+                LogMethodBegin(speakerId);
+
+                Task<ActionResult> result = GetAvatarAsync(speakerId, ImageSize.Full);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpGet("[action]/{speakerId}/avatar")]
         public Task<ActionResult> GetFriendSmallLogo(string speakerId)
-            => GetAvatarAsync(speakerId, ImageSize.Small);
+        {
+            try
+            {
+                LogMethodBegin(speakerId);
+
+                Task<ActionResult> result = GetAvatarAsync(speakerId, ImageSize.Small);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         private async Task<ActionResult> GetAvatarAsync(string speakerId, ImageSize imageSize)
         {

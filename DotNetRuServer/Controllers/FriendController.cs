@@ -1,18 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.BL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetRuServer.Controllers
 {
     [Route("api/[controller]")]
-    public class FriendController : Controller
+    public class FriendController : BaseController
     {
         private readonly IFriendService _friendService;
         private readonly IImageService _imageService;
 
-        public FriendController(IFriendService friendService, IImageService imageService)
+        public FriendController(IFriendService friendService, IImageService imageService, ILoggerFactory logger) :
+            base(logger)
         {
             _friendService = friendService;
             _imageService = imageService;
@@ -20,27 +23,123 @@ namespace DotNetRuServer.Controllers
 
         [HttpGet("[action]")]
         public Task<List<AutocompleteRow>> GetFriends()
-            => _friendService.GetAllFriendsAsync();
+        {
+            try
+            {
+                LogMethodBegin();
+
+                Task<List<AutocompleteRow>> result = _friendService.GetAllFriendsAsync();
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpGet("[action]/{friendId}")]
         public Task<FriendVm> GetFriend(string friendId)
-            => _friendService.GetFriendAsync(friendId);
+        {
+            try
+            {
+                LogMethodBegin(friendId);
+
+                Task<FriendVm> result = _friendService.GetFriendAsync(friendId);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpPost("[action]")]
         public Task<FriendVm> AddFriend([FromBody] FriendVm friend)
-            => _friendService.AddFriendAsync(friend);
+        {
+            try
+            {
+                LogMethodBegin(friend);
+
+                Task<FriendVm> result = _friendService.AddFriendAsync(friend);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpPost("[action]")]
         public Task<FriendVm> UpdateFriend([FromBody] FriendVm friend)
-            => _friendService.UpdateFriendAsync(friend);
+        {
+            try
+            {
+                LogMethodBegin(friend);
+
+                Task<FriendVm> result = _friendService.UpdateFriendAsync(friend);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         [HttpGet("[action]/{friendId}/fullLogo")]
         public Task<ActionResult> GetFriendFullLogo(string friendId)
-            => GetFriendLogoAsync(friendId, ImageSize.Full);
+        {
+            try
+            {
+                LogMethodBegin(friendId);
+
+                Task<ActionResult> result = GetFriendLogoAsync(friendId, ImageSize.Full);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        } 
 
         [HttpGet("[action]/{friendId}/smallLogo")]
         public Task<ActionResult> GetFriendSmallLogo(string friendId)
-            => GetFriendLogoAsync(friendId, ImageSize.Small);
+        {
+            try
+            {
+                LogMethodBegin(friendId);
+
+                Task<ActionResult> result = GetFriendLogoAsync(friendId, ImageSize.Small);
+
+                LogMethodEnd(result);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogMethodError(e);
+                throw;
+            }
+        }
 
         private async Task<ActionResult> GetFriendLogoAsync(string friendId, ImageSize imageSize)
         {

@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using DotNetRuServer.Application;
-using DotNetRuServer.Comon.BL.Caching;
+using DotNetRuServer.Extensions;
 using DotNetRuServer.Integration.TimePad;
 using DotNetRuServer.Meetups.BL;
-using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
 using DotNetRuServer.Meetups.DAL.Providers;
 using Microsoft.AspNetCore.Builder;
@@ -60,9 +59,7 @@ namespace DotNetRuServer
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
 
-            services.AddSingleton<ICache, MemCache>();
-            services.AddScoped<IImporter, Application.Importer>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddInjection();
             services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(_configuration);
             services.AddTimePadIntegration();
             

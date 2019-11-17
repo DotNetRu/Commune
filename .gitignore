@@ -238,3 +238,4 @@ _Pvt_Extensions
 .vscode
 .idea
 .DS_Store
+/DotNetRuServer/Logs
