@@ -1,13 +1,12 @@
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetRuServer.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        protected HomeController() { }
-
-        public HomeController(ILoggerFactory logger) : base(logger)
+        public string Index()
         {
+            return "Api works";
         }
     }
 }
