@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using DotNetRuServer.Application;
 using DotNetRuServer.Comon.BL.Caching;
+using DotNetRuServer.Filters;
 using DotNetRuServer.Integration.TimePad;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
@@ -44,7 +45,10 @@ namespace DotNetRuServer
 
             services.AddMemoryCache();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ApiExceptionFilter));
+            });
 
             //CORS
             services.AddCors(options =>
