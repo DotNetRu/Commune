@@ -6,8 +6,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNetRuServer.Integration.Common;
 using DotNetRuServer.Meetups.BL.Entities;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using RazorLight;
 
 namespace DotNetRuServer.Integration.TimePad
@@ -15,13 +16,13 @@ namespace DotNetRuServer.Integration.TimePad
     public class TimePadIntegrationService
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly IOptionsSnapshot<TimePadConfiguration> _optionsAccessor;
         private readonly RazorLightEngine _razorEngine;
+        private readonly IConfiguration _configuration;
 
-        public TimePadIntegrationService(IHttpClientFactory factory, IOptionsSnapshot<TimePadConfiguration> options)
+        public TimePadIntegrationService(IHttpClientFactory factory, IConfiguration configuration)
         {
             _clientFactory = factory;
-            _optionsAccessor = options;
+            _configuration = configuration;
             _razorEngine = new RazorLightEngineBuilder()
                 .UseFilesystemProject(AppDomain.CurrentDomain.BaseDirectory)
                 .UseMemoryCachingProvider()
@@ -30,7 +31,16 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task CreateDraftEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var token = _optionsAccessor.Get(meetup.Community.ExportId).Token;
+            if (meetup is null)
+                throw new IntegrationException(nameof(TimePadIntegrationService), "Meetup is null");
+            
+            var token = _configuration
+                .GetSection($"{meetup.Community.ExportId}:TimePad")
+                .Get<TimePadConfiguration>()
+                ?.Token;
+            if (token is null)
+                throw new IntegrationException(nameof(TimePadIntegrationService), "Can't find TimePad API token");
+
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
@@ -92,7 +102,16 @@ namespace DotNetRuServer.Integration.TimePad
 
         public async Task PublishEventAsync(Meetup meetup, CancellationToken ct)
         {
-            var token = _optionsAccessor.Get(meetup.Community.ExportId).Token;
+            if (meetup is null)
+                throw new IntegrationException(nameof(TimePadIntegrationService), "Meetup is null");
+            
+            var token = _configuration
+                .GetSection($"{meetup.Community.ExportId}:TimePad")
+                .Get<TimePadConfiguration>()
+                ?.Token;
+            if (token is null)
+                throw new IntegrationException(nameof(TimePadIntegrationService), "Can't find TimePad API token");
+            
             var httpClient = _clientFactory.CreateClient("TimePad");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var timePadClient = new TimePadClient(httpClient);
@@ -101,7 +120,7 @@ namespace DotNetRuServer.Integration.TimePad
             var events = await GetLastPrivateEvents(communityOrganization.Id, timePadClient, ct);
             var meetupEvent = events.FirstOrDefault(e => e.Name == meetup.Name);
             if (meetupEvent is null)
-                throw new Exception("Can't find meetup event");
+                throw new IntegrationException(nameof(TimePadIntegrationService), "Can't find meetup event");
 
             var editEventBody = new EditEvent {Access_status = "public"};
             await timePadClient.EditEventAsync(meetupEvent.Id, editEventBody, ct);
@@ -114,7 +133,7 @@ namespace DotNetRuServer.Integration.TimePad
 
             var communityOrganization = introspect.Organizations?.SingleOrDefault(o => o.Name.Contains(community.Name));
             if (communityOrganization is null)
-                throw new Exception("Can't find community TimePad organization");
+                throw new IntegrationException(nameof(TimePadIntegrationService),"Can't find community TimePad organization");
 
             return communityOrganization;
         }

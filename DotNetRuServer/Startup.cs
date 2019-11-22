@@ -65,7 +65,6 @@ namespace DotNetRuServer
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(_configuration);
             services.AddTimePadIntegration();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
