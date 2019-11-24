@@ -38,6 +38,8 @@ namespace DotNetRuServer.Meetups.BL.Models
         UfaDotNet = 8,
         OmsDotNet = 9,
         SamDotNet = 10,
-        PnzDotNet = 11
+        PnzDotNet = 11,
+        KrdDotNet = 12,
+        EkbDotNet = 13,
     }
 }

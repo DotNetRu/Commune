@@ -28,14 +28,17 @@ namespace DotNetRuServer.Comon.BL.Enums
 
         /// <summary> Омск </summary>
         Oms = 9,
-        
+
         /// <summary> Омск </summary>
         Sam = 10,
-        
+
         /// <summary> Пенза </summary>
         Pnz = 11,
-        
+
         /// <summary> Краснодар </summary>
-        Krd = 12
+        Krd = 12,
+
+        /// <summary> Екатеринбург </summary>
+        Ekb = 13
     }
 }
