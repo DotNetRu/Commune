@@ -11,9 +11,10 @@ namespace DotNetRuServer.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
+        private const string _logError = "Internal server error occurred";
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
-        private readonly IHostingEnvironment _env;
+        private readonly bool _isDevelopment;
 
         public ErrorHandlingMiddleware( RequestDelegate next, 
                                         ILogger<ErrorHandlingMiddleware> logger,
@@ -21,7 +22,7 @@ namespace DotNetRuServer.Middlewares
         {
             _next = next;
             _logger = logger;
-            _env = env;
+            _isDevelopment = env.IsDevelopment();
         }
 
         public async Task Invoke(HttpContext context)
@@ -38,16 +39,15 @@ namespace DotNetRuServer.Middlewares
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            _logger.LogError(exception, _logError);
             if (exception is AggregateException aex && aex.InnerExceptions?.Count > 0)
-                exception = aex.InnerExceptions[0];
-
-            _logger.LogError(exception, nameof(ErrorHandlingMiddleware));
+            {
+                foreach (Exception ex in aex.InnerExceptions)
+                    _logger.LogError(ex, _logError);
+            }
 
             var error = new ResponseErrorModel(exception.Message, (int)HttpStatusCode.InternalServerError);
-            if (_env.IsDevelopment())
-            {
-                error.StackTrace = exception.StackTrace;
-            }
+            if (_isDevelopment) error.StackTrace = exception.StackTrace;
 
             context.Response.StatusCode = error.StatusCode;
             return context.Response.WriteAsync(JsonConvert.SerializeObject(error));
