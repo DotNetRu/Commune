@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Login
-      run: docker login docker.pkg.github.com --username egorikas
+      run: docker login docker.pkg.github.com -u egorikas -p ${{ secrets.GITHUB_TOKEN }}
     - name: Build with docker
       run: docker build . -t docker.pkg.github.com/dotnetru/server/apiserver:latest .
     - name: Push with docker
