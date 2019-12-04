@@ -12,6 +12,6 @@ jobs:
     - name: Login
       run: docker login docker.pkg.github.com -u egorikas -p ${{ secrets.GITHUB_TOKEN }}
     - name: Build with docker
-      run: docker build . -t docker.pkg.github.com/dotnetru/server/apiserver:latest .
+      run: docker build -t docker.pkg.github.com/dotnetru/server/apiserver:latest .
     - name: Push with docker
       run: docker push docker.pkg.github.com/dotnetru/server/apiserver:latest
