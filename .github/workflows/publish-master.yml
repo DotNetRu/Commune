@@ -1,4 +1,4 @@
-name: Publish to GitHub Packagesp
+name: Publish to GitHub Packages
 
 on: [push]
 
@@ -12,6 +12,6 @@ jobs:
     - name: Build with docker
       run: docker build . -t "apiserver"
     - name: Tag with docker
-      run: docker tag apiserver docker.pkg.github.com/DotNetRu/server/apiserver
+      run: docker tag apiserver docker.pkg.github.com/dotnetru/server/apiserver
     - name: Push with docker
-      run: docker push docker.pkg.github.com/DotNetRu/server/apiserver
+      run: docker push docker.pkg.github.com/dotnetru/server/apiserver
