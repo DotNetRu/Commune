@@ -1,4 +1,4 @@
-name: Build & Test
+name: Publish to GitHub Packagesp
 
 on: [push]
 
@@ -9,11 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.2.108
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-    - name: Run tests
-      run: dotnet test
+    - name: Build with docker
+      run: docker build . -t "apiserver"
+    - name: Tag with docker
+      run: docker tag apiserver docker.pkg.github.com/DotNetRu/server/apiserver
+    - name: Push with docker
+      run: docker push docker.pkg.github.com/DotNetRu/server/apiserver
