@@ -420,17 +420,9 @@ namespace DotNetRuServer.Importer
                     var sessions = new List<Session>();
                     foreach (var sessionRaw in sessionsRaw)
                     {
-
                         var talkId = sessionRaw.XPathSelectElement("TalkId")?.Value;
-                        if (talkId == null)
-                        {
-                            throw new Exception();
-                        }
-                        var talk = await _context.Talks.FirstOrDefaultAsync(x => x.ExportId == talkId);
-                        if (talk == null)
-                        {
-                            throw new Exception();
-                        }
+                        var talk = await _context.Talks.FirstAsync(x => x.ExportId == talkId);
+
                         var startTime = DateTime.Parse(
                             sessionRaw.XPathSelectElement("StartTime")?.Value,
                             CultureInfo.InvariantCulture,
