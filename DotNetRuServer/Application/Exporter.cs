@@ -42,7 +42,7 @@ namespace DotNetRuServer.Application
             _logger.LogInformation("Starting export Meetups");
             await export.ExportMeetups();
 
-            _logger.LogInformation("Starting export Spekers");
+            _logger.LogInformation("Starting export Speakers");
             await export.ExportSpeakers();
 
             _logger.LogInformation("Starting export Talks");
