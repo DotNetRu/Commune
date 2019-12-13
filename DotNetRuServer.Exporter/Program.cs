@@ -39,7 +39,7 @@ namespace DotNetRuServer.Exporter
             Console.WriteLine("Starting export Meetups");
             await export.ExportMeetups();
 
-            Console.WriteLine("Starting export Spekers");
+            Console.WriteLine("Starting export Speakers");
             await export.ExportSpeakers();
 
             Console.WriteLine("Starting export Talks");
@@ -143,7 +143,7 @@ namespace DotNetRuServer.Exporter
         }
         public async Task ExportSpeakers()
         {
-            var entityDirectory = _directory.CreateSubdirectory(@"spekers");
+            var entityDirectory = _directory.CreateSubdirectory(@"speakers");
 
             var entities = await _context.Speakers
                 .ToListAsync();
