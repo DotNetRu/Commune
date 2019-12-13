@@ -40,7 +40,7 @@ namespace DotNetRuServer.Exporter
             await export.ExportMeetups();
 
             Console.WriteLine("Starting export Spekers");
-            await export.ExportSpeekers();
+            await export.ExportSpeakers();
 
             Console.WriteLine("Starting export Talks");
             await export.ExportTalks();
@@ -94,20 +94,26 @@ namespace DotNetRuServer.Exporter
             var entityDirectory = _directory.CreateSubdirectory(@"friends");
 
             var entities = await _context.Friends
-                .Select(f=>f.ToVm())
                 .ToListAsync();
 
             var serializer = new XmlSerializer(typeof(FriendVm));
 
             foreach (var entity in entities)
             {
-                var itemFolder = entityDirectory.CreateSubdirectory(entity.Id);
-                using (var stream = new FileStream(Path.Combine(itemFolder.FullName.ToString(),
-                    entity.Id + ".xml"), FileMode.Create))
+                var dto = entity.ToVm();
+                var itemFolder = entityDirectory.CreateSubdirectory(dto.Id);
+                using (var stream = new FileStream(Path.Combine(itemFolder.FullName,
+                    dto.Id + ".xml"), FileMode.Create))
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
-                    serializer.Serialize(writer, entity, _emptyNamespaces);
+                    serializer.Serialize(writer, dto, _emptyNamespaces);
                 }
+
+                var logo = await _context.Images.FirstOrDefaultAsync(x => x.Id == entity.LogoId);
+                var smallLogo = await _context.Images.FirstOrDefaultAsync(x => x.Id == entity.SmallLogoId);
+
+                await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "logo.png"), logo.Data);
+                await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "logo.small.png"), smallLogo.Data);
             }
         }
         public async Task ExportMeetups()
@@ -135,25 +141,31 @@ namespace DotNetRuServer.Exporter
                 }
             }
         }
-        public async Task ExportSpeekers()
+        public async Task ExportSpeakers()
         {
             var entityDirectory = _directory.CreateSubdirectory(@"spekers");
 
             var entities = await _context.Speakers
-                .Select(s=>s.ToVm())
                 .ToListAsync();
 
             var serializer = new XmlSerializer(typeof(SpeakerVm));
 
             foreach (var entity in entities)
             {
-                var itemFolder = entityDirectory.CreateSubdirectory(entity.Id);
+                var dto = entity.ToVm();
+                var itemFolder = entityDirectory.CreateSubdirectory(dto.Id);
                 using (var stream = new FileStream(Path.Combine(itemFolder.FullName.ToString(),
-                    entity.Id + ".xml"), FileMode.Create))
+                    dto.Id + ".xml"), FileMode.Create))
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
-                    serializer.Serialize(writer, entity, _emptyNamespaces);
+                    serializer.Serialize(writer, dto, _emptyNamespaces);
                 }
+
+                var logo = await _context.Images.FirstOrDefaultAsync(x => x.Id == entity.AvatarId);
+                var smallLogo = await _context.Images.FirstOrDefaultAsync(x => x.Id == entity.AvatarSmallId);
+
+                await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "avatar.jpg"), logo.Data);
+                await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "avatar.small.jpg"), smallLogo.Data);
             }
         }
         public async Task ExportTalks()

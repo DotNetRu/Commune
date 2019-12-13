@@ -33,22 +33,22 @@ namespace DotNetRuServer.Application
 
             var export = new ExporterUtils(_context, auditFolder);
 
-            Console.WriteLine("Starting export Communities");
+            _logger.LogInformation("Starting export Communities");
             await export.ExportCommunties();
 
-            Console.WriteLine("Starting export Friends");
+            _logger.LogInformation("Starting export Friends");
             await export.ExportFriends();
 
-            Console.WriteLine("Starting export Meetups");
+            _logger.LogInformation("Starting export Meetups");
             await export.ExportMeetups();
 
-            Console.WriteLine("Starting export Spekers");
-            await export.ExportSpeekers();
+            _logger.LogInformation("Starting export Spekers");
+            await export.ExportSpeakers();
 
-            Console.WriteLine("Starting export Talks");
+            _logger.LogInformation("Starting export Talks");
             await export.ExportTalks();
 
-            Console.WriteLine("Starting export Meetups");
+            _logger.LogInformation("Starting export Meetups");
             await export.ExportVenues();
 
             return exportFolder;
