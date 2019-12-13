@@ -37,7 +37,7 @@ namespace DotNetRuServer.Exporter
             await export.ExportFriends();
 
             Console.WriteLine("Starting export Meetups");
-            await export.ExportMeetups();  
+            await export.ExportMeetups();
 
             Console.WriteLine("Starting export Spekers");
             await export.ExportSpeekers();
@@ -69,19 +69,22 @@ namespace DotNetRuServer.Exporter
         {
             var entityDirectory = _directory.CreateSubdirectory(@"communities");
 
-            var entities = await _context.Communities?
-                .Select(c=>c.ToVm())
-                .ToListAsync();
-
-            var serializer = new XmlSerializer(typeof(CommunityVm));
-
-            foreach (var entity in entities)
+            if (_context.Communities != null)
             {
-                using (var stream = new FileStream(Path.Combine(entityDirectory.FullName.ToString(),
-                    entity.Id + ".xml"), FileMode.Create))
-                using (var writer = XmlWriter.Create(stream, _settings))
+                var entities = await _context.Communities?
+                    .Select(c=>c.ToVm())
+                    .ToListAsync();
+
+                var serializer = new XmlSerializer(typeof(CommunityVm));
+
+                foreach (var entity in entities)
                 {
-                    serializer.Serialize(writer, entity, _emptyNamespaces);
+                    using (var stream = new FileStream(Path.Combine(entityDirectory.FullName.ToString(),
+                        entity.Id + ".xml"), FileMode.Create))
+                    using (var writer = XmlWriter.Create(stream, _settings))
+                    {
+                        serializer.Serialize(writer, entity, _emptyNamespaces);
+                    }
                 }
             }
         }
