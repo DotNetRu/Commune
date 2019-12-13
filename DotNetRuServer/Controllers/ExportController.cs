@@ -26,8 +26,8 @@ namespace DotNetRuServer.Controllers
                 Path.Combine(info.FullName, "Audit"),
                 zipFile
                 );
-
-            return File(zipFile, "application/octet-stream");
+            
+            return File(new FileStream(zipFile, FileMode.Open), "application/zip", "Audit.zip");
         }
     }
 }

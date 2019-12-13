@@ -62,6 +62,7 @@ namespace DotNetRuServer
 
             services.AddSingleton<ICache, MemCache>();
             services.AddScoped<IImporter, Application.Importer>();
+            services.AddScoped<IExporter, Application.Exporter>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMeetups<SpeakerProvider, TalkProvider, VenueProvider, FriendProvider, MeetupProvider,CommunityProvider, ImageProvider>(_configuration);
             services.AddTimePadIntegration();
@@ -102,7 +103,7 @@ namespace DotNetRuServer
                             var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
                             if (string.IsNullOrEmpty(token))
                                 return;
-                            
+
                             try
                             {
                                 await importer.Import(token);
@@ -112,7 +113,7 @@ namespace DotNetRuServer
                                 Console.WriteLine(e);
                                 throw;
                             }
-                    
+
                         }
                     }
                 );
