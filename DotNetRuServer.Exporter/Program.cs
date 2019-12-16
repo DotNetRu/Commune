@@ -45,7 +45,7 @@ namespace DotNetRuServer.Exporter
             Console.WriteLine("Starting export Talks");
             await export.ExportTalks();
 
-            Console.WriteLine("Starting export Meetups");
+            Console.WriteLine("Starting export Venues");
             await export.ExportVenues();
         }
     }
