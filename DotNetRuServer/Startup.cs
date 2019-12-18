@@ -2,11 +2,13 @@ using System;
 using System.Threading.Tasks;
 using DotNetRuServer.Application;
 using DotNetRuServer.Comon.BL.Caching;
+using DotNetRuServer.Filters;
 using DotNetRuServer.Integration.TimePad;
 using DotNetRuServer.Meetups.BL;
 using DotNetRuServer.Meetups.BL.Interfaces;
 using DotNetRuServer.Meetups.DAL.Database;
 using DotNetRuServer.Meetups.DAL.Providers;
+using DotNetRuServer.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -44,7 +46,10 @@ namespace DotNetRuServer
 
             services.AddMemoryCache();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ApiExceptionFilter));
+            });
 
             //CORS
             services.AddCors(options =>
@@ -83,6 +88,7 @@ namespace DotNetRuServer
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
