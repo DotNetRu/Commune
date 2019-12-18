@@ -8,7 +8,6 @@ namespace DotNetRuServer.Meetups.BL.Models
     {
         public string Id { get; set; }
 
-        [XmlArrayItem(ElementName = "SpeakerId")]
         public List<SpeakerReference> SpeakerIds { get; set; }
 
         public string Title { get; set; }

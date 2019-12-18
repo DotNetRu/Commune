@@ -68,6 +68,7 @@ namespace DotNetRuServer.CLI
             }
 
             ZipFile.ExtractToDirectory(zipPath, options.Path, true);
+            zipFolder.Delete(true);
 
             Console.WriteLine("Completed successfully!");
             return 0;

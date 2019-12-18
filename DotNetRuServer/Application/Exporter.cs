@@ -34,7 +34,7 @@ namespace DotNetRuServer.Application
             var export = new ExporterUtils(_context, auditFolder);
 
             _logger.LogInformation("Starting export Communities");
-            await export.ExportCommunties();
+            await export.ExportCommunities();
 
             _logger.LogInformation("Starting export Friends");
             await export.ExportFriends();
