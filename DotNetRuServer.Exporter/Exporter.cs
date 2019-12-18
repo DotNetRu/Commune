@@ -1,5 +1,4 @@
-﻿using System;
-using DotNetRuServer.Meetups.DAL.Database;
+﻿using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Linq;
@@ -13,17 +12,18 @@ namespace DotNetRuServer.Exporter
 {
     public class ExporterUtils
     {
-        private DotNetRuServerContext _context;
-        private DirectoryInfo _directory;
-        private XmlWriterSettings _settings;
+        private readonly DotNetRuServerContext _context;
+        private readonly DirectoryInfo _directory;
+        private readonly XmlWriterSettings _settings;
 
-        XmlSerializerNamespaces _emptyNamespaces;
+        readonly XmlSerializerNamespaces _emptyNamespaces;
+
         public ExporterUtils(DotNetRuServerContext context, DirectoryInfo directory)
         {
-            this._context = context;
-            this._directory = directory;
-            this._settings = new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true };
-            this._emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+            _context = context;
+            _directory = directory;
+            _settings = new XmlWriterSettings() {Indent = true, OmitXmlDeclaration = true};
+            _emptyNamespaces = new XmlSerializerNamespaces(new[] {XmlQualifiedName.Empty});
         }
 
         public async Task ExportCommunities()
@@ -33,14 +33,14 @@ namespace DotNetRuServer.Exporter
             if (_context.Communities != null)
             {
                 var entities = await _context.Communities?
-                    .Select(c=> c.ToVm())
+                    .Select(c => c.ToVm())
                     .ToListAsync();
 
                 var serializer = new XmlSerializer(typeof(CommunityVm));
 
                 foreach (var entity in entities)
                 {
-                    using (var stream = new FileStream(Path.Combine(entityDirectory.FullName.ToString(),
+                    using (var stream = new FileStream(Path.Combine(entityDirectory.FullName,
                         entity.Id + ".xml"), FileMode.Create))
                     using (var writer = XmlWriter.Create(stream, _settings))
                     {
@@ -64,7 +64,7 @@ namespace DotNetRuServer.Exporter
                 var dto = entity.ToVm();
                 var itemFolder = entityDirectory.CreateSubdirectory(dto.Id);
                 using (var stream = new FileStream(Path.Combine(itemFolder.FullName,
-                   "index.xml"), FileMode.Create))
+                    "index.xml"), FileMode.Create))
                 using (var writer = XmlWriter.Create(stream, _settings))
                 {
                     serializer.Serialize(writer, dto, _emptyNamespaces);
@@ -77,6 +77,7 @@ namespace DotNetRuServer.Exporter
                 await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "logo.small.png"), smallLogo.Data);
             }
         }
+
         public async Task ExportMeetups()
         {
             var entityDirectory = _directory.CreateSubdirectory(@"meetups");
@@ -87,9 +88,9 @@ namespace DotNetRuServer.Exporter
                 .Include(x => x.Friends).ThenInclude(x => x.Friend)
                 .Include(x => x.Community)
                 .Include(x => x.Sessions).ThenInclude(x => x.Talk)
-                .Select(x=> x.ToVm()).ToListAsync();
+                .Select(x => x.ToExportVm()).ToListAsync();
 
-            var serializer = new XmlSerializer(typeof(MeetupVm));
+            var serializer = new XmlSerializer(typeof(MeetupExportVm));
 
             foreach (var entity in entities)
             {
@@ -97,6 +98,7 @@ namespace DotNetRuServer.Exporter
                 {
                     entity.FriendIds = null;
                 }
+
                 using (var stream = new FileStream(Path.Combine(entityDirectory.FullName,
                     entity.Id + ".xml"), FileMode.Create))
                 using (var writer = XmlWriter.Create(stream, _settings))
@@ -105,6 +107,7 @@ namespace DotNetRuServer.Exporter
                 }
             }
         }
+
         public async Task ExportSpeakers()
         {
             var entityDirectory = _directory.CreateSubdirectory(@"speakers");
@@ -132,17 +135,18 @@ namespace DotNetRuServer.Exporter
                 await File.WriteAllBytesAsync(Path.Combine(itemFolder.ToString(), "avatar.small.jpg"), smallLogo.Data);
             }
         }
+
         public async Task ExportTalks()
         {
             var entityDirectory = _directory.CreateSubdirectory(@"talks");
 
             var entities = await _context.Talks
-                .Include(t=>t.Speakers).ThenInclude(t=>t.Speaker)
+                .Include(t => t.Speakers).ThenInclude(t => t.Speaker)
                 .Include(x => x.SeeAlsoTalks)
-                .Select(t=> t.ToVm())
+                .Select(t => t.ToExportVm())
                 .ToListAsync();
 
-            var serializer = new XmlSerializer(typeof(TalkVm));
+            var serializer = new XmlSerializer(typeof(TalkExportVm));
 
             foreach (var entity in entities)
             {
@@ -154,11 +158,12 @@ namespace DotNetRuServer.Exporter
                 }
             }
         }
+
         public async Task ExportVenues()
         {
             var entityDirectory = _directory.CreateSubdirectory(@"venues");
 
-            var entities = await _context.Venues.Select(v=>v.ToVm()).ToListAsync();
+            var entities = await _context.Venues.Select(v => v.ToVm()).ToListAsync();
 
             var serializer = new XmlSerializer(typeof(VenueVm));
 
@@ -174,5 +179,3 @@ namespace DotNetRuServer.Exporter
         }
     }
 }
-
-
