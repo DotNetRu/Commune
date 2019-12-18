@@ -1,4 +1,4 @@
-﻿using DotNetRuServer.Meetups.DAL.Database;
+using DotNetRuServer.Meetups.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Linq;
