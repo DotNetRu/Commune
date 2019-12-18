@@ -44,30 +44,28 @@ namespace DotNetRuServer.Importer
             foreach (var communityLink in communitiesLinks)
             {
                 var responseData = await _httpClient.GetByteArrayAsync(communityLink.DownloadUrl);
-                using (var ms = new MemoryStream(responseData))
+                using var ms = new MemoryStream(responseData);
+                var responseXml = XDocument.Load(ms).Root;
+                var exportId = responseXml?.Element("Id")?.Value;
+                if (string.IsNullOrEmpty(exportId))
+                    continue;
+
+                var existing = await _context.Communities.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
+                if (existing != null)
+                    continue;
+
+                _context.Communities.Add(new Community
                 {
-                    var responseXml = XDocument.Load(ms).Root;
-                    var exportId = responseXml?.Element("Id")?.Value;
-                    if (string.IsNullOrEmpty(exportId))
-                        continue;
-
-                    var existing = await _context.Communities.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
-                    if (existing != null)
-                        continue;
-
-                    _context.Communities.Add(new Community
-                    {
-                        ExportId = exportId,
-                        City = responseXml.Element("City")?.Value,
-                        Name = responseXml.Element("Name")?.Value,
-                        TimeZone = responseXml.Element("TimeZone")?.Value,
-                        Vk = responseXml.Element("VkUrl")?.Value,
-                        TelegramChannel = responseXml.Element("TelegramChannelUrl")?.Value,
-                        TelegramChat = responseXml.Element("TelegramChatUrl")?.Value,
-                        TimePad = responseXml.Element("TimePadUrl")?.Value,
-                    });
-                    _context.SaveChanges();
-                }
+                    ExportId = exportId,
+                    City = responseXml.Element("City")?.Value,
+                    Name = responseXml.Element("Name")?.Value,
+                    TimeZone = responseXml.Element("TimeZone")?.Value,
+                    Vk = responseXml.Element("VkUrl")?.Value,
+                    TelegramChannel = responseXml.Element("TelegramChannelUrl")?.Value,
+                    TelegramChat = responseXml.Element("TelegramChatUrl")?.Value,
+                    TimePad = responseXml.Element("TimePadUrl")?.Value,
+                });
+                _context.SaveChanges();
             }
         }
 
