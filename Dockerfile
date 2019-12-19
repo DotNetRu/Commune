@@ -1,5 +1,5 @@
 ## Build stage
-FROM microsoft/dotnet:2.2-sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /build
 
 # Copy source
@@ -12,7 +12,7 @@ RUN dotnet restore DotNetRuServer/DotNetRuServer.csproj
 RUN dotnet publish DotNetRuServer/DotNetRuServer.csproj -o /publish /p:SolutionDir=/build
 
 ## Runtime stage
-FROM microsoft/dotnet:2.2-aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 
 # Environment Variables
 ENV ASPNETCORE_ENVIRONMENT Development
