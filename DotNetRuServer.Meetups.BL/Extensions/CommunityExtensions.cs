@@ -11,16 +11,17 @@ namespace DotNetRuServer.Meetups.BL.Extensions
                 Id = community.ExportId,
                 Name = community.Name,
                 City = community.City,
-                TimeZone = community.TimeZone
+                TimeZone = community.TimeZone,
+                Vk = community.Vk,
+                TelegramChannel = community.TelegramChannel,
+                TelegramChat = community.TelegramChat,
+                TimePad = community.TimePad,
             };
 
         public static Community Extend(this Community original, CommunityVm vm)
             => new Community
             {
-                Id = original.Id,
-                Name = vm.Name,
-                City = vm.City,
-                TimeZone = vm.TimeZone,
+                Id = original.Id, Name = vm.Name, City = vm.City, TimeZone = vm.TimeZone,
             };
     }
 }

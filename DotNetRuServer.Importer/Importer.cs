@@ -18,76 +18,6 @@ using SixLabors.ImageSharp;
 
 namespace DotNetRuServer.Importer
 {
-    internal class Program
-    {
-        private static async Task<int> Main(string[] args)
-        {
-            var options = Parser.Default.ParseArguments<ImportViaApiOptions, ImportViaDatabaseOptions>(args);
-
-            return await options.MapResult(
-                async (ImportViaApiOptions o) => await ImportViaApi(o),
-                async (ImportViaDatabaseOptions o) => await ImportViaDatabase(o),
-                _ => Task.FromResult(-1));
-        }
-
-        private static async Task<int> ImportViaApi(ImportViaApiOptions options)
-        {
-            Console.WriteLine("Importing data to Server at {0} from Github.", options.ServerUrl);
-
-            var query = $"{options.ServerUrl}api/import?githubToken={options.GithubToken}";
-
-            var client = new HttpClient();
-            var result = await client.PostAsync(query, new StringContent(string.Empty));
-
-            if (result.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Completed successfully!");
-                return 0;
-            }
-            else
-            {
-                Console.WriteLine("Import failed.");
-                Console.WriteLine(await result.Content.ReadAsStringAsync());
-                return -1;
-            }
-        }
-
-        private static async Task<int> ImportViaDatabase(ImportViaDatabaseOptions options)
-        {
-            Console.WriteLine("It's time to start");
-
-            var connectionString = options.DatabaseConnection;
-            var githubToken = options.GithubToken;
-
-            Console.WriteLine($"Github token - {githubToken}");
-            Console.WriteLine($"Connection string - {connectionString}");
-
-            var optionsBuilder = new DbContextOptionsBuilder<DotNetRuServerContext>();
-            optionsBuilder.UseSqlServer(connectionString);
-            var context = new DotNetRuServerContext(optionsBuilder.Options);
-
-            var github = new GitHubClient(new ProductHeaderValue("DotNetRuServer"));
-            var tokenAuth = new Credentials(githubToken);
-            github.Credentials = tokenAuth;
-
-            var importer = new ImporterUtils(context, github);
-            Console.WriteLine("Start to import Communities");
-            await importer.ImportCommunities();
-            Console.WriteLine("Start to import Venues");
-            await importer.ImportVenues();
-            Console.WriteLine("Start to import Friends");
-            await importer.ImportFriend();
-            Console.WriteLine("Start to import Speakers");
-            await importer.ImportSpeakers();
-            Console.WriteLine("Start to import Talks");
-            await importer.ImportTalks();
-            Console.WriteLine("Start to import Meetups");
-            await importer.ImportMeetups();
-            Console.WriteLine("All data is imported");
-            return 0;
-        }
-    }
-
     public class ImporterUtils
     {
         private readonly DotNetRuServerContext _context;
@@ -114,26 +44,28 @@ namespace DotNetRuServer.Importer
             foreach (var communityLink in communitiesLinks)
             {
                 var responseData = await _httpClient.GetByteArrayAsync(communityLink.DownloadUrl);
-                using (var ms = new MemoryStream(responseData))
+                using var ms = new MemoryStream(responseData);
+                var responseXml = XDocument.Load(ms).Root;
+                var exportId = responseXml?.Element("Id")?.Value;
+                if (string.IsNullOrEmpty(exportId))
+                    continue;
+
+                var existing = await _context.Communities.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
+                if (existing != null)
+                    continue;
+
+                _context.Communities.Add(new Community
                 {
-                    var responseXml = XDocument.Load(ms).Root;
-                    var exportId = responseXml?.Element("Id")?.Value;
-                    if (string.IsNullOrEmpty(exportId))
-                        continue;
-
-                    var existing = await _context.Communities.FirstOrDefaultAsync(x => x.ExportId == exportId.Trim());
-                    if (existing != null)
-                        continue;
-
-                    _context.Communities.Add(new Community
-                    {
-                        ExportId = exportId,
-                        City = responseXml.Element("City")?.Value,
-                        Name = responseXml.Element("Name")?.Value,
-                        TimeZone = responseXml.Element("TimeZone")?.Value
-                    });
-                    _context.SaveChanges();
-                }
+                    ExportId = exportId,
+                    City = responseXml.Element("City")?.Value,
+                    Name = responseXml.Element("Name")?.Value,
+                    TimeZone = responseXml.Element("TimeZone")?.Value,
+                    Vk = responseXml.Element("VkUrl")?.Value,
+                    TelegramChannel = responseXml.Element("TelegramChannelUrl")?.Value,
+                    TelegramChat = responseXml.Element("TelegramChatUrl")?.Value,
+                    TimePad = responseXml.Element("TimePadUrl")?.Value,
+                });
+                _context.SaveChanges();
             }
         }
 

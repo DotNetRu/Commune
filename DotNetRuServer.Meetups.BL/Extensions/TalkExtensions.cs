@@ -35,6 +35,20 @@ namespace DotNetRuServer.Meetups.BL.Extensions
             };
         }
 
+        public static TalkExportVm ToExportVm(this Talk talk)
+        {
+            return new TalkExportVm
+            {
+                Id = talk.ExportId,
+                SpeakerIds = talk.Speakers.Select(x => x.Speaker.ExportId).ToList(),
+                Title = talk.Title,
+                Description = talk.Description,
+                CodeUrl = talk.CodeUrl,
+                SlidesUrl = talk.SlidesUrl,
+                VideoUrl = talk.VideoUrl
+            };
+        }
+
         public static Talk Extend(this Talk original, TalkVm talk)
         {
             return new Talk

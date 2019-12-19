@@ -32,8 +32,32 @@ namespace DotNetRuServer.Meetups.BL.Extensions
             {
                 Id = meetup.ExportId,
                 Name = meetup.Name,
-                CommunityId = (Communities) Enum.Parse(typeof(Communities), meetup.Community.ExportId, true),
+                CommunityId = (Communities)Enum.Parse(typeof(Communities), meetup.Community.ExportId, true),
                 FriendIds = meetup.Friends.Select(x => new FriendReference {FriendId = x.Friend.ExportId}).ToList(),
+                VenueId = meetup.Venue.ExportId,
+                Sessions = meetup.Sessions.Select(x =>
+                {
+                    var timeZone = TZConvert.GetTimeZoneInfo(meetup.Community.TimeZone);
+                    return new SessionVm
+                    {
+                        TalkId = x.Talk.ExportId,
+                        StartTime = TimeZoneInfo.ConvertTimeFromUtc(x.StartTime, timeZone)
+                            .ToString("yyyy-MM-ddTHH:mm:ss"),
+                        EndTime = TimeZoneInfo.ConvertTimeFromUtc(x.EndTime, timeZone)
+                            .ToString("yyyy-MM-ddTHH:mm:ss")
+                    };
+                }).ToList()
+            };
+        }
+
+        public static MeetupExportVm ToExportVm(this Meetup meetup)
+        {
+            return new MeetupExportVm
+            {
+                Id = meetup.ExportId,
+                Name = meetup.Name,
+                CommunityId = (Communities)Enum.Parse(typeof(Communities), meetup.Community.ExportId, true),
+                FriendIds = meetup.Friends.Select(x => x.Friend.ExportId).ToList(),
                 VenueId = meetup.Venue.ExportId,
                 Sessions = meetup.Sessions.Select(x =>
                 {
