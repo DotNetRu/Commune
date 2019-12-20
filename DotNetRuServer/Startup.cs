@@ -51,6 +51,7 @@ namespace DotNetRuServer
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ApiExceptionFilter));
+                options.EnableEndpointRouting = false;
             });
 
             //CORS
@@ -93,12 +94,12 @@ namespace DotNetRuServer
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseStaticFiles();
 
-            // app.UseMvc(routes =>
-            // {
-            //     routes.MapRoute(
-            //         "default",
-            //         "{controller=Home}/{action=Index}/{id?}");
-            // });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
+            });
 
             if (_currentEnvironment.IsDevelopment())
             {
