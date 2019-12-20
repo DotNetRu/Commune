@@ -16,15 +16,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace DotNetRuServer
 {
     public class Startup
     {
         private readonly IConfiguration _configuration;
-        private readonly IHostingEnvironment _currentEnvironment;
+        private readonly IWebHostEnvironment _currentEnvironment;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment currentEnvironment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment currentEnvironment)
         {
             _configuration = configuration;
             _currentEnvironment = currentEnvironment;
@@ -49,6 +51,7 @@ namespace DotNetRuServer
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ApiExceptionFilter));
+                options.EnableEndpointRouting = false;
             });
 
             //CORS
@@ -63,7 +66,7 @@ namespace DotNetRuServer
 
 
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DotNetRuAPI", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "DotNetRuAPI", Version = "v1"}); });
 
             services.AddSingleton<ICache, MemCache>();
             services.AddScoped<IImporter, Application.Importer>();
@@ -74,7 +77,7 @@ namespace DotNetRuServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("Everyone");
 
@@ -103,23 +106,20 @@ namespace DotNetRuServer
                 Task.Run(async () =>
                     {
                         var serviceProvider = app.ApplicationServices;
-                        using (var scope = serviceProvider.CreateScope())
+                        using var scope = serviceProvider.CreateScope();
+                        var importer = scope.ServiceProvider.GetService<IImporter>();
+                        var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+                        if (string.IsNullOrEmpty(token))
+                            return;
+
+                        try
                         {
-                            var importer = scope.ServiceProvider.GetService<IImporter>();
-                            var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
-                            if (string.IsNullOrEmpty(token))
-                                return;
-
-                            try
-                            {
-                                await importer.Import(token);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                                throw;
-                            }
-
+                            await importer.Import(token);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
                         }
                     }
                 );
