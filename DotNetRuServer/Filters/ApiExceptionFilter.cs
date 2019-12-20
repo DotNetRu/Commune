@@ -3,6 +3,7 @@ using DotNetRuServer.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace DotNetRuServer.Filters
@@ -14,7 +15,7 @@ namespace DotNetRuServer.Filters
 
         protected ApiExceptionFilter() { }
 
-        public ApiExceptionFilter(IHostingEnvironment env, ILogger<ApiExceptionFilter> logger)
+        public ApiExceptionFilter(IWebHostEnvironment env, ILogger<ApiExceptionFilter> logger)
         {
             _isDevelopment = env.IsDevelopment();
             _logger = logger;

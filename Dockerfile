@@ -12,7 +12,7 @@ RUN dotnet restore DotNetRuServer/DotNetRuServer.csproj
 RUN dotnet publish DotNetRuServer/DotNetRuServer.csproj -o /publish /p:SolutionDir=/build
 
 ## Runtime stage
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 
 # Environment Variables
 ENV ASPNETCORE_ENVIRONMENT Development

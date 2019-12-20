@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DotNetRuServer.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -16,9 +17,9 @@ namespace DotNetRuServer.Middlewares
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
         private readonly bool _isDevelopment;
 
-        public ErrorHandlingMiddleware( RequestDelegate next, 
+        public ErrorHandlingMiddleware( RequestDelegate next,
                                         ILogger<ErrorHandlingMiddleware> logger,
-                                        IHostingEnvironment env)
+                                        IWebHostEnvironment env)
         {
             _next = next;
             _logger = logger;
