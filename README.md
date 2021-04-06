@@ -22,7 +22,7 @@ DotNetRu Server - продукт семейства DotNetRu, обеспечив
 
 ## WebUI
 
-[Веб-интерфейс](https://github.com/DotNetRu/DevActivator) для удобной работы с DotNetRu Server. 
+[Веб-интерфейс](https://github.com/DotNetRu/DevActivator) для удобной работы с DotNetRu Server.
 
 В настоящее время существует [отдельная версия UI](https://github.com/root-server/hw), работающая в виде Electron приложения. Этот же UI поставляется в виде [docker контейнера](https://hub.docker.com/r/ovcharov/devactivator).
 
@@ -33,7 +33,7 @@ DotNetRu Server - продукт семейства DotNetRu, обеспечив
 В связи с этим план на ближайший этап состоит в следующем:
  - развернуть UI на production сервере и указать URL в этом файле
  - протестировать совместную работу UI и Server по упрощённой схеме без хранилища
- 
+
 Желаемый срок окончания ближайшего этапа - 05 ноября 2019 года.
 
 Упрощённая схема взаимодействия заключается в следующем:
