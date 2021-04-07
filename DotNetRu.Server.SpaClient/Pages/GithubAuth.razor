@@ -1,6 +1,26 @@
 ﻿@page "/GithubAuth"
+@using DotNetRu.Server.SpaClient.Services
+@inject GHInteractor GhClient
+
 <h3>GithubAuth</h3>
+<button class="btn btn-primary" @onclick="BtnClick">Click me</button>
+<p>Repo data: @repoData</p>
+
+<p>
+    User
+    <input type="text" value="@user">
+</p>
+<input type="text" value="@user">
 
 @code {
-    
+
+    string repoData = string.Empty;
+    string user = string.Empty;
+    string token = string.Empty;
+
+    private async void BtnClick()
+    {
+        repoData = await GhClient.TryGetRepoData(user, token);
+    }
+
 }
