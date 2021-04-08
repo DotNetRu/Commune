@@ -92,8 +92,8 @@ namespace DotNetRu.Server.SpaClient.Services
 
             var originMaster = await client.Git.Reference.Get(originalRepo.Id, "refs/heads/master");
             logger.LogTrace("Origin master ref: {Ref}", originMaster.Ref);
-            logger.LogTrace("PR src ref: {Ref}", currentBranch.Ref);
-            var pr = await client.PullRequest.Create(originalRepo.Id, new("AUTOMATED PR", currentBranch.Ref, originMaster.Ref){Draft = true});
+            logger.LogTrace("PR src ref: {Owner:}{Ref}", myFork.Owner.Login, currentBranch.Ref);
+            var pr = await client.PullRequest.Create(originalRepo.Id, new("AUTOMATED PR",  $"{myFork.Owner.Login}:{currentBranch.Ref}", originMaster.Ref){Draft = true});
             return pr.HtmlUrl;
         }
 
