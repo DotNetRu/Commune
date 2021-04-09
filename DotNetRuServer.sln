@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRu.Server.SpaClient", "DotNetRu.Server.SpaClient\DotNetRu.Server.SpaClient.csproj", "{D5559E22-BAA3-43FF-8AE3-6CCF06ECCA15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRu.GitHubFilesystem", "DotNetRu.GitHubFilesystem\DotNetRu.GitHubFilesystem.csproj", "{5B5B17CC-FC44-4154-AFAC-520035962784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D5559E22-BAA3-43FF-8AE3-6CCF06ECCA15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5559E22-BAA3-43FF-8AE3-6CCF06ECCA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5B17CC-FC44-4154-AFAC-520035962784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5B17CC-FC44-4154-AFAC-520035962784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5B17CC-FC44-4154-AFAC-520035962784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5B17CC-FC44-4154-AFAC-520035962784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
