@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Http;
 
-namespace DotNetRu.Server.SpaClient
+namespace DotNetRu.Commune.GitHubFilesystem
 {
-    public class BalzorHttpMessageHandlerFactory
+    public class Net5HttpMessageHandlerFactory
     {
         public static HttpMessageHandler CreateDefault()
         {
