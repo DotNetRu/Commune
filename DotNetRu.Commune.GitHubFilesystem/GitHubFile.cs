@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Abstractions;
 using System.Security.AccessControl;
@@ -9,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace DotNetRu.GitHubFilesystem
 {
-    internal class File : IFile
+    internal class GitHubFile : IFile
     {
+        public GitHubFile([NotNull] IFileSystem fileSystem)
+        {
+            FileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        }
+
         public async Task AppendAllLinesAsync(string path, IEnumerable<string> contents,
             CancellationToken cancellationToken = new CancellationToken()) =>
             throw new NotImplementedException();
