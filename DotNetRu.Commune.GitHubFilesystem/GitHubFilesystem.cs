@@ -1,19 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Abstractions;
+using System.Threading.Tasks;
+using Octokit;
+using Octokit.Helpers;
+using Octokit.Internal;
 
-namespace DotNetRu.GitHubFilesystem
+namespace DotNetRu.Commune.GitHubFilesystem
 {
-    public class GitHubFilesystem : IFileSystem
+    public class GitHubFilesystem
     {
-        public IFile File { get; }
-        public IDirectory Directory => throw new NotSupportedException();
-        public IFileInfoFactory FileInfo => throw new NotSupportedException();
-        public IFileStreamFactory FileStream => throw new NotSupportedException();
-        public IPath Path => throw new NotSupportedException();
-        public IDirectoryInfoFactory DirectoryInfo => throw new NotSupportedException();
-        public IDriveInfoFactory DriveInfo => throw new NotSupportedException();
-        public IFileSystemWatcherFactory FileSystemWatcher => throw new NotSupportedException();
+        private List<GitHubFileStream> files = new List<GitHubFileStream>();
 
+        public async Task StartContext(string token, string originRepo, string originOwner)
+        {
+            var credStore = new InMemoryCredentialStore(new(token, AuthenticationType.Bearer));
+            var client = new GitHubClient(new Connection(new ProductHeaderValue("BlazorClientApp"),
+                GitHubClient.GitHubApiUrl, credStore,
+                new HttpClientAdapter(Net5HttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer()));
+            var originalRepo = await client.Repository.Get(originOwner, originRepo);
+            var fork = await client.Repository.Forks.Create(originalRepo.Id, new ());
+            var currentBranch = await client.Git.Reference.CreateBranch(fork.Owner.Login, fork.Name, "new-branch-1");
+        }
 
     }
 }
