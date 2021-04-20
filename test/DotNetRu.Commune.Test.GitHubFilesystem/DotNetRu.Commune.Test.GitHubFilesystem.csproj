@@ -21,4 +21,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\DotNetRu.Commune.GitHubFilesystem\DotNetRu.Commune.GitHubFilesystem.csproj" />
+    </ItemGroup>
+
 </Project>
