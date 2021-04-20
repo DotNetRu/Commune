@@ -3,7 +3,7 @@ using Xunit;
 
 namespace DotNetRu.Commune.Test.GitHubFilesystem
 {
-    public class UnitTest1
+    public class GithubFileStreamTests
     {
         [Fact]
         public void Test1()

@@ -25,16 +25,14 @@ namespace DotNetRu.Server.SpaClient.Services
 
         public bool IsInitialized { get; private set; } = false;
 
-        public void Initialize([NotNull]string token)
+        public void Initialize([NotNull] string token)
         {
             if (token == null) throw new ArgumentNullException(nameof(token));
             try
             {
                 var credStore = new InMemoryCredentialStore(new(token, AuthenticationType.Bearer));
                 logger.LogTrace("Credentials store created");
-                client = new GitHubClient(new Connection(new ProductHeaderValue("BlazorClientApp"),
-                    GitHubClient.GitHubApiUrl, credStore,
-                    new HttpClientAdapter(BalzorHttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer()));
+                client = new GitHubClient(new Connection(new ProductHeaderValue("BlazorClientApp")));
                 IsInitialized = true;
                 logger.LogTrace("Client created");
             }
@@ -53,7 +51,7 @@ namespace DotNetRu.Server.SpaClient.Services
                 if (client == null) throw new InvalidOperationException();
                 var currentUser = await client.User.Current();
                 var owner = currentUser.Login;
-                var repos =  await client.Repository.GetAllForUser(currentUser.Login);
+                var repos = await client.Repository.GetAllForUser(currentUser.Login);
                 return repos.Select(x => x.Name).ToList();
             }
             catch (Exception e)
@@ -93,9 +91,9 @@ namespace DotNetRu.Server.SpaClient.Services
             var originMaster = await client.Git.Reference.Get(originalRepo.Id, "refs/heads/master");
             logger.LogTrace("Origin master ref: {Ref}", originMaster.Ref);
             logger.LogTrace("PR src ref: {Owner:}{Ref}", myFork.Owner.Login, currentBranch.Ref);
-            var pr = await client.PullRequest.Create(originalRepo.Id, new("AUTOMATED PR",  $"{myFork.Owner.Login}:{currentBranch.Ref}", originMaster.Ref){Draft = true});
+            var pr = await client.PullRequest.Create(originalRepo.Id,
+                new("AUTOMATED PR", $"{myFork.Owner.Login}:{currentBranch.Ref}", originMaster.Ref) {Draft = true});
             return pr.HtmlUrl;
         }
-
     }
 }
