@@ -8,6 +8,9 @@ using Octokit;
 
 namespace DotNetRu.Commune.GitHubFilesystem
 {
+    /// <summary>
+    /// Стрим данных в памяти, связанный с файлом в github репозитории
+    /// </summary>
     internal class GitHubFileStream : MemoryStream
     {
         /// <summary>
@@ -23,9 +26,9 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <summary>
         /// Контекст в котором существует файл
         /// </summary>
-        public SessionContext Context { get; }
+        public EditingContext Context { get; }
 
-        public GitHubFileStream(string path, SessionContext context, string originSha, byte[] originContent)
+        public GitHubFileStream(string path, EditingContext context, string originSha, byte[] originContent)
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             Context = context ?? throw new ArgumentNullException(nameof(context));
@@ -33,11 +36,13 @@ namespace DotNetRu.Commune.GitHubFilesystem
             base.Write(originContent);
         }
 
+        /// <inheritdoc />
         public override void Flush()
         {
             this.FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
         }
 
+        /// <inheritdoc />
         public override async Task FlushAsync(CancellationToken cancellationToken)
         {
             var content = Convert.ToBase64String(this.GetBuffer());
