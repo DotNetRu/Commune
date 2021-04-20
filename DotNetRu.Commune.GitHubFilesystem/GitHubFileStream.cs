@@ -47,7 +47,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         {
             var content = Convert.ToBase64String(this.GetBuffer());
             var updateRequest = new UpdateFileRequest($"Flush @ {DateTime.Now}", content, RepoFileSha, Context.CurrentBranch.Ref, false);
-            var updateResult = await Context.Client.Repository.Content.UpdateFile(Context.LocalRepo.Id, Path, updateRequest);
+            var updateResult = await Context.ContentClient.UpdateFile(Context.LocalRepo.Id, Path, updateRequest);
             RepoFileSha = updateResult.Content.Sha;
         }
 

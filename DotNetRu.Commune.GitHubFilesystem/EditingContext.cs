@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Octokit;
 
 namespace DotNetRu.Commune.GitHubFilesystem
@@ -16,7 +17,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <summary>
         /// Клиент доступа к контенту репозитория
         /// </summary>
-        public IRepositoryContentsClient ContentClient => Client.Repository.Content;
+        public virtual IRepositoryContentsClient ContentClient => Client.Repository.Content;
 
         /// <summary>
         /// исходный репозиторий, откуда был сделан форк
@@ -44,6 +45,16 @@ namespace DotNetRu.Commune.GitHubFilesystem
         public async Task Commit()
         {
 
+        }
+
+        public EditingContext(IGitHubClient client, Repository originRepo, Reference originBranch, Repository localRepo,
+            Reference currentBranch)
+        {
+            Client = client ?? throw new ArgumentNullException(nameof(client));
+            OriginRepo = originRepo ?? throw new ArgumentNullException(nameof(originRepo));
+            OriginBranch = originBranch ?? throw new ArgumentNullException(nameof(originBranch));
+            LocalRepo = localRepo ?? throw new ArgumentNullException(nameof(localRepo));
+            CurrentBranch = currentBranch ?? throw new ArgumentNullException(nameof(currentBranch));
         }
     }
 }
