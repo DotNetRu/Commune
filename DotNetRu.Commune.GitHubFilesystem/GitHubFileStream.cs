@@ -28,18 +28,21 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// </summary>
         public EditingContext Context { get; }
 
-        public GitHubFileStream(string path, EditingContext context, string originSha, byte[] originContent)
+        public GitHubFileStream(string path, EditingContext context, string originSha, byte[] originContent) :
+            base(originContent?.Length ?? throw new ArgumentNullException(nameof(originContent)))
         {
             Path = path ?? throw new ArgumentNullException(nameof(path));
             Context = context ?? throw new ArgumentNullException(nameof(context));
             RepoFileSha = originSha ?? throw new ArgumentNullException(nameof(originSha));
-            base.Write(originContent);
+
+            var allocatedBuffer = base.GetBuffer();
+            Buffer.BlockCopy(originContent, 0, allocatedBuffer, 0, originContent.Length);
         }
 
         /// <inheritdoc />
         public override void Flush()
         {
-            this.FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
+            FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc />
