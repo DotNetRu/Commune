@@ -1,6 +1,7 @@
 namespace DotNetRu.Commune.Test.Fs.GitHubFilesystem
 
 open System
+open System.IO
 open System.Linq.Expressions
 open System.Threading
 open System.Threading.Tasks
@@ -24,21 +25,16 @@ type GitHubFileStreamTests() =
     [<Fact>]
     let ``Ctor fails on null path`` () =
         let editingContext = EditingContext(Mock.Of<IGitHubClient>(), Repository(), Reference(), Repository(), Reference())
-        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream(null, editingContext, String.Empty, array.Empty<byte>()) |> ignore)
+        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream(null, editingContext, String.Empty) |> ignore)
 
     [<Fact>]
     let ``Ctor fails on null context`` () =
-        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream("path", null, String.Empty, array.Empty<byte>()) |> ignore)
+        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream("path", null, String.Empty) |> ignore)
 
     [<Fact>]
     let ``Ctor fails on null sha`` () =
         let editingContext = EditingContext(Mock.Of<IGitHubClient>(), Repository(), Reference(), Repository(), Reference())
-        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream("path", editingContext, null, array.Empty<byte>()) |> ignore);
-
-    [<Fact>]
-    let ``Ctor fails on null data array`` () =
-        let editingContext = EditingContext(Mock.Of<IGitHubClient>(), Repository(), Reference(), Repository(), Reference())
-        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream("path", editingContext, "sha", null) |> ignore)
+        Assert.Throws<ArgumentNullException>(fun () -> new GitHubFileStream("path", editingContext, null) |> ignore);
 
     [<Fact>]
     let ``FlushAsync invokes saves data in content client and updates SHA`` () =
@@ -55,7 +51,7 @@ type GitHubFileStreamTests() =
             let contextMock = new EditingContextStub(repoContentMock)
             let path = "file path"
             let originalSha = "original sha"
-            let sut = new GitHubFileStream(path, contextMock, originalSha, [|0x0Duy; 0x0Auy|])
+            let sut = new GitHubFileStream(path, contextMock, originalSha)
 
             //act
             sut.FlushAsync() |> Async.AwaitTask |> ignore
@@ -65,14 +61,14 @@ type GitHubFileStreamTests() =
         }
 
     [<Fact>]
-    let ``Flush calls FlushAsync``() =
+    let ``Flush calls FlushInternal``() =
         // arrange
         let editingContext = EditingContext(Mock.Of<IGitHubClient>(), Repository(), Reference(), Repository(), Reference())
-        let flushAsyncInvocationsCnt = ref 0
+        let flushInvocationsCnt = ref 0
         let sut = {
-            new GitHubFileStream("", editingContext, "", array.Empty()) with
-                override x.FlushAsync(token : CancellationToken) =
-                    incr flushAsyncInvocationsCnt
+            new GitHubFileStream("", editingContext, "") with
+                override x.FlushInternal() =
+                    incr flushInvocationsCnt
                     Task.CompletedTask
             }
 
@@ -80,7 +76,4 @@ type GitHubFileStreamTests() =
         sut.Flush()
 
         //assert
-        flushAsyncInvocationsCnt.contents.Should().Be(1, "")
-
-
-
+        flushInvocationsCnt.contents.Should().Be(1, "")
