@@ -6,6 +6,7 @@ open System.Linq.Expressions
 open System.Threading
 open System.Threading.Tasks
 open DotNetRu.Commune.GitHubFilesystem
+open Foq.Linq
 open Moq
 open Octokit
 open Xunit
@@ -43,16 +44,17 @@ type GitHubFileStreamTests() =
             let repoContentInfo = RepositoryContentInfo("", "", "NEW SHA", 0, ContentType.File, "", "", "", "")
             let changeSet = RepositoryContentChangeSet(repoContentInfo, Commit())
             let repoContentMock =
-                Mock<IRepositoryContentsClient>()
+                Mock<IRepositoryContentsClient>(MockMode.Strict)
                     .Setup(fun(x) -> <@ x.UpdateFile(any(), any(), any()) @>)
                     .Returns(Task.FromResult(changeSet))
                     .Create()
 
-            let contextMock = new EditingContextStub(repoContentMock)
+            let contextStub = new EditingContextStub(repoContentMock)
             let path = "file path"
             let originalSha = "original sha"
-            let sut = new GitHubFileStream(path, contextMock, originalSha)
-
+            let sut = new GitHubFileStream(path, contextStub, originalSha)
+            let rng = Random()
+            let mockData = Array.init
             //act
             sut.FlushAsync() |> Async.AwaitTask |> ignore
 

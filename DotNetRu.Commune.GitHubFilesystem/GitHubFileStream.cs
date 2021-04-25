@@ -42,10 +42,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         }
 
         /// <inheritdoc />
-        public override async Task FlushAsync(CancellationToken cancellationToken)
-        {
-            await FlushInternal();
-        }
+        public override Task FlushAsync(CancellationToken cancellationToken) => FlushInternal();
 
         protected virtual async Task FlushInternal()
         {
