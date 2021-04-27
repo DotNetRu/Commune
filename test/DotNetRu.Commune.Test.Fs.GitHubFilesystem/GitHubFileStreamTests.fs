@@ -1,6 +1,7 @@
 namespace DotNetRu.Commune.Test.Fs.GitHubFilesystem
 
 open System
+open System
 open System.IO
 open System.Linq.Expressions
 open System.Threading
@@ -39,28 +40,28 @@ type GitHubFileStreamTests() =
 
     [<Fact>]
     let ``FlushAsync invokes saves data in content client and updates SHA`` () =
-        async {
-            //arrange
-            let repoContentInfo = RepositoryContentInfo("", "", "NEW SHA", 0, ContentType.File, "", "", "", "")
-            let changeSet = RepositoryContentChangeSet(repoContentInfo, Commit())
-            let repoContentMock =
-                Mock<IRepositoryContentsClient>(MockMode.Strict)
-                    .Setup(fun(x) -> <@ x.UpdateFile(any(), any(), any()) @>)
-                    .Returns(Task.FromResult(changeSet))
-                    .Create()
+        //arrange
+        let repoContentInfo = RepositoryContentInfo("", "", "NEW SHA", 0, ContentType.File, "", "", "", "")
+        let changeSet = RepositoryContentChangeSet(repoContentInfo, Commit())
+        let repoContentMock =
+            Mock<IRepositoryContentsClient>(MockMode.Strict)
+                .Setup(fun(x) -> <@ x.UpdateFile(any(), any(), any()) @>)
+                .Returns(Task.FromResult(changeSet))
+                .Create()
 
-            let contextStub = new EditingContextStub(repoContentMock)
-            let path = "file path"
-            let originalSha = "original sha"
-            let sut = new GitHubFileStream(path, contextStub, originalSha)
-            let rng = Random()
-            let mockData = Array.init
-            //act
-            sut.FlushAsync() |> Async.AwaitTask |> ignore
+        let contextStub = new EditingContextStub(repoContentMock)
+        let path = "file path"
+        let originalSha = "original sha"
+        let sut = new GitHubFileStream(path, contextStub, originalSha)
+        let rng = Random()
+        let mockData = Array.init 1024 (fun(x) -> rng.Next(int Byte.MaxValue) |> byte)
+        sut.Write(mockData, 0, mockData.Length)
 
-            //assert
-            verify <@ repoContentMock.UpdateFile(any(), is(fun x -> x = path), is(fun (x:UpdateFileRequest) -> x.Sha = originalSha)) @> once
-        }
+        //act
+        sut.FlushAsync() |> Async.AwaitTask |> Async.RunSynchronously
+
+        //assert
+        verify <@ repoContentMock.UpdateFile(any(), is(fun x -> x = path), is(fun (x:UpdateFileRequest) -> x.Sha = originalSha && x.Content = Convert.ToBase64String(mockData))) @> once
 
     [<Fact>]
     let ``Flush calls FlushInternal``() =
