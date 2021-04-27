@@ -1,13 +1,8 @@
 namespace DotNetRu.Commune.Test.Fs.GitHubFilesystem
 
 open System
-open System
-open System.IO
-open System.Linq.Expressions
-open System.Threading
 open System.Threading.Tasks
 open DotNetRu.Commune.GitHubFilesystem
-open Foq.Linq
 open Moq
 open Octokit
 open Xunit
