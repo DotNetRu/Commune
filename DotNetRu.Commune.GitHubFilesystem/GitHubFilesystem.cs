@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Primitives;
 using Octokit;
 using Octokit.Helpers;
 using Octokit.Internal;
@@ -11,7 +12,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
     /// <summary>
     /// Провайдер файлов с github
     /// </summary>
-    public class GitHubFilesystem
+    public class GitHubFilesystem : IFileProvider
     {
         private List<GitHubFileStream> files = new List<GitHubFileStream>();
         private EditingContext? _editingContext;
@@ -40,10 +41,15 @@ namespace DotNetRu.Commune.GitHubFilesystem
         {
             if (_editingContext == null) throw new InvalidOperationException();
             string rootSha = _editingContext.CurrentBranch.Object.Sha;
-            var recursive = await _editingContext.Client.Git.Tree.GetRecursive(_editingContext.LocalRepo.Id, rootSha);
             var contents = await _editingContext.Client.Repository.Content.GetAllContents(_editingContext.LocalRepo.Id);
 
 
         }
+
+        public IFileInfo GetFileInfo(string subpath) => throw new NotImplementedException();
+
+        public IDirectoryContents GetDirectoryContents(string subpath) => throw new NotImplementedException();
+
+        public IChangeToken Watch(string filter) => throw new NotSupportedException();
     }
 }
