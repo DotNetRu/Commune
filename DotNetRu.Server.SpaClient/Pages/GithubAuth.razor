@@ -1,0 +1,82 @@
+﻿@page "/GithubAuth"
+@using DotNetRu.Server.SpaClient.Services
+@inject AuditGithubClient GhClient
+
+<h3>GithubAuth</h3>
+
+<p>
+    Token
+    <input type="text" @bind="token">
+    <button class="btn btn-primary" @onclick="InitClientBtnClick">Init client</button>
+</p>
+@if (GhClient.IsInitialized)
+{
+    <div>
+        <button @onclick="GetReposBtnOnClick">get user repos</button>
+        <ul>
+            @foreach (var item in repos)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    </div>
+    <div>
+        <button @onclick="ForkBtnOnClick">Fork audit repo</button>
+        @if (!string.IsNullOrEmpty(forkUrl))
+        {
+            <a href="@forkUrl">Fork url @forkUrl</a>
+        }
+    </div>
+    <div>
+        <button @onclick="NewBranchBtnOnClick">new branch</button>
+        @if (!string.IsNullOrEmpty(branchUrl))
+        {
+            <a href="@branchUrl">Branch url @branchUrl</a>
+        }
+    </div>
+    <div>
+        <button @onclick="NewFileAndPR">add file and make pr</button>
+        @if (!string.IsNullOrEmpty(prUrl))
+        {
+            <a href="@prUrl">PR url @prUrl</a>
+        }
+    </div>
+}
+else
+{
+    <p>Init client first</p>
+}
+
+@code {
+    string token = "";
+    List<string> repos = new();
+    string forkUrl = "";
+    string branchUrl = "";
+    string prUrl = "";
+
+    private void InitClientBtnClick()
+    {
+        GhClient.Initialize(token);
+    }
+
+    private async Task GetReposBtnOnClick()
+    {
+        repos = await GhClient.ListRepositories();
+    }
+
+    private async Task ForkBtnOnClick()
+    {
+        forkUrl = await GhClient.ForkAudit();
+    }
+
+    private async Task NewBranchBtnOnClick()
+    {
+        branchUrl = await GhClient.NewBranchLocal();
+    }
+
+    private async Task NewFileAndPR()
+    {
+        prUrl = await GhClient.AddNewFileAndPR();
+    }
+
+}
