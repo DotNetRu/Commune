@@ -44,7 +44,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// </summary>
         public async Task Commit()
         {
-
+            throw new NotImplementedException();
         }
 
         public EditingContext(IGitHubClient client, Repository originRepo, Reference originBranch, Repository localRepo,

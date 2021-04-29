@@ -2,7 +2,7 @@
 open Octokit
 open Octokit.Internal
 
-let ghclient = new GitHubClient(new ProductHeaderValue("FSXCLIENT"), new InMemoryCredentialStore(new Credentials("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", AuthenticationType.Bearer)))
+let ghclient = new GitHubClient(new ProductHeaderValue("FSXCLIENT"), new InMemoryCredentialStore(new Credentials("", AuthenticationType.Bearer)))
 
 let auditContents = ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit")
                     |> Async.AwaitTask
