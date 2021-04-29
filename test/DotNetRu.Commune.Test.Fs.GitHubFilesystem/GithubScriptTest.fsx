@@ -2,7 +2,7 @@
 open Octokit
 open Octokit.Internal
 
-let ghclient = new GitHubClient(new ProductHeaderValue("FSXCLIENT"), new InMemoryCredentialStore(new Credentials("", AuthenticationType.Bearer)))
+let ghclient = new GitHubClient(new ProductHeaderValue("FSXCLIENT"), new InMemoryCredentialStore(new Credentials("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", AuthenticationType.Bearer)))
 
 let auditContents = ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit")
                     |> Async.AwaitTask
@@ -16,3 +16,6 @@ let rec contentMapper (content : RepositoryContentInfo) =
 let flattenedCOntents = auditContents |> Seq.map contentMapper |> Seq.collect (fun x -> x)
 
 flattenedCOntents |> Seq.iter (printfn "%s")
+
+let schemaTalk = ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit", "schemas/Talk.xsd") |> Async.AwaitTask |> Async.RunSynchronously
+schemaTalk

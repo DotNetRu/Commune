@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
@@ -14,7 +15,6 @@ namespace DotNetRu.Commune.GitHubFilesystem
     /// </summary>
     public class GitHubFilesystem : IFileProvider
     {
-        private List<GitHubFileStream> files = new List<GitHubFileStream>();
         private EditingContext? _editingContext;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         public async Task StartContext(string token, string originRepo, string originOwner)
         {
             var credStore = new InMemoryCredentialStore(new(token, AuthenticationType.Bearer));
-            var client = new GitHubClient(new Connection(new ProductHeaderValue("DotNetRu.Commune.GitHubFilesystem"),
+            var client = new GitHubClient(new Connection(new ProductHeaderValue("DotNetRuCommune"),
                 GitHubClient.GitHubApiUrl, credStore,
                 new HttpClientAdapter(Net5HttpMessageHandlerFactory.CreateDefault), new SimpleJsonSerializer()));
 
@@ -37,19 +37,31 @@ namespace DotNetRu.Commune.GitHubFilesystem
             _editingContext = new EditingContext(client, originalRepo, originalBranch, fork, currentBranch);
         }
 
-        public async Task<IReadOnlyCollection<string>> ListFiles()
+        public IFileInfo GetFileInfo(string subpath)
         {
             if (_editingContext == null) throw new InvalidOperationException();
-            string rootSha = _editingContext.CurrentBranch.Object.Sha;
-            var contents = await _editingContext.Client.Repository.Content.GetAllContents(_editingContext.LocalRepo.Id);
-
-
+            var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
+                .GetAwaiter().GetResult();
+            if (foundContents.Count == 0) throw new Exception(); //TODO add special file not found exception
+            var content = foundContents.First(); // what shall we do if there are several contents?
+            return new GithubFile(_editingContext, content.Sha, content.Size, content.Path, content.Name,content.Type.Value == ContentType.Dir);
         }
 
-        public IFileInfo GetFileInfo(string subpath) => throw new NotImplementedException();
+        public IDirectoryContents GetDirectoryContents(string subpath)
+        {
+            if (_editingContext == null) throw new InvalidOperationException();
+            var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
+                .GetAwaiter().GetResult();
+            return new DirectoryContents(foundContents.Select(FileFactory));
+        }
 
-        public IDirectoryContents GetDirectoryContents(string subpath) => throw new NotImplementedException();
-
+        private GithubFile FileFactory(RepositoryContent content) =>
+            new(_editingContext ?? throw new InvalidOperationException(),
+                content.Sha,
+                content.Size,
+                content.Path,
+                content.Name,
+                content.Type.Value == ContentType.Dir);
         public IChangeToken Watch(string filter) => throw new NotSupportedException();
     }
 }
