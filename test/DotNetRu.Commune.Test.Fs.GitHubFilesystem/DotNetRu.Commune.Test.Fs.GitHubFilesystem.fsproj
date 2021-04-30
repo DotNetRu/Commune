@@ -9,8 +9,8 @@
 
     <ItemGroup>
         <Compile Include="GitHubFileStreamTests.fs" />
-        <Compile Include="Program.fs" />
         <None Include="GithubScriptTest.fsx" />
+        <Compile Include="GithubFileTests.fs" />
     </ItemGroup>
 
     <ItemGroup>

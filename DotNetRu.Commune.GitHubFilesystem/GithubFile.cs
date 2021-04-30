@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 
 namespace DotNetRu.Commune.GitHubFilesystem
 {
-    public class GithubFile : IFileInfo
+    internal class GithubFile : IFileInfo
     {
         private readonly EditingContext _context;
         private readonly string originSha;
