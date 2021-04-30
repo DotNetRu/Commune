@@ -40,16 +40,16 @@ type GitHubFileStreamTests() =
         let changeSet = RepositoryContentChangeSet(repoContentInfo, Commit())
         let repoContentMock =
             Mock<IRepositoryContentsClient>(MockMode.Strict)
-                .Setup(fun(x) -> <@ x.UpdateFile(any(), any(), any()) @>)
+                .Setup(fun x -> <@ x.UpdateFile(any(), any(), any()) @>)
                 .Returns(Task.FromResult(changeSet))
                 .Create()
 
-        let contextStub = new EditingContextStub(repoContentMock)
+        let contextStub = EditingContextStub(repoContentMock)
         let path = "file path"
         let originalSha = "original sha"
         let sut = new GitHubFileStream(path, contextStub, originalSha)
         let rng = Random()
-        let mockData = Array.init 1024 (fun(x) -> rng.Next(int Byte.MaxValue) |> byte)
+        let mockData = Array.init 1024 (fun _ -> rng.Next(int Byte.MaxValue) |> byte)
         sut.Write(mockData, 0, mockData.Length)
 
         //act
