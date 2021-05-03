@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6632FB11-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetRu.Commune.Test.WasmClient", "test\DotNetRu.Commune.Test.WasmClient\DotNetRu.Commune.Test.WasmClient.csproj", "{301379D1-48ED-4C60-8A37-F46BAFA1E870}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotNetRu.Commune.Test.Fs.WasmClient", "test\DotNetRu.Commune.Test.Fs.WasmClient\DotNetRu.Commune.Test.Fs.WasmClient.fsproj", "{16456F52-B529-469D-88D5-D2D668A2B2E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{301379D1-48ED-4C60-8A37-F46BAFA1E870}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{301379D1-48ED-4C60-8A37-F46BAFA1E870}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{301379D1-48ED-4C60-8A37-F46BAFA1E870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16456F52-B529-469D-88D5-D2D668A2B2E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16456F52-B529-469D-88D5-D2D668A2B2E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16456F52-B529-469D-88D5-D2D668A2B2E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16456F52-B529-469D-88D5-D2D668A2B2E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{301379D1-48ED-4C60-8A37-F46BAFA1E870} = {6632FB11-E205-404B-A564-F7D808E2F98D}
+		{16456F52-B529-469D-88D5-D2D668A2B2E3} = {6632FB11-E205-404B-A564-F7D808E2F98D}
 	EndGlobalSection
 EndGlobal
