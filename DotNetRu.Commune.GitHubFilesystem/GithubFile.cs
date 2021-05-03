@@ -5,6 +5,9 @@ using Microsoft.Extensions.FileProviders;
 
 namespace DotNetRu.Commune.GitHubFilesystem
 {
+    /// <summary>
+    /// реализация абстракции файла, хранящегося в репозитории github
+    /// </summary>
     internal class GithubFile : IFileInfo
     {
         private readonly EditingContext _context;
@@ -26,14 +29,39 @@ namespace DotNetRu.Commune.GitHubFilesystem
             return fs;
         }
 
+        /// <inheritdoc />
         public bool Exists => true;
+
+        /// <inheritdoc />
         public long Length { get; }
+
+        /// <inheritdoc />
         public string PhysicalPath { get; }
+
+        /// <inheritdoc />
         public string Name { get; }
+
+        /// <inheritdoc />
         public DateTimeOffset LastModified { get; }
+
+        /// <inheritdoc />
         public bool IsDirectory { get; }
 
-        public GithubFile(EditingContext context, string originSha, long length, string physicalPath, string name,
+        /// <summary>
+        /// Констурктор файла
+        /// </summary>
+        /// <param name="context">Контекст редактирования</param>
+        /// <param name="originSha">Начальное значение SHA полученное из github</param>
+        /// <param name="length">размер файла</param>
+        /// <param name="physicalPath">путь к файлу в файловой системе</param>
+        /// <param name="name">имя файла</param>
+        /// <param name="isDirectory">если истина - то это папка</param>
+        /// <exception cref="ArgumentNullException">выбрасывается если в аргументах преедан null</exception>
+        public GithubFile([NotNull] EditingContext context,
+            [NotNull] string originSha,
+            long length,
+            [NotNull] string physicalPath,
+            [NotNull] string name,
             bool isDirectory)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
