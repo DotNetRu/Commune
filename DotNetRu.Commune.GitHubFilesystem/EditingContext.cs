@@ -20,6 +20,11 @@ namespace DotNetRu.Commune.GitHubFilesystem
         public virtual IRepositoryContentsClient ContentClient => Client.Repository.Content;
 
         /// <summary>
+        /// Клиент доступа к списку pull request
+        /// </summary>
+        public virtual IPullRequestsClient PullRequestsClient => Client.PullRequest;
+
+        /// <summary>
         /// исходный репозиторий, откуда был сделан форк
         /// </summary>
         public Repository OriginRepo { get; }
@@ -42,10 +47,9 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <summary>
         /// Применить изменения, создав PR в основную ветвь основного репозитория
         /// </summary>
-        public async Task Commit()
-        {
-            throw new NotImplementedException();
-        }
+        public Task Commit() =>
+            PullRequestsClient.Create(OriginRepo.Id,
+                new("AUTOMATED PR", CurrentBranch.Ref, OriginBranch.Ref) {Draft = true});
 
         public EditingContext(IGitHubClient client, Repository originRepo, Reference originBranch, Repository localRepo,
             Reference currentBranch)
