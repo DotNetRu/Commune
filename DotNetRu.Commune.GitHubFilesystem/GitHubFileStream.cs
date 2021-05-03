@@ -11,7 +11,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
     /// <summary>
     /// Стрим данных в памяти, связанный с файлом в github репозитории
     /// </summary>
-    public class GitHubFileStream : MemoryStream
+    internal class GitHubFileStream : MemoryStream
     {
         /// <summary>
         /// Путь к файлу в репозитории

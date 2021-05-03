@@ -7,7 +7,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
     /// <summary>
     /// Сессия работы с файловой системой
     /// </summary>
-    public class EditingContext
+    internal class EditingContext
     {
         /// <summary>
         /// Клиент доступа к github

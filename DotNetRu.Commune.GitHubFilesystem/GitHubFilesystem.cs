@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
@@ -42,9 +43,9 @@ namespace DotNetRu.Commune.GitHubFilesystem
             if (_editingContext == null) throw new InvalidOperationException();
             var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
                 .GetAwaiter().GetResult();
-            if (foundContents.Count == 0) throw new Exception(); //TODO add special file not found exception
+            if (foundContents.Count == 0) throw new FileNotFoundException("No file found for given subpath", subpath);
             var content = foundContents.First(); // what shall we do if there are several contents?
-            return new GithubFile(_editingContext, content.Sha, content.Size, content.Path, content.Name,content.Type.Value == ContentType.Dir);
+            return FileFactory(content);
         }
 
         public IDirectoryContents GetDirectoryContents(string subpath)
