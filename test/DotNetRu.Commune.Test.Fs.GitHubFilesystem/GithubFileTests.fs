@@ -10,7 +10,7 @@ open Foq
 open FluentAssertions
 
 
-type EditingContextMock =
+type EditingContextContentClientMock =
     inherit EditingContext
     val repositoryContentClient : IRepositoryContentsClient
 
@@ -113,7 +113,7 @@ type GithubFileTests() =
                 .Returns(Task.FromResult(mockData))
                 .Create()
 
-        let contextMock = EditingContextMock(repoContentsClientMock, originRepo, originBranch, forkRepo, currentBranch)
+        let contextMock = EditingContextContentClientMock(repoContentsClientMock, originRepo, originBranch, forkRepo, currentBranch)
 
         let sut = GithubFile(contextMock, "", 0L, "", "", false)
 

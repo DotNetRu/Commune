@@ -12,6 +12,7 @@
         <None Include="GithubScriptTest.fsx" />
         <Compile Include="GithubFileTests.fs" />
         <Compile Include="DirectoryContentsTests.fs" />
+        <Compile Include="EditingContextTests.fs" />
     </ItemGroup>
 
     <ItemGroup>
