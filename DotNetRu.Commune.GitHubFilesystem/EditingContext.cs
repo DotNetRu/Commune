@@ -47,9 +47,12 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <summary>
         /// Применить изменения, создав PR в основную ветвь основного репозитория
         /// </summary>
-        public Task Commit() =>
-            PullRequestsClient.Create(OriginRepo.Id,
-                new("AUTOMATED PR", CurrentBranch.Ref, OriginBranch.Ref) {Draft = true});
+        public Task Commit()
+        {
+            var head = $"{LocalRepo.Owner.Login}:{CurrentBranch.Ref}";
+            return PullRequestsClient.Create(OriginRepo.Id,
+                new("AUTOMATED PR", head, OriginBranch.Ref) {Draft = true});
+        }
 
         public EditingContext(IGitHubClient client, Repository originRepo, Reference originBranch, Repository localRepo,
             Reference currentBranch)

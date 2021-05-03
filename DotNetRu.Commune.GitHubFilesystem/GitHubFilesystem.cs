@@ -64,5 +64,22 @@ namespace DotNetRu.Commune.GitHubFilesystem
                 content.Name,
                 content.Type.Value == ContentType.Dir);
         public IChangeToken Watch(string filter) => throw new NotSupportedException();
+
+        /// <summary>
+        /// Внести изменения создав новый PR
+        /// </summary>
+        /// <exception cref="InvalidOperationException">выбрасывается если не начат контекст редактирования репозитория</exception>
+        public async Task CommitChanges()
+        {
+            if (_editingContext == null) throw new InvalidOperationException();
+            try
+            {
+                await _editingContext.Commit().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
