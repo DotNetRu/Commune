@@ -25,7 +25,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     
     - name: Publish
-      run: dotnet publish DotNetRu.Commune.WasmClient.csproj -c Release -o release
+      run: dotnet publish DotNetRu.Commune.WasmClient/DotNetRu.Commune.WasmClient.csproj -c Release -o release
     
     # заменить базовый URL с / на /Commune
     - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
