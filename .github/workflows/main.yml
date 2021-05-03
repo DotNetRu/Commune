@@ -9,35 +9,35 @@ jobs:
     steps:
     - name: get sources
       uses: actions/checkout@v2
-    
+
     - name: Setup .NET 5.0 SDK
       uses: actions/setup-dotnet@v1.7.2
       with:
         dotnet-version: "5.0.201"
-    
+
     - name: restore dependencies
       run: dotnet restore
-    
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    
+
     - name: Test
-      run: dotnet test --no-restore --verbosity normal --settings coverlet.runsettings
-      
+      run: dotnet test --no-restore --verbosity normal --settings .runsettings
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
 
     - name: Publish
       run: dotnet publish DotNetRu.Commune.WasmClient/DotNetRu.Commune.WasmClient.csproj -c Release -o release
-    
+
     # заменить базовый URL с / на /Commune
     - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
       run: sed -i 's/<base href="\/" \/>/<base href="\/Commune\/" \/>/g' release/wwwroot/index.html
-    
+
     # добавить файл .nojekyll чтобы отвязаться от правила Jekyll по игнорированию путей начинающихся с нижнего подчеркивания. Это критично важно для blazor
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
-    
+
     # наконец, закоммитить результаты в ветку gh-pages
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -45,4 +45,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: release/wwwroot
-          
+
