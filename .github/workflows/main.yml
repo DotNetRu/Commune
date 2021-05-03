@@ -21,9 +21,11 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
+    # тестирование со сборкой результатов покрытия по конфигурации в файле по умолчанию
     - name: Test
-      run: dotnet test --no-restore --verbosity normal --settings .runsettings
+      run: dotnet test --no-restore --verbosity normal --collect:"XPlat code coverage"
 
+    # публикация результатов покрытия тестами на code-cov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
 
