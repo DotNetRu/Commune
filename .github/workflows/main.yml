@@ -22,7 +22,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test --no-restore --no-build --verbosity normal --settings coverlet.runsettings
+      run: dotnet test --no-restore --verbosity normal --settings coverlet.runsettings
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
