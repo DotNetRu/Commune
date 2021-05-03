@@ -5,6 +5,7 @@ open System.Threading.Tasks
 open Foq
 open Octokit
 open Xunit
+open MyMocks
 
 type EditingContextPrClientMock =
     inherit EditingContext
@@ -22,20 +23,26 @@ type EditingContextPrClientMock =
 
 type EditingContextTests() =
     class
+        let originUser = UserMock(PubLogin = "originUser")
+        let forkUser = UserMock(PubLogin = "forkUser")
+
+        let originRepo = RepositoryMock(PubName = "origin-repo", PubOwner = originUser, PubId = 42L)
+        let forkRepo = RepositoryMock(PubName = "fork-repo", PubOwner = forkUser, PubId = 69L)
+
         [<Fact>]
         let ``Commit when called calls PullRequestClient``() =
             //arrange
             let prClientMock = Mock<IPullRequestsClient>().Setup(fun x -> <@ x.Create(any(), any()) @>).Returns(Task.FromResult(PullRequest())).Create()
-            let originRepo = Repository(42L)
             let originBranch = Reference("origin-master", "", "", TagObject())
             let currentBranch = Reference("current-branch", "", "", TagObject())
 
-            let sut = EditingContextPrClientMock(prClientMock, originRepo, originBranch, Repository(), currentBranch)
+            let sut = EditingContextPrClientMock(prClientMock, originRepo, originBranch, forkRepo, currentBranch)
 
             //act
             sut.Commit() |> Async.AwaitTask |> Async.RunSynchronously
 
             //assert
-            verify <@ prClientMock.Create(is (fun originId -> originId = 42L), is (fun (request : NewPullRequest) -> request.Draft.HasValue && request.Draft.Value && request.Head = "current-branch" && request.Base = "origin-master")) @> once
+            verify <@ prClientMock.Create(is (fun originId -> originId = 42L), is (fun (request : NewPullRequest) -> request.Draft.HasValue && request.Draft.Value && request.Head = "forkUser:current-branch" && request.Base = "origin-master")) @> once
+
     end
 

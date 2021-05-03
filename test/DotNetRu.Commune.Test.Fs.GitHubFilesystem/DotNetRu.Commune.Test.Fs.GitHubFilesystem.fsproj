@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="MyMocks.fs" />
         <Compile Include="GitHubFileStreamTests.fs" />
         <None Include="GithubScriptTest.fsx" />
         <Compile Include="GithubFileTests.fs" />

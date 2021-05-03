@@ -1,21 +1,18 @@
 ﻿#r "nuget: Octokit"
-open Octokit
-open Octokit.Internal
+#r "nuget: Microsoft.Extensions.FileProviders.Abstractions"
+#r "../../DotNetRu.Commune.GitHubFilesystem/bin/Debug/net5.0/DotNetRu.Commune.GitHubFilesystem.dll"
 
-let ghclient = new GitHubClient(new ProductHeaderValue("FSXCLIENT"), new InMemoryCredentialStore(new Credentials("", AuthenticationType.Bearer)))
+open DotNetRu.Commune.GitHubFilesystem
+open System
+open System.IO
 
-let auditContents = ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit")
-                    |> Async.AwaitTask
-                    |> Async.RunSynchronously
-let rec contentMapper (content : RepositoryContentInfo) =
-    match content.Type.Value with
-    | ContentType.File -> seq {content.Path}
-    | ContentType.Dir -> ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit", content.Path) |> Async.AwaitTask |> Async.RunSynchronously |> Seq.collect contentMapper
-    | _ -> Seq.empty
+let client = new GitHubFilesystem()
+client.StartContext("", "DEMO", "SelectFromGroup-By") |> Async.AwaitTask |> Async.RunSynchronously
 
-let flattenedCOntents = auditContents |> Seq.map contentMapper |> Seq.collect (fun x -> x)
-
-flattenedCOntents |> Seq.iter (printfn "%s")
-
-let schemaTalk = ghclient.Repository.Content.GetAllContents("DotNetRu", "Audit", "schemas/Talk.xsd") |> Async.AwaitTask |> Async.RunSynchronously
-schemaTalk
+let rootContents = client.GetDirectoryContents("/")
+let readme = client.GetFileInfo("README.md")
+let readmeStream = readme.CreateReadStream()
+let sw = new StreamWriter(readmeStream)
+sw.Write("test data new at {0}", DateTime.Now.ToString())
+sw.Flush()
+client.CommitChanges() |> Async.AwaitTask |> Async.RunSynchronously

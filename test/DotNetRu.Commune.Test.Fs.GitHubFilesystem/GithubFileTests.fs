@@ -8,7 +8,7 @@ open Octokit
 open Xunit
 open Foq
 open FluentAssertions
-
+open MyMocks
 
 type EditingContextContentClientMock =
     inherit EditingContext
@@ -23,14 +23,9 @@ type EditingContextContentClientMock =
     override this.ContentClient
         with get() = this.repositoryContentClient
 
-type private UserMock() =
-    inherit User()
-    member this.PubLogin with set value = this.Login <- value
 
-type private RepositoryMock() =
-    inherit Repository()
-    member this.PubName with set value = this.Name <- value
-    member this.PubOwner with set value = this.Owner <- value
+
+
 
 type GithubFileTests() =
 
