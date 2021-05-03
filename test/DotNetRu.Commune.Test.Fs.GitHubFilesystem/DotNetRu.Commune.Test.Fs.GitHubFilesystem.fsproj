@@ -9,7 +9,9 @@
 
     <ItemGroup>
         <Compile Include="GitHubFileStreamTests.fs" />
-        <Compile Include="Program.fs" />
+        <None Include="GithubScriptTest.fsx" />
+        <Compile Include="GithubFileTests.fs" />
+        <Compile Include="DirectoryContentsTests.fs" />
     </ItemGroup>
 
     <ItemGroup>
