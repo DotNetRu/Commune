@@ -1,6 +1,6 @@
 # DotNetRu.Commune
-![CI status](https://github.com/zetroot/Commune/actions/workflows/main.yml/badge.svg)
-[![codecov](https://codecov.io/gh/zetroot/Commune/branch/master/graph/badge.svg)](https://codecov.io/gh/zetroot/Commune)
+![CI status](https://github.com/DotNetRu/Commune/actions/workflows/main.yml/badge.svg)
+[![codecov](https://codecov.io/gh/DotNetRu/Commune/branch/master/graph/badge.svg)](https://codecov.io/gh/DotNetRu/Commune)
 
 DotNetRu Commune - продукт семейства DotNetRu, обеспечивающий кроссплатформенный, serverless доустп к [Аудиту](https://github.com/DotNetRu/Audit) с целью удобного метода добавления и редактирования митапов.
 
