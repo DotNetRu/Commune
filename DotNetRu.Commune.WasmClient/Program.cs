@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
+using DotNetRu.Commune.WasmClient.Model;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
@@ -15,9 +17,15 @@ namespace DotNetRu.Commune.WasmClient
 
             SetupLogging(builder.Logging, builder.Configuration);
 
-            builder.Services.AddBizLogic();
+            ConfigureServices(builder.Services, builder.Configuration);
 
             await builder.Build().RunAsync();
+        }
+
+        private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<CustomMessage>(configuration.GetSection(nameof(CustomMessage)));
+            services.AddBizLogic();
         }
 
         /// <summary>
