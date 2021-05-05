@@ -15,7 +15,7 @@ namespace DotNetRu.Commune.WasmClient
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            SetupLogging(builder.Logging, builder.Configuration);
+            ConfigureLogging(builder.Logging, builder.Configuration);
 
             ConfigureServices(builder.Services, builder.Configuration);
 
