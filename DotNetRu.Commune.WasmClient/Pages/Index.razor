@@ -1,6 +1,56 @@
 ﻿@page "/"
+@using Microsoft.Extensions.Logging
+@using Microsoft.Extensions.Options
+@using DotNetRu.Commune.WasmClient.Model
+@inject ILogger<Index> _logger;
+@inject IOptions<CustomMessage> customMsgOpts
 
 <h1>Hello, world!</h1>
 
-Это тестовое приложение DotNetRU.Commune
+<p>
+    Это тестовое приложение DotNetRU.Commune.
+    <br/>
+    Загляните в лог отладчика страницы :-)
+</p>
 
+<h2>Демо внедрения опций</h2>
+<div class="text-monospace">
+    @if (customMsgOpts != null)
+    {
+        <div>customMsgOpts is not null</div>
+        if (customMsgOpts.Value != null)
+        {
+            <div>customMsgOpts.Value is not null</div>
+            if (!string.IsNullOrEmpty(customMsgOpts.Value.Message))
+            {
+                <div>customMsgOpts.Value.Message is not null or empty</div>
+                <div>customMsgOpts.Value.Message == "@customMsgOpts.Value.Message"</div>
+            }
+            else
+            {
+                <div>customMsgOpts.Value.Message is null or empty</div>
+            }
+        }
+        else
+        {
+            <div>customMsgOpts.Value is null</div>
+        }
+    }
+    else
+    {
+        <div>customMsgOpts is not null</div>
+    }
+</div>
+@code
+{
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _logger.LogTrace("Index page was initialized and this is logged @ trace");
+        _logger.LogDebug("Index page was initialized and this is logged @ debug");
+        _logger.LogInformation("Index page was initialized and this is logged @ info");
+        _logger.LogWarning("Index page was initialized and this is logged @ warning");
+        _logger.LogError("Index page was initialized and this is logged @ error");
+        _logger.LogCritical("Index page was initialized and this is logged @ critical");
+    }
+}
