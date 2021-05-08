@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using DotNetRu.Commune.WasmClient.Model;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -8,6 +9,7 @@ using Serilog;
 
 namespace DotNetRu.Commune.WasmClient
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         public static async Task Main(string[] args)

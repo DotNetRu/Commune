@@ -15,30 +15,14 @@
 
 <h2>Демо внедрения опций</h2>
 <div class="text-monospace">
-    @if (customMsgOpts != null)
+    @if (!string.IsNullOrEmpty(customMsgOpts.Value.Message))
     {
-        <div>customMsgOpts is not null</div>
-        if (customMsgOpts.Value != null)
-        {
-            <div>customMsgOpts.Value is not null</div>
-            if (!string.IsNullOrEmpty(customMsgOpts.Value.Message))
-            {
-                <div>customMsgOpts.Value.Message is not null or empty</div>
-                <div>customMsgOpts.Value.Message == "@customMsgOpts.Value.Message"</div>
-            }
-            else
-            {
-                <div>customMsgOpts.Value.Message is null or empty</div>
-            }
-        }
-        else
-        {
-            <div>customMsgOpts.Value is null</div>
-        }
+        <div id="notNullInfo">customMsgOpts.Value.Message is not null or empty</div>
+        <div id="message">customMsgOpts.Value.Message == "@customMsgOpts.Value.Message"</div>
     }
     else
     {
-        <div>customMsgOpts is not null</div>
+        <div id="nullInfo">customMsgOpts.Value.Message is null or empty</div>
     }
 </div>
 @code
