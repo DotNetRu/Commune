@@ -48,11 +48,19 @@ namespace DotNetRu.Commune.GitHubFilesystem
             return FileFactory(content);
         }
 
-        public IDirectoryContents GetDirectoryContents(string subpath)
+        public IDirectoryContents GetDirectoryContents(string subpath) // TODO blazor не может в GetAwaiter().GetResult(). Поэтому надо реализовать свой асинхронный IFileProvider
         {
             if (_editingContext == null) throw new InvalidOperationException();
             var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
-                .GetAwaiter().GetResult();
+                .Result;
+            return new DirectoryContents(foundContents.Select(FileFactory));
+        }
+
+        public async Task<IDirectoryContents> GetDirectoryContentsAsync(string subpath)
+        {
+            if (_editingContext == null) throw new InvalidOperationException();
+            var foundContents = await _editingContext.ContentClient
+                .GetAllContents(_editingContext.LocalRepo.Id, subpath).ConfigureAwait(false);
             return new DirectoryContents(foundContents.Select(FileFactory));
         }
 

@@ -16,7 +16,7 @@ namespace DotNetRu.Commune.Test.WasmClient
             //arrange
             var myCustomMsg = "my custom msg";
             var ctx = new TestContext();
-            ctx.Services.Configure<CustomMessage>(message => message.Message = myCustomMsg);
+            ctx.Services.Configure<AuditSettings>(message => message.RepositoryName = myCustomMsg);
             ctx.Services.AddLogging();
 
             //act
@@ -36,7 +36,7 @@ namespace DotNetRu.Commune.Test.WasmClient
         {
             //arrange
             var ctx = new TestContext();
-            ctx.Services.Configure<CustomMessage>(message => message.Message = emptyMsg);
+            ctx.Services.Configure<AuditSettings>(message => message.RepositoryName = emptyMsg);
             ctx.Services.AddLogging();
 
             //act

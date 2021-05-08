@@ -1,0 +1,30 @@
+﻿@page "/ContentView"
+@using DotNetRu.Commune.GitHubFilesystem
+@using Microsoft.Extensions.FileProviders
+@inject GitHubFilesystem _gitHubFilesystem;
+
+<h3>ContentViewPage</h3>
+
+<div>
+    <select type="text" value=@selectedItem>
+        @foreach (var item in CurrentFiles)
+        {
+            <option value=@item>
+                @item.Name
+            </option>
+        }
+    </select>
+</div>
+
+@code {
+
+    List<IFileInfo> CurrentFiles { get; set; } = new List<IFileInfo>();
+    IFileInfo? selectedItem = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        CurrentFiles = (await _gitHubFilesystem.GetDirectoryContentsAsync("/")).ToList();
+    }
+
+}
