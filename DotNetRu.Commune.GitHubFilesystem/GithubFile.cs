@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 
 namespace DotNetRu.Commune.GitHubFilesystem
@@ -8,7 +9,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
     /// <summary>
     /// реализация абстракции файла, хранящегося в репозитории github
     /// </summary>
-    internal class GithubFile : IFileInfo
+    public class GithubFile : IFileInfo
     {
         private readonly EditingContext _context;
         private readonly string originSha;
@@ -24,6 +25,16 @@ namespace DotNetRu.Commune.GitHubFilesystem
                 .GetRawContent(_context.LocalRepo.Owner.Login, _context.LocalRepo.Name, PhysicalPath)
                 .GetAwaiter()
                 .GetResult();
+            fs.Write(originalContent);
+            fs.Position = 0;
+            return fs;
+        }
+
+        public async Task<Stream> CreateReadStreamAsync()
+        {
+            var fs = new GitHubFileStream(PhysicalPath, _context, originSha);
+            var originalContent = await _context.ContentClient
+                .GetRawContent(_context.LocalRepo.Owner.Login, _context.LocalRepo.Name, PhysicalPath);
             fs.Write(originalContent);
             fs.Position = 0;
             return fs;
@@ -57,7 +68,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <param name="name">имя файла</param>
         /// <param name="isDirectory">если истина - то это папка</param>
         /// <exception cref="ArgumentNullException">выбрасывается если в аргументах преедан null</exception>
-        public GithubFile([NotNull] EditingContext context,
+        internal GithubFile([NotNull] EditingContext context,
             [NotNull] string originSha,
             long length,
             [NotNull] string physicalPath,

@@ -1,0 +1,35 @@
+﻿@using Microsoft.Extensions.FileProviders
+@using System.IO
+@using DotNetRu.Commune.GitHubFilesystem
+
+@if (FileInfo is not null)
+{
+    <ul>
+        <li>Имя: @FileInfo.Name</li>
+        <li>Путь: @FileInfo.PhysicalPath</li>
+        <li>Размер: @FileInfo.Length</li>
+        <li>Изменен: @FileInfo.LastModified</li>
+    </ul>
+    <div style="font-family: monospace">
+        <p>@fileContents</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IFileInfo? FileInfo { get; set; }
+
+    string? fileContents;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        if (FileInfo is GithubFile ghFile )
+        {
+            using var filestrem = await ghFile.CreateReadStreamAsync();
+            using var sr = new StreamReader(filestrem);
+            fileContents = await sr.ReadToEndAsync();
+        }
+    }
+
+}

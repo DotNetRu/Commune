@@ -1,12 +1,12 @@
-﻿@page "/ContentView/{CurrentPath}"
-@page "/ContentView"
+﻿@page "/ContentView/{*CurrentPath}"
+@page "/ContentView/"
 @using DotNetRu.Commune.GitHubFilesystem
 @using Microsoft.Extensions.FileProviders
 @using Microsoft.Extensions.Logging
 @inject GitHubFilesystem _gitHubFilesystem;
 @inject ILogger<ContentView> logger;
 
-<h1>ContentViewPage</h1>
+<h2>ContentViewPage</h2>
 
 <h3>@CurrentPath</h3>
 <div>
@@ -21,7 +21,11 @@
             }
             else
             {
-                <li>@item.Name</li>
+                <li>
+                    <a href="/FileContentView/@item.PhysicalPath">
+                        @item.Name
+                    </a>
+                </li>
             }
         }
     </ul>

@@ -1,0 +1,34 @@
+﻿@page "/FileContentView/{*CurrentPath}"
+
+@using DotNetRu.Commune.GitHubFilesystem
+@using Microsoft.Extensions.FileProviders
+@using Microsoft.Extensions.Logging
+
+@inject GitHubFilesystem _gitHubFilesystem;
+@inject ILogger<ContentView> logger;
+
+<h3>FileContentView</h3>
+
+@if (string.IsNullOrWhiteSpace(CurrentPath))
+{
+    <p>Не указан путь к файлу</p>
+}
+else
+{
+    <FileContents FileInfo=@currentFileInfo/>
+}
+
+@code {
+    [Parameter]
+    public string? CurrentPath { get; set; }
+
+    IFileInfo? currentFileInfo;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        if(!string.IsNullOrWhiteSpace(CurrentPath))
+            currentFileInfo = await _gitHubFilesystem.GetFileInfoAsync(CurrentPath);
+    }
+
+}

@@ -48,6 +48,16 @@ namespace DotNetRu.Commune.GitHubFilesystem
             return FileFactory(content);
         }
 
+        public async Task<IFileInfo> GetFileInfoAsync(string subpath)
+        {
+            if (_editingContext == null) throw new InvalidOperationException();
+            var foundContents =
+                await _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath);
+            if (foundContents.Count == 0) throw new FileNotFoundException("No file found for given subpath", subpath);
+            var content = foundContents.First(); // what shall we do if there are several contents?
+            return FileFactory(content);
+        }
+
         public IDirectoryContents GetDirectoryContents(string subpath) // TODO blazor не может в GetAwaiter().GetResult(). Поэтому надо реализовать свой асинхронный IFileProvider
         {
             if (_editingContext == null) throw new InvalidOperationException();
