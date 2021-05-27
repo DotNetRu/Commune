@@ -25,7 +25,7 @@
         try
         {
             await githubFs.StartContext(pat, auditSettings.Value.RepositoryName, auditSettings.Value.OriginalOwner);
-            _navigationManager.NavigateTo("ContentView");
+            _navigationManager.NavigateTo("ContentView/");
         }
         catch (Exception e)
         {
