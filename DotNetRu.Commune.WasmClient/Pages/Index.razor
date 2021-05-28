@@ -13,7 +13,8 @@
 <p>
     Это тестовое приложение DotNetRU.Commune.<br/>
     Введите свой PAT для авторизации клиента github:<br/>
-    <input @bind="pat"> <button name="authBtn" @onclick="ProvidePat">Продолжить</button>
+    <input @bind="pat"/>
+    <button type="button" class="btn btn-primary" name="authBtn" @onclick="ProvidePat">Продолжить</button>
 </p>
 
 @code

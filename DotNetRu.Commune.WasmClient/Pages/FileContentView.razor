@@ -3,6 +3,7 @@
 @using DotNetRu.Commune.GitHubFilesystem
 @using Microsoft.Extensions.FileProviders
 @using Microsoft.Extensions.Logging
+@using System.IO
 
 @inject GitHubFilesystem _gitHubFilesystem;
 @inject ILogger<ContentView> logger;
@@ -15,7 +16,8 @@
 }
 else
 {
-    <FileContents FileInfo=@currentFileInfo/>
+    <FileContents @ref="fileContentsViewer" FileInfo=@currentFileInfo/>
+    <button class="btn-primary" @onclick="AppendButtonClick">Дописать</button>
 }
 
 @code {
@@ -23,6 +25,7 @@ else
     public string? CurrentPath { get; set; }
 
     IFileInfo? currentFileInfo;
+    FileContents? fileContentsViewer;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -30,5 +33,19 @@ else
         if(!string.IsNullOrWhiteSpace(CurrentPath))
             currentFileInfo = await _gitHubFilesystem.GetFileInfoAsync(CurrentPath);
     }
+
+    private async Task AppendButtonClick(MouseEventArgs obj)
+    {
+        if (currentFileInfo is GithubFile ghfile)
+        {
+            var stream = await ghfile.CreateReadStreamAsync();
+            var sw = new StreamWriter(stream);
+            await sw.WriteAsync($"\n{Guid.NewGuid()} @ {DateTime.Now}");
+            await stream.FlushAsync();
+            if(fileContentsViewer != null)
+                await fileContentsViewer.RereadFile();
+        }
+    }
+
 
 }

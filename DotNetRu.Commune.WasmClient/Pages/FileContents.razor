@@ -24,6 +24,11 @@
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
+        await RereadFile();
+    }
+
+    public async Task RereadFile()
+    {
         if (FileInfo is GithubFile ghFile )
         {
             using var filestrem = await ghFile.CreateReadStreamAsync();

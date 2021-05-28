@@ -38,7 +38,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
         /// <inheritdoc />
         public override void Flush()
         {
-            FlushInternal().GetAwaiter().GetResult();
+            throw new NotSupportedException();
         }
 
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace DotNetRu.Commune.GitHubFilesystem
 
         protected virtual async Task FlushInternal()
         {
-            var content = Convert.ToBase64String(this.GetBuffer());
+            var content = Convert.ToBase64String(this.ToArray());
             var updateRequest = new UpdateFileRequest($"Flush @ {DateTime.Now}", content, RepoFileSha, Context.CurrentBranch.Ref, false);
             var updateResult = await Context.ContentClient.UpdateFile(Context.LocalRepo.Id, Path, updateRequest);
             RepoFileSha = updateResult.Content.Sha;
