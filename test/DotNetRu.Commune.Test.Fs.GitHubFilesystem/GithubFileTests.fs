@@ -49,15 +49,11 @@ type GithubFileTests() =
 
     [<Fact>]
     let ``Ctor fails on null context``() =
-        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(null, "", 0L, "", "", false) |> ignore)
-
-    [<Fact>]
-    let ``Ctor fails on null origin sha``() =
-        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(context, null, 0L, "", "", false) |> ignore)
-
+        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(null, 0L, "", "", false) |> ignore)
+    
     [<Fact>]
     let ``Ctor fails on null physical path``() =
-        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(context, "", 0L, null, "", false) |> ignore)
+        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(context, 0L, null, "", false) |> ignore)
 
     [<Fact>]
     let ``Ctor sets physical path``() =
@@ -65,14 +61,14 @@ type GithubFileTests() =
         let physicalPath = "path/to/file"
 
         //act
-        let sut = GithubFile(context, "", 0L, physicalPath, "", false)
+        let sut = GithubFile(context, 0L, physicalPath, "", false)
 
         //assert
         sut.PhysicalPath.Should().Be(physicalPath, "ctor must save file path")
 
     [<Fact>]
     let ``Ctor fails on null name``() =
-        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(context, "", 0L, "", null, false) |> ignore)
+        Assert.Throws<ArgumentNullException>(fun () -> GithubFile(context, 0L, "", null, false) |> ignore)
 
     [<Fact>]
     let ``Ctor sets name``() =
@@ -80,7 +76,7 @@ type GithubFileTests() =
         let name = "file_name"
 
         //act
-        let sut = GithubFile(context, "", 0L, "", name, false)
+        let sut = GithubFile(context, 0L, "", name, false)
 
         //assert
         sut.Name.Should().Be(name, "ctor must save file name")
@@ -89,8 +85,8 @@ type GithubFileTests() =
     let ``Ctor sets IsDirectory``() =
         //arrange
         //act
-        let fileSut = GithubFile(context, "", 0L, "", "", false)
-        let dirSut = GithubFile(context, "", 0L, "", "", true)
+        let fileSut = GithubFile(context, 0L, "", "", false)
+        let dirSut = GithubFile(context, 0L, "", "", true)
 
         //assert
         fileSut.IsDirectory.Should().BeFalse("directory is not file") |> ignore
@@ -110,7 +106,7 @@ type GithubFileTests() =
 
         let contextMock = EditingContextContentClientMock(repoContentsClientMock, originRepo, originBranch, forkRepo, currentBranch)
 
-        let sut = GithubFile(contextMock, "", 0L, "", "", false)
+        let sut = GithubFile(contextMock, 0L, "", "", false)
 
         //act
         let stream = sut.CreateReadStream()
@@ -123,5 +119,5 @@ type GithubFileTests() =
 
     [<Fact>]
     let ``Exists is always true``() =
-        let sut = GithubFile(context, "", 0L, "", "", false)
+        let sut = GithubFile(context, 0L, "", "", false)
         sut.Exists.Should().BeTrue("it is written so") |> ignore

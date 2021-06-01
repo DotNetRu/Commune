@@ -76,7 +76,6 @@ namespace DotNetRu.Commune.GitHubFilesystem
 
         private GithubFile FileFactory(RepositoryContent content) =>
             new(_editingContext ?? throw new InvalidOperationException(),
-                content.Sha,
                 content.Size,
                 content.Path,
                 content.Name,

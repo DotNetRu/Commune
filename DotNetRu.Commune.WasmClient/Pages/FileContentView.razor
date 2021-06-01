@@ -39,9 +39,10 @@ else
         if (currentFileInfo is GithubFile ghfile)
         {
             var stream = await ghfile.CreateReadStreamAsync();
-            var sw = new StreamWriter(stream);
+            stream.Position = stream.Length;
+            var sw = new StreamWriter(stream){AutoFlush = false};
             await sw.WriteAsync($"\n{Guid.NewGuid()} @ {DateTime.Now}");
-            await stream.FlushAsync();
+            await sw.FlushAsync();
             if(fileContentsViewer != null)
                 await fileContentsViewer.RereadFile();
         }
