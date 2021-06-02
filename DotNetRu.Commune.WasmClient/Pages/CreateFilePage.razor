@@ -1,0 +1,40 @@
+﻿@page "/CreateFilePage"
+@using DotNetRu.Commune.GitHubFilesystem
+@using Microsoft.Extensions.Logging
+@using System.IO
+@inject GitHubFilesystem _filesystem
+@inject ILogger<CreateFilePage> _logger
+@inject NavigationManager _navigationManager
+
+<h3>Создать новый файл</h3>
+
+<div>
+    <input @bind="fileName"/>
+    <br/>
+    <input type="text" @bind="fileContent"/>
+    <button type="button" class="btn btn-primary" @onclick="CreateFile">Создать</button>
+</div>
+
+@code {
+
+    private string fileName = string.Empty;
+    private string fileContent = string.Empty;
+
+    private async Task CreateFile()
+    {
+        try
+        {
+            var fileInfo = await _filesystem.CreateFileAsync(fileName);
+            var sw = new StreamWriter(fileInfo);
+            await sw.WriteAsync(fileContent);
+            await sw.FlushAsync();
+            _navigationManager.NavigateTo($"/FileContentView/{fileInfo.PhysicalPath}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Failed to create file");
+            throw;
+        }
+    }
+
+}

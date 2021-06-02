@@ -40,30 +40,18 @@ namespace DotNetRu.Commune.GitHubFilesystem
 
         public IFileInfo GetFileInfo(string subpath)
         {
-            if (_editingContext == null) throw new InvalidOperationException();
-            var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
-                .GetAwaiter().GetResult();
-            if (foundContents.Count == 0) throw new FileNotFoundException("No file found for given subpath", subpath);
-            var content = foundContents.First(); // what shall we do if there are several contents?
-            return FileFactory(content);
+            throw new NotSupportedException();
         }
 
-        public async Task<IFileInfo> GetFileInfoAsync(string subpath)
-        {
-            if (_editingContext == null) throw new InvalidOperationException();
-            var foundContents =
-                await _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath);
-            if (foundContents.Count == 0) throw new FileNotFoundException("No file found for given subpath", subpath);
-            var content = foundContents.First(); // what shall we do if there are several contents?
-            return FileFactory(content);
-        }
+        public async Task<GithubFile> GetFileInfoAsync(string subpath) =>
+            await GithubFile.Open(_editingContext ?? throw new InvalidOperationException(),subpath);
+
+        public async Task<GithubFile> CreateFileAsync(string subpath) =>
+            await GithubFile.Create(_editingContext ?? throw new InvalidOperationException(),subpath);
 
         public IDirectoryContents GetDirectoryContents(string subpath) // TODO blazor не может в GetAwaiter().GetResult(). Поэтому надо реализовать свой асинхронный IFileProvider
         {
-            if (_editingContext == null) throw new InvalidOperationException();
-            var foundContents = _editingContext.ContentClient.GetAllContents(_editingContext.LocalRepo.Id, subpath)
-                .Result;
-            return new DirectoryContents(foundContents.Select(FileFactory));
+            throw new NotSupportedException();
         }
 
         public async Task<IDirectoryContents> GetDirectoryContentsAsync(string subpath)
@@ -76,10 +64,10 @@ namespace DotNetRu.Commune.GitHubFilesystem
 
         private GithubFile FileFactory(RepositoryContent content) =>
             new(_editingContext ?? throw new InvalidOperationException(),
-                content.Size,
                 content.Path,
                 content.Name,
-                content.Type.Value == ContentType.Dir);
+                content.Type.Value == ContentType.Dir, false, content.Sha, false);
+
         public IChangeToken Watch(string filter) => throw new NotSupportedException();
 
         /// <summary>
