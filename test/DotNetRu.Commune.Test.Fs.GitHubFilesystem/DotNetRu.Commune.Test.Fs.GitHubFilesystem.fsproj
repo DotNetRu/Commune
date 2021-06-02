@@ -4,25 +4,36 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+        <GenerateProgramFile>false</GenerateProgramFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.1.5" />
+        <Compile Include="MyMocks.fs" />
+        <Compile Include="GitHubFileStreamTests.fs" />
+        <None Include="GithubScriptTest.fsx" />
+        <Compile Include="GithubFileTests.fs" />
+        <Compile Include="DirectoryContentsTests.fs" />
+        <Compile Include="EditingContextTests.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
+        <PackageReference Include="Foq" Version="1.8.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+        <PackageReference Include="Moq" Version="4.16.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="3.0.3">
+        <PackageReference Include="coverlet.collector" Version="1.3.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\DotNetRu.Commune.WasmClient\DotNetRu.Commune.WasmClient.csproj" />
+      <ProjectReference Include="..\..\DotNetRu.Commune.GitHubFilesystem\DotNetRu.Commune.GitHubFilesystem.csproj" />
     </ItemGroup>
 
 </Project>

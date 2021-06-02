@@ -1,0 +1,16 @@
+﻿@using DotNetRu.Commune.GitHubFilesystem
+@inject GitHubFilesystem _ghfs
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="btn btn-outline-primary" @onclick="CommitButtonCLick">Finish and PR</button>
+    <a href="/CreateFilePage"><button class="btn btn-outline-primary">Create new file</button></a>
+</nav>
+
+@code {
+
+    private async Task CommitButtonCLick(MouseEventArgs obj)
+    {
+        await _ghfs.CommitChanges();
+    }
+
+}

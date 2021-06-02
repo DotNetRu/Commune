@@ -15,7 +15,7 @@
         <PackageReference Include="Serilog" Version="2.10.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
-        <PackageReference Include="Serilog.Sinks.BrowserConsole" Version="1.0.0-dev-00019" />
+        <PackageReference Include="Serilog.Sinks.BrowserConsole" Version="1.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
     </ItemGroup>
@@ -26,6 +26,10 @@
         <CopyToPublishDirectory>Always</CopyToPublishDirectory>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DotNetRu.Commune.GitHubFilesystem\DotNetRu.Commune.GitHubFilesystem.csproj" />
     </ItemGroup>
 
 </Project>

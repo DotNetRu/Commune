@@ -1,0 +1,72 @@
+﻿@page "/FileContentView/{*CurrentPath}"
+
+@using DotNetRu.Commune.GitHubFilesystem
+@using Microsoft.Extensions.FileProviders
+@using Microsoft.Extensions.Logging
+@using System.IO
+
+@inject GitHubFilesystem _gitHubFilesystem;
+@inject ILogger<ContentView> logger;
+
+<h3>FileContentView</h3>
+
+@if (string.IsNullOrWhiteSpace(CurrentPath))
+{
+    <p>Не указан путь к файлу</p>
+}
+else
+{
+    @if (currentFileInfo is GithubFile ghFile && ghFile.ContentsLoaded)
+    {
+        <ul>
+            <li>Имя: @ghFile.Name</li>
+            <li>Путь: @ghFile.PhysicalPath</li>
+            <li>Размер: @fileSize</li>
+            <li>Изменен: @ghFile.LastModified</li>
+        </ul>
+        <div style="font-family: monospace">
+            <p>@fileContents</p>
+        </div>
+    }
+    <button class="btn-primary" @onclick="AppendButtonClick">Дописать</button>
+}
+
+@code {
+    [Parameter]
+    public string? CurrentPath { get; set; }
+
+    IFileInfo? currentFileInfo;
+    string fileContents = string.Empty;
+    long? fileSize;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(CurrentPath))
+        {
+            var ghFile = await _gitHubFilesystem.GetFileInfoAsync(CurrentPath);
+            using var sr = new StreamReader(ghFile);
+            currentFileInfo = ghFile;
+            fileContents = await sr.ReadToEndAsync();
+            fileSize = ghFile.Length;
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task AppendButtonClick(MouseEventArgs obj)
+    {
+        if(!string.IsNullOrWhiteSpace(CurrentPath))
+        {
+            var ghFile = await _gitHubFilesystem.GetFileInfoAsync(CurrentPath);
+            ghFile.Seek(0, SeekOrigin.End);
+            var sw = new StreamWriter(ghFile) { AutoFlush = false };
+            await sw.WriteAsync($"\n{Guid.NewGuid()} @ {DateTime.Now}");
+            await sw.FlushAsync();
+            fileSize = ghFile.Length;
+            ghFile.Seek(0, SeekOrigin.Begin);
+            using var sr = new StreamReader(ghFile);
+            fileContents = await sr.ReadToEndAsync();
+        }
+    }
+
+
+}

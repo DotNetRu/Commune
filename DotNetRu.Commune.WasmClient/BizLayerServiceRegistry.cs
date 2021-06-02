@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DotNetRu.Commune.WasmClient
 {
@@ -19,6 +20,7 @@ namespace DotNetRu.Commune.WasmClient
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
             // здесь регистрируются службы слоя бизнес-логики
+            services.TryAddSingleton<GitHubFilesystem.GitHubFilesystem>();
             return services;
         }
     }

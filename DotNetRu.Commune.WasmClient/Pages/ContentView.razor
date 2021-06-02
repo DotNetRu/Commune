@@ -1,0 +1,49 @@
+﻿@page "/ContentView/{*CurrentPath}"
+@page "/ContentView/"
+@using DotNetRu.Commune.GitHubFilesystem
+@using Microsoft.Extensions.FileProviders
+@using Microsoft.Extensions.Logging
+@inject GitHubFilesystem _gitHubFilesystem;
+@inject ILogger<ContentView> logger;
+
+<h2>Содержимое директории</h2>
+
+<h3>@CurrentPath</h3>
+<div>
+    <ul>
+        @foreach (var item in CurrentFiles)
+        {
+            if (item.IsDirectory)
+            {
+                <li>
+                    <a href="/ContentView/@item.PhysicalPath">@item.Name</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="/FileContentView/@item.PhysicalPath">
+                        @item.Name
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string? CurrentPath { get; set; }
+
+    List<IFileInfo> CurrentFiles { get; set; } = new List<IFileInfo>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        logger.LogInformation("Loading from path = {Path}", CurrentPath);
+        CurrentFiles = (await _gitHubFilesystem.GetDirectoryContentsAsync(string.IsNullOrWhiteSpace(CurrentPath) ? "/" : CurrentPath)).ToList();
+        await base.OnParametersSetAsync();
+    }
+
+}
