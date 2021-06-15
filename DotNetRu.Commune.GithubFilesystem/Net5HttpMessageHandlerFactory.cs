@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace DotNetRu.Commune.GithubFilesystem
 {
-    public class Net5HttpMessageHandlerFactory
+    internal class Net5HttpMessageHandlerFactory
     {
         public static HttpMessageHandler CreateDefault()
         {
