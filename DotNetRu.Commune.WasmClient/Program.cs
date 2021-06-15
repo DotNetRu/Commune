@@ -29,7 +29,7 @@ namespace DotNetRu.Commune.WasmClient
         /// <param name="configuration">Конфигурация</param>
         private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CustomMessage>(configuration.GetSection(nameof(CustomMessage)));
+            services.Configure<AuditSettings>(configuration.GetSection(nameof(AuditSettings)));
             services.AddBizLogic();
         }
 
