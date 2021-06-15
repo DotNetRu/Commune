@@ -8,4 +8,8 @@
         <WarningLevel>9999</WarningLevel>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Octokit" Version="0.50.0" />
+    </ItemGroup>
+
 </Project>
