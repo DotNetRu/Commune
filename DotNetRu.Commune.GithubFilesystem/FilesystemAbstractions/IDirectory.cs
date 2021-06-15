@@ -14,16 +14,44 @@ namespace DotNetRu.Auditor.Storage.FileSystem
     /// </remarks>>
     public interface IDirectory : IFileSystemEntry
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
         ValueTask<IDirectory> GetDirectoryInfoAsync(string subPath);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
         ValueTask<IFile> GetFileInfoAsync(string subPath);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         IAsyncEnumerable<IDirectory> EnumerateDirectoriesAsync();
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         IAsyncEnumerable<IFile> EnumerateFilesAsync();
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
         ValueTask<IFile> CreateFileAsync(string subPath);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
         ValueTask DeleteFileAsync(string subPath);
     }
 }
