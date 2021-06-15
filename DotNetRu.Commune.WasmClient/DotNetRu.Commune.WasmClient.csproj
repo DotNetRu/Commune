@@ -28,4 +28,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DotNetRu.Commune.GithubFilesystem\DotNetRu.Commune.GithubFilesystem.csproj" />
+    </ItemGroup>
+
 </Project>
