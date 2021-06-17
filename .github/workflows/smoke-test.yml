@@ -1,0 +1,35 @@
+name: Smoke-test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal --collect:"XPlat code coverage"
+
+      - name: Publish
+        run: dotnet publish DotNetRu.Commune.WasmClient/DotNetRu.Commune.WasmClient.csproj -c Release -o release
+
+      - name: Save
+        uses: actions/upload-artifact@v2
+        with:
+          name: smoke-artifact
+          path: ./release
