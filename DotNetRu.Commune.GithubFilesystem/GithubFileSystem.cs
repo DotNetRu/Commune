@@ -6,7 +6,7 @@ using Octokit;
 using Octokit.Helpers;
 using Octokit.Internal;
 
-namespace DotNetRu.Commune.GithubFilesystem
+namespace DotNetRu.Commune.GithubFileSystem
 {
     /// <summary>
     /// Virtual filesystem implementation using GitHub repositories for storing files. Implements <see cref="IFileSystem"/>

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 
-namespace DotNetRu.Commune.GithubFilesystem
+namespace DotNetRu.Commune.GithubFileSystem
 {
     internal class Net5HttpMessageHandlerFactory
     {

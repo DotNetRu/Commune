@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Octokit;
 
-namespace DotNetRu.Commune.GithubFilesystem
+namespace DotNetRu.Commune.GithubFileSystem
 {
     /// <summary>
     /// Represents a single session of work with filesystem. Actually - main part of it is a link to current branch of forked repository.
@@ -49,11 +49,13 @@ namespace DotNetRu.Commune.GithubFilesystem
         /// Commit the changes.
         /// Creates a pr from <see cref="CurrentBranch"/> of <see cref="LocalRepo"/> to <see cref="OriginBranch"/> of <see cref="OriginRepo"/>
         /// </summary>
-        public Task Commit()
+        /// <param name="prTitle">Title of the creating pull request</param>
+        public Task Commit(string prTitle)
         {
+            if (string.IsNullOrWhiteSpace(prTitle)) throw new ArgumentException("Pull request title must be not empty.");
             var head = $"{LocalRepo.Owner.Login}:{CurrentBranch.Ref}";
             return PullRequestsClient.Create(OriginRepo.Id,
-                new("AUTOMATED PR", head, OriginBranch.Ref) {Draft = true});
+                new(prTitle, head, OriginBranch.Ref) {Draft = true});
         }
 
         public EditingContext(IGitHubClient client, Repository originRepo, Reference originBranch, Repository localRepo,
