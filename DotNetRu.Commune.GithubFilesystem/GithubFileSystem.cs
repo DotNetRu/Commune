@@ -17,7 +17,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         private EditingContext? _editingContext;
 
         /// <summary>
-        /// Begin work with filesytem. Creates a fork of original repository, than creates a new branch in this fork and
+        /// Begin work with filesytem. Creates a fork of original repository, then creates a new branch in this fork and
         /// stores all the data inside editing context. Without calling this method you can't do anything else - enumerate, read, create
         /// </summary>
         /// <param name="token">Personal access token</param>

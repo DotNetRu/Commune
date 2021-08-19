@@ -36,7 +36,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         public Reference OriginBranch { get; }
 
         /// <summary>
-        /// Users forl of original repo
+        /// User's fork of original repo
         /// </summary>
         public Repository LocalRepo { get; }
 
