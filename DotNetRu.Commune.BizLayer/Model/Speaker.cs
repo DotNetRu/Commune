@@ -13,11 +13,11 @@ namespace DotNetRu.Commune.BizLayer.Model
     /// <param name="TwitterUrl">Link to speaker's twitter account</param>
     /// <param name="HabrUrl">Link to speaker's account at habr.com</param>
     /// <param name="GitHubUrl">Link to speaker's account at github.com</param>
-    public record Speaker(string? Id,
-        string? Name,
+    public record Speaker(string Id,
+        string Name,
         string? CompanyName,
         string? CompanyUrl,
-        string? Description,
+        string Description,
         string? BlogUrl,
         string? ContactsUrl,
         string? TwitterUrl,

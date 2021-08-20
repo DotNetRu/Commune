@@ -13,10 +13,10 @@ namespace DotNetRu.Commune.BizLayer.Model
     /// <param name="TelegramChatUrl">Link to community's telegram chat</param>
     /// <param name="MeetupComUrl">Link to community page at Meetup.com</param>
     /// <param name="TimePadUrl">Link to community's page at TimePad</param>
-    public record Community(string? Id,
-        string? Name,
-        string? City,
-        string? TimeZone,
+    public record Community(string Id,
+        string Name,
+        string City,
+        string TimeZone,
         string? VkUrl,
         string? TwitterUrl,
         string? TelegramChannelUrl,

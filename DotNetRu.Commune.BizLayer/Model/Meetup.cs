@@ -10,9 +10,9 @@ namespace DotNetRu.Commune.BizLayer.Model
     /// <param name="Community">Community, that organized this meetup</param>
     /// <param name="Friends">Friends, who helped with te meetup</param>
     /// <param name="Venue">Venue, where meetup took place</param>
-    /// <param name="Sessions">Sessions of the meetup</param>
-    public record Meetup(string? Id,
-        string? Name,
+    /// <param name="Sessions">Sessions of the meetup. Should contain at lest one item</param>
+    public record Meetup(string Id,
+        string Name,
         Community Community,
         IReadOnlyList<Friend> Friends,
         Venue? Venue,
