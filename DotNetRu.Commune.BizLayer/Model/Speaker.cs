@@ -7,7 +7,7 @@ namespace DotNetRu.Commune.BizLayer.Model
     /// <param name="Name">Speaker's name</param>
     /// <param name="CompanyName">Speaker's company, if present</param>
     /// <param name="CompanyUrl">Speaker's company website, if present</param>
-    /// <param name="Description">Spekaer's description</param>
+    /// <param name="Description">Speaker's description</param>
     /// <param name="BlogUrl">Speaker's blog url</param>
     /// <param name="ContactsUrl">Speaker's contans page url</param>
     /// <param name="TwitterUrl">Link to speaker's twitter account</param>
