@@ -11,6 +11,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
@@ -26,6 +27,10 @@
         <CopyToPublishDirectory>Always</CopyToPublishDirectory>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DotNetRu.Commune.GithubFilesystem\DotNetRu.Commune.GithubFilesystem.csproj" />
     </ItemGroup>
 
 </Project>

@@ -2,55 +2,36 @@
 @using Microsoft.Extensions.Logging
 @using Microsoft.Extensions.Options
 @using DotNetRu.Commune.WasmClient.Model
+@using DotNetRu.Commune.GithubFileSystem
 @inject ILogger<Index> _logger;
-@inject IOptions<CustomMessage> customMsgOpts
+@inject GithubFileSystem githubFs;
+@inject IOptions<AuditSettings> auditSettings;
+@inject NavigationManager _navigationManager;
 
-<h1>Hello, world!</h1>
+<h1>DotNetRu Commune</h1>
 
 <p>
-    Это тестовое приложение DotNetRU.Commune.
-    <br/>
-    Загляните в лог отладчика страницы :-)
+    Это тестовое приложение DotNetRU.Commune.<br/>
+    Введите свой PAT для авторизации клиента github:<br/>
+    <input @bind="pat"/>
+    <button type="button" class="btn btn-primary" name="authBtn" @onclick="ProvidePat">Продолжить</button>
 </p>
 
-<h2>Демо внедрения опций</h2>
-<div class="text-monospace">
-    @if (customMsgOpts != null)
-    {
-        <div>customMsgOpts is not null</div>
-        if (customMsgOpts.Value != null)
-        {
-            <div>customMsgOpts.Value is not null</div>
-            if (!string.IsNullOrEmpty(customMsgOpts.Value.Message))
-            {
-                <div>customMsgOpts.Value.Message is not null or empty</div>
-                <div>customMsgOpts.Value.Message == "@customMsgOpts.Value.Message"</div>
-            }
-            else
-            {
-                <div>customMsgOpts.Value.Message is null or empty</div>
-            }
-        }
-        else
-        {
-            <div>customMsgOpts.Value is null</div>
-        }
-    }
-    else
-    {
-        <div>customMsgOpts is not null</div>
-    }
-</div>
 @code
 {
-    protected override void OnInitialized()
+    string pat = string.Empty;
+
+    private async Task ProvidePat()
     {
-        base.OnInitialized();
-        _logger.LogTrace("Index page was initialized and this is logged @ trace");
-        _logger.LogDebug("Index page was initialized and this is logged @ debug");
-        _logger.LogInformation("Index page was initialized and this is logged @ info");
-        _logger.LogWarning("Index page was initialized and this is logged @ warning");
-        _logger.LogError("Index page was initialized and this is logged @ error");
-        _logger.LogCritical("Index page was initialized and this is logged @ critical");
+        try
+        {
+            await githubFs.StartContext(pat, auditSettings.Value.RepositoryName, auditSettings.Value.OriginalOwner);
+            _navigationManager.NavigateTo("AuthSuccess");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Ошибка старта контекста реадктирования");
+            _navigationManager.NavigateTo("AuthFailed");
+        }
     }
 }
