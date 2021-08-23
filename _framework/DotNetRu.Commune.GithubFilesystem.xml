@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DotNetRu.Commune.GithubFilesystem</name>
+    </assembly>
+    <members>
+        <member name="T:DotNetRu.Commune.GithubFileSystem.EditingContext">
+            <summary>
+            Represents a single session of work with filesystem. Actually - main part of it is a link to current branch of forked repository.
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.Client">
+            <summary>
+            GitHub API client instance
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.ContentClient">
+            <summary>
+            Sub-client for accessing API for manipulation with repository contents
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.PullRequestsClient">
+            <summary>
+            Sub-client for accessing API for manipulation with pull requests
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.OriginRepo">
+            <summary>
+            Original repository
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.OriginBranch">
+            <summary>
+            Original (source) branch
+            </summary>
+            <remarks>HINT: It is "master"</remarks>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.LocalRepo">
+            <summary>
+            User's fork of original repo
+            </summary>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.EditingContext.CurrentBranch">
+            <summary>
+            Current branch. All files are editing in it.
+            </summary>
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.EditingContext.Commit(System.String)">
+            <summary>
+            Commit the changes.
+            Creates a pr from <see cref="P:DotNetRu.Commune.GithubFileSystem.EditingContext.CurrentBranch"/> of <see cref="P:DotNetRu.Commune.GithubFileSystem.EditingContext.LocalRepo"/> to <see cref="P:DotNetRu.Commune.GithubFileSystem.EditingContext.OriginBranch"/> of <see cref="P:DotNetRu.Commune.GithubFileSystem.EditingContext.OriginRepo"/>
+            </summary>
+            <param name="prTitle">Title of the creating pull request</param>
+        </member>
+        <member name="T:DotNetRu.Commune.GithubFileSystem.GithubFileSystem">
+            <summary>
+            Virtual filesystem implementation using GitHub repositories for storing files. Implements <see cref="T:DotNetRu.Auditor.Storage.FileSystem.IFileSystem"/>
+            </summary>
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.StartContext(System.String,System.String,System.String)">
+            <summary>
+            Begin work with filesytem. Creates a fork of original repository, then creates a new branch in this fork and
+            stores all the data inside editing context. Without calling this method you can't do anything else - enumerate, read, create
+            </summary>
+            <param name="token">Personal access token</param>
+            <param name="originRepo">Original repository name</param>
+            <param name="originOwner">Original repository owner (user or organization)</param>
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.FullName">
+            <inheritdoc />
+        </member>
+        <member name="P:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.Exists">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.GetDirectoryInfoAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.GetFileInfoAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.EnumerateDirectoriesAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.EnumerateFilesAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.CreateFileAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:DotNetRu.Commune.GithubFileSystem.GithubFileSystem.DeleteFileAsync(System.String)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
