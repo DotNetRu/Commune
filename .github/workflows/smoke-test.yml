@@ -1,0 +1,45 @@
+name: Smoke-test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      # тестирование и сбор покрытия
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal --collect:"XPlat code coverage"
+
+      # публикация результатов покрытия тестами на code-cov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+
+      - name: Publish
+        run: dotnet publish DotNetRu.Commune.WasmClient/DotNetRu.Commune.WasmClient.csproj -c Release -o release
+
+      - name: Save
+        uses: actions/upload-artifact@v2
+        with:
+          name: smoke-artifact
+          path: ./release
