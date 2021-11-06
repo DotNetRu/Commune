@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetRu.Auditor.Storage.FileSystem;
@@ -26,7 +25,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         /// <returns>new directory instance pointing to the root of content of this branch in this repository</returns>
         public static IDirectory ForRoot(IGitHubClient gitHubClient, Repository repository, Reference branch)
         {
-            return new GithubDirectory(gitHubClient, repository, branch, string.Empty, string.Empty);
+            return new GithubDirectory(gitHubClient, repository, branch, string.Empty, "/");
         }
 
         private string GetChildFullName(string childDirectoryName) =>
@@ -46,7 +45,11 @@ namespace DotNetRu.Commune.GithubFileSystem
         }
 
         /// <inheritdoc />
-        public IFile GetFile(string childFileName) => throw new NotImplementedException();
+        public IFile GetFile(string childFileName)
+        {
+            var childFullName = GetChildFullName(childFileName);
+            return new GithubFile(GitHubClient, Repository, Branch, childFileName, childFullName);
+        }
 
         /// <inheritdoc />
         public async IAsyncEnumerable<IDirectory> EnumerateDirectoriesAsync()
@@ -71,6 +74,13 @@ namespace DotNetRu.Commune.GithubFileSystem
         }
 
         /// <inheritdoc />
-        public override ValueTask<bool> ExistsAsync() => throw new NotImplementedException();
+        public override async ValueTask<bool> ExistsAsync()
+        {
+            var parentDirectory = GetParentDirectory();
+            var contents = await ContentsClient.GetAllContentsByRef(Repository.Id, parentDirectory, Branch.Ref)
+                .ConfigureAwait(false);
+
+            return contents.Any(x => x.Name == Name && x.Type.Value == ContentType.File);
+        }
     }
 }

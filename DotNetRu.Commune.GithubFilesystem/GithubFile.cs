@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using DotNetRu.Auditor.Storage.FileSystem;
 using Octokit;
@@ -22,11 +23,25 @@ namespace DotNetRu.Commune.GithubFileSystem
             base(gitHubClient, repository, branch, name, fullName)
         {
         }
-        /// <inheritdoc />
-        public override ValueTask<bool> ExistsAsync() => throw new System.NotImplementedException();
 
         /// <inheritdoc />
-        public Task<Stream> OpenForReadAsync() => throw new System.NotImplementedException();
+        public override async ValueTask<bool> ExistsAsync()
+        {
+            var parentDirectory = GetParentDirectory();
+            var contents = await ContentsClient.GetAllContentsByRef(Repository.Id, parentDirectory, Branch.Ref)
+                .ConfigureAwait(false);
+
+            return contents.Any(x => x.Name == Name && x.Type.Value == ContentType.File);
+        }
+
+        /// <inheritdoc />
+        public async Task<Stream> OpenForReadAsync()
+        {
+            var contents = await ContentsClient
+                .GetRawContentByRef(Repository.Owner.Login, Repository.Name, FullName, Branch.Ref)
+                .ConfigureAwait(false);
+            return new MemoryStream(contents, false);
+        }
 
         /// <inheritdoc />
         public Task<IWritableFile?> RequestWriteAccessAsync() => throw new System.NotImplementedException();

@@ -55,5 +55,16 @@ namespace DotNetRu.Commune.GithubFileSystem
 
         /// <inheritdoc />
         public abstract ValueTask<bool> ExistsAsync();
+
+        /// <summary>
+        /// Get parent directory name containing this entry
+        /// </summary>
+        /// <returns>path of the parent directory</returns>
+        protected string GetParentDirectory() =>
+            FullName.Remove(FullName.Length - Name.Length) switch
+            {
+                "/" => string.Empty,
+                {} s => s
+            };
     }
 }
