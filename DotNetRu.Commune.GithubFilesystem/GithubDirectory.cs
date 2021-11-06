@@ -10,20 +10,11 @@ namespace DotNetRu.Commune.GithubFileSystem
     /// <summary>
     /// Virtual directory in github repository. Implements <see cref="IDirectory"/>
     /// </summary>
-    public class GithubDirectory : IDirectory
+    public class GithubDirectory : GithubFilesystemEntry, IDirectory
     {
-        private readonly IGitHubClient _gitHubClient;
-        private readonly Repository _repository;
-        private readonly Reference _branch;
-        private IRepositoryContentsClient ContentsClient => _gitHubClient.Repository.Content;
-
-        private GithubDirectory(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName)
+        private GithubDirectory(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName) :
+            base(gitHubClient, repository, branch, name, fullName)
         {
-            _gitHubClient = gitHubClient;
-            _repository = repository;
-            _branch = branch;
-            Name = name;
-            FullName = fullName;
         }
 
         /// <summary>
@@ -38,26 +29,20 @@ namespace DotNetRu.Commune.GithubFileSystem
             return new GithubDirectory(gitHubClient, repository, branch, string.Empty, string.Empty);
         }
 
-        /// <inheritdoc />
-        public ValueTask<bool> ExistsAsync() => throw new NotImplementedException();
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public string FullName { get; }
-
-        /// <inheritdoc />
-        public IDirectory GetDirectory(string childDirectoryName)
-        {
-            var childFullName = FullName switch
+        private string GetChildFullName(string childDirectoryName) =>
+            FullName switch
             {
                 null => childDirectoryName,
                 "" => childDirectoryName,
                 {} s when s.EndsWith("/") => $"{FullName}{childDirectoryName}",
                 _ => $"{FullName}/{childDirectoryName}"
             };
-            return new GithubDirectory(_gitHubClient, _repository, _branch, childDirectoryName, childFullName);
+
+        /// <inheritdoc />
+        public IDirectory GetDirectory(string childDirectoryName)
+        {
+            var childFullName = GetChildFullName(childDirectoryName);
+            return new GithubDirectory(GitHubClient, Repository, Branch, childDirectoryName, childFullName);
         }
 
         /// <inheritdoc />
@@ -66,15 +51,26 @@ namespace DotNetRu.Commune.GithubFileSystem
         /// <inheritdoc />
         public async IAsyncEnumerable<IDirectory> EnumerateDirectoriesAsync()
         {
-            var contents = await ContentsClient.GetAllContentsByRef(_repository.Id, FullName, _branch.Ref)
+            var contents = await ContentsClient.GetAllContentsByRef(Repository.Id, FullName, Branch.Ref)
                 .ConfigureAwait(false);
             foreach (var content in contents.Where(x => x.Type.Value == ContentType.Dir))
             {
-                yield return new GithubDirectory(_gitHubClient, _repository, _branch, content.Name, content.Path);
+                yield return new GithubDirectory(GitHubClient, Repository, Branch, content.Name, content.Path);
             }
         }
 
         /// <inheritdoc />
-        public IAsyncEnumerable<IFile> EnumerateFilesAsync() => throw new NotImplementedException();
+        public async IAsyncEnumerable<IFile> EnumerateFilesAsync()
+        {
+            var contents = await ContentsClient.GetAllContentsByRef(Repository.Id, FullName, Branch.Ref)
+                .ConfigureAwait(false);
+            foreach (var content in contents.Where(x => x.Type.Value == ContentType.File))
+            {
+                yield return new GithubFile(GitHubClient, Repository, Branch, content.Name, content.Path);
+            }
+        }
+
+        /// <inheritdoc />
+        public override ValueTask<bool> ExistsAsync() => throw new NotImplementedException();
     }
 }
