@@ -3,35 +3,73 @@
 @using Microsoft.Extensions.Options
 @using DotNetRu.Commune.WasmClient.Model
 @using DotNetRu.Commune.GithubFileSystem
+@using Radzen
+@using DotNetRu.Auditor.Storage
+@using DotNetRu.Auditor.Data.Model
 @inject ILogger<Index> _logger;
-@inject GithubFileSystem githubFs;
+@inject ClientFactory _clientFactory;
 @inject IOptions<AuditSettings> auditSettings;
 @inject NavigationManager _navigationManager;
+@inject NotificationService _notificationService;
 
 <h1>DotNetRu Commune</h1>
 
-<p>
-    Это тестовое приложение DotNetRU.Commune.<br/>
-    Введите свой PAT для авторизации клиента github:<br/>
-    <input @bind="pat"/>
-    <button type="button" class="btn btn-primary" name="authBtn" @onclick="ProvidePat">Продолжить</button>
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <RadzenLabel Text="Это тестовое приложение DotNetRU.Commune."/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <RadzenDataGrid @ref="@_dataGrid" Data="@_communities" Count="@_communityCnt" TItem="Community">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Community" Property="Id" Title="Id"/>
+                    <RadzenDataGridColumn TItem="Community" Property="Name" Title="Наименование"/>
+                    <RadzenDataGridColumn TItem="Community" Property="City" Title="Город"/>
+                    <RadzenDataGridColumn TItem="Community" Property="TimeZone" Title="Временная зона"/>
+                    <RadzenDataGridColumn TItem="Community" Property="VkUrl" Title="Группа в ВК"/>
+                    <RadzenDataGridColumn TItem="Community" Property="TwitterUrl" Title="Twitter"/>
+                    <RadzenDataGridColumn TItem="Community" Property="TelegramChannelUrl" Title="Канал в Telegram"/>
+                    <RadzenDataGridColumn TItem="Community" Property="TelegramChatUrl" Title="Telegram чат"/>
+                    <RadzenDataGridColumn TItem="Community" Property="MeetupComUrl" Title="Meetup.com"/>
+                    <RadzenDataGridColumn TItem="Community" Property="TimePadUrl" Title="TimePad"/>
+                </Columns>
+            </RadzenDataGrid>
+        </div>
+    </div>
+</div>
 
 @code
 {
-    string pat = string.Empty;
-
-    private async Task ProvidePat()
+    private List<Community> _communities = new();
+    private int _communityCnt;
+    private RadzenDataGrid<Community>? _dataGrid;
+    protected override async Task OnInitializedAsync()
     {
-        try
+        var client = _clientFactory.Anonymous();
+
+        var repository = await client.Repository.Get(auditSettings.Value.OriginalOwner, auditSettings.Value.RepositoryName);
+        _logger.LogDebug("Got repository for {Owner}/{RepoName}: {@Repo}", auditSettings.Value.OriginalOwner, auditSettings.Value.RepositoryName, repository);
+
+        var masterBranch = await client.Git.Reference.Get(repository.Id, "heads/master");
+        _logger.LogDebug("Got masterbransh ref: {@Branch}", masterBranch);
+
+        var auditDirectory = GitHubDirectory.ForRoot(client, repository, masterBranch).GetDirectory("db");
+        var store = await AuditStore.OpenAsync(auditDirectory);
+        var session = store.OpenSession();
+        var communities = session.QueryAsync<Community>();
+        _logger.LogDebug("Got communities, starting to enumerate the sequence");
+        var buffer = new List<Community>();
+        await foreach (var item in communities)
         {
-            await githubFs.StartContext(pat, auditSettings.Value.RepositoryName, auditSettings.Value.OriginalOwner);
-            _navigationManager.NavigateTo("AuthSuccess");
+            _logger.LogDebug("Got new community: {@Commuinity}", item);
+            buffer.Add(item);
         }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Ошибка старта контекста реадктирования");
-            _navigationManager.NavigateTo("AuthFailed");
-        }
+        _communities = buffer;
+        _communityCnt = _communities.Count;
+        await base.OnInitializedAsync();
     }
 }

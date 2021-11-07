@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Radzen;
 using Serilog;
 
 namespace DotNetRu.Commune.WasmClient
@@ -29,6 +30,13 @@ namespace DotNetRu.Commune.WasmClient
         /// <param name="configuration">Конфигурация</param>
         private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            // registering radzen blazor services for using notifications, dialogs, tooltips and custom context menus
+            services
+                .AddScoped<DialogService>()
+                .AddScoped<NotificationService>()
+                .AddScoped<TooltipService>()
+                .AddScoped<ContextMenuService>();
+
             services.Configure<AuditSettings>(configuration.GetSection(nameof(AuditSettings)));
             services.AddBizLogic();
         }
