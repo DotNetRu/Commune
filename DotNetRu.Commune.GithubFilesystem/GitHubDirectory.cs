@@ -9,9 +9,9 @@ namespace DotNetRu.Commune.GithubFileSystem
     /// <summary>
     /// Virtual directory in github repository. Implements <see cref="IDirectory"/>
     /// </summary>
-    public class GithubDirectory : GithubFilesystemEntry, IDirectory
+    public class GitHubDirectory : GitHubFilesystemEntry, IDirectory
     {
-        private GithubDirectory(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName) :
+        private GitHubDirectory(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName) :
             base(gitHubClient, repository, branch, name, fullName)
         {
         }
@@ -25,7 +25,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         /// <returns>new directory instance pointing to the root of content of this branch in this repository</returns>
         public static IDirectory ForRoot(IGitHubClient gitHubClient, Repository repository, Reference branch)
         {
-            return new GithubDirectory(gitHubClient, repository, branch, string.Empty, "/");
+            return new GitHubDirectory(gitHubClient, repository, branch, string.Empty, "/");
         }
 
         private string GetChildFullName(string childDirectoryName) =>
@@ -41,14 +41,14 @@ namespace DotNetRu.Commune.GithubFileSystem
         public IDirectory GetDirectory(string childDirectoryName)
         {
             var childFullName = GetChildFullName(childDirectoryName);
-            return new GithubDirectory(GitHubClient, Repository, Branch, childDirectoryName, childFullName);
+            return new GitHubDirectory(GitHubClient, Repository, Branch, childDirectoryName, childFullName);
         }
 
         /// <inheritdoc />
         public IFile GetFile(string childFileName)
         {
             var childFullName = GetChildFullName(childFileName);
-            return new GithubFile(GitHubClient, Repository, Branch, childFileName, childFullName);
+            return new GitHubFile(GitHubClient, Repository, Branch, childFileName, childFullName);
         }
 
         /// <inheritdoc />
@@ -58,7 +58,7 @@ namespace DotNetRu.Commune.GithubFileSystem
                 .ConfigureAwait(false);
             foreach (var content in contents.Where(x => x.Type.Value == ContentType.Dir))
             {
-                yield return new GithubDirectory(GitHubClient, Repository, Branch, content.Name, content.Path);
+                yield return new GitHubDirectory(GitHubClient, Repository, Branch, content.Name, content.Path);
             }
         }
 
@@ -69,7 +69,7 @@ namespace DotNetRu.Commune.GithubFileSystem
                 .ConfigureAwait(false);
             foreach (var content in contents.Where(x => x.Type.Value == ContentType.File))
             {
-                yield return new GithubFile(GitHubClient, Repository, Branch, content.Name, content.Path);
+                yield return new GitHubFile(GitHubClient, Repository, Branch, content.Name, content.Path);
             }
         }
 

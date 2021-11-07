@@ -9,7 +9,7 @@ namespace DotNetRu.Commune.GithubFileSystem
     /// <summary>
     /// Files from github repository
     /// </summary>
-    public class GithubFile : GithubFilesystemEntry, IFile
+    public class GitHubFile : GitHubFilesystemEntry, IFile
     {
         /// <summary>
         /// ctor
@@ -19,7 +19,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         /// <param name="branch">branch in this repository</param>
         /// <param name="name">file name</param>
         /// <param name="fullName">file full path in repository</param>
-        public GithubFile(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName) :
+        public GitHubFile(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName) :
             base(gitHubClient, repository, branch, name, fullName)
         {
         }

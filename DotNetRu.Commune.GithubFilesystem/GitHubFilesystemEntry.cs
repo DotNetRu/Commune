@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using DotNetRu.Auditor.Storage.FileSystem;
 using Octokit;
@@ -8,7 +7,7 @@ namespace DotNetRu.Commune.GithubFileSystem
     /// <summary>
     /// base class for all filesystem objects - directories and files
     /// </summary>
-    public abstract class GithubFilesystemEntry : IFileSystemEntry
+    public abstract class GitHubFilesystemEntry : IFileSystemEntry
     {
         /// <summary>
         /// Github client, used to access github data
@@ -38,7 +37,7 @@ namespace DotNetRu.Commune.GithubFileSystem
         /// <param name="branch">branch in repository</param>
         /// <param name="name">name of this entry</param>
         /// <param name="fullName">full name, aka path of this entry</param>
-        protected GithubFilesystemEntry(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName)
+        protected GitHubFilesystemEntry(IGitHubClient gitHubClient, Repository repository, Reference branch, string name, string fullName)
         {
             GitHubClient = gitHubClient;
             Repository = repository;
