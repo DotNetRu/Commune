@@ -57,7 +57,7 @@
         var masterBranch = await client.Git.Reference.Get(repository.Id, "heads/master");
         _logger.LogDebug("Got masterbransh ref: {@Branch}", masterBranch);
 
-        var auditDirectory = GitHubDirectory.ForRoot(client, repository, masterBranch);
+        var auditDirectory = GitHubDirectory.ForRoot(client, repository, masterBranch).GetDirectory("db");
         var store = await AuditStore.OpenAsync(auditDirectory);
         var session = store.OpenSession();
         var communities = session.QueryAsync<Community>();
