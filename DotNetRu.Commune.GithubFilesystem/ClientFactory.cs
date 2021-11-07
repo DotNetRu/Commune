@@ -23,5 +23,20 @@ namespace DotNetRu.Commune.GithubFileSystem
                 new SimpleJsonSerializer()));
             return client;
         }
+
+        /// <summary>
+        /// Get an authenticated client with specific token
+        /// </summary>
+        /// <param name="token">personal access token for github</param>
+        /// <returns>GitHUb client with injeccted personal access token</returns>
+        public GitHubClient WithToken(string token)
+        {
+            var credStore = new InMemoryCredentialStore(new (token, AuthenticationType.Bearer));
+            var client = new GitHubClient(new Connection(new ProductHeaderValue(ProductName),
+            GitHubClient.GitHubApiUrl, credStore,
+            new HttpClientAdapter(Net5HttpMessageHandlerFactory.CreateDefault),
+            new SimpleJsonSerializer()));
+            return client;
+        }
     }
 }
