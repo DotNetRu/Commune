@@ -6,15 +6,15 @@ namespace DotNetRu.Commune.GithubFileSystem
     /// <summary>
     /// Factoy for building clients
     /// </summary>
-    public static class ClientFactory
+    public class ClientFactory
     {
         private const string ProductName = "DotNetRuCommune";
 
         /// <summary>
         /// Build anonymous client - no credentials needed
         /// </summary>
-        /// <returns></returns>
-        public static GitHubClient Anonymous()
+        /// <returns>Github client with anonymous credentials</returns>
+        public GitHubClient Anonymous()
         {
             var credStore = new InMemoryCredentialStore(Credentials.Anonymous);
             var client = new GitHubClient(new Connection(new ProductHeaderValue(ProductName),
