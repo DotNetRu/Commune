@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <RadzenDataGrid Data="@_communities" TItem="Community">
+            <RadzenDataGrid @ref="@_dataGrid" Data="@_communities" Count="@_communityCnt" TItem="Community">
                 <Columns>
                     <RadzenDataGridColumn TItem="Community" Property="Id" Title="Id"/>
                     <RadzenDataGridColumn TItem="Community" Property="Name" Title="Наименование"/>
@@ -44,7 +44,9 @@
 
 @code
 {
-    private readonly List<Community> _communities = new();
+    private List<Community> _communities = new();
+    private int _communityCnt;
+    private RadzenDataGrid<Community>? _dataGrid;
     protected override async Task OnInitializedAsync()
     {
         var client = _clientFactory.Anonymous();
@@ -60,11 +62,14 @@
         var session = store.OpenSession();
         var communities = session.QueryAsync<Community>();
         _logger.LogDebug("Got communities, starting to enumerate the sequence");
+        var buffer = new List<Community>();
         await foreach (var item in communities)
         {
             _logger.LogDebug("Got new community: {@Commuinity}", item);
-            _communities.Add(item);
+            buffer.Add(item);
         }
+        _communities = buffer;
+        _communityCnt = _communities.Count;
         await base.OnInitializedAsync();
     }
 }
